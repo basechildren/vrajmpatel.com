@@ -4,10 +4,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 <BaseLayout
   title="About — Vraj Patel"
-  description="About Vraj Patel, a systems integration engineer working on backend, data, and applied machine-learning systems."
+  description="About Vraj Patel, a backend and ML systems engineer completing dual M.S. programs at CU Boulder."
 >
   <header class="max-w-3xl pb-10 sm:pb-14">
-    <p class="font-mono text-xs text-slate-500 dark:text-slate-500">Profile</p>
+    <p class="font-mono text-xs text-slate-500 dark:text-slate-400">Profile</p>
     <h1 class="mt-3 text-4xl font-semibold tracking-[-0.035em] text-slate-950 dark:text-white sm:text-5xl">
       About
     </h1>
@@ -17,26 +17,20 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <aside class="text-sm leading-6 text-slate-600 dark:text-slate-400">
       <dl class="space-y-5">
         <div>
-          <dt class="font-mono text-xs text-slate-500 dark:text-slate-500">Location</dt>
+          <dt class="font-mono text-xs text-slate-500 dark:text-slate-400">Location</dt>
           <dd class="mt-1">Boulder, Colorado</dd>
         </div>
         <div>
-          <dt class="font-mono text-xs text-slate-500 dark:text-slate-500">Work</dt>
+          <dt class="font-mono text-xs text-slate-500 dark:text-slate-400">Work</dt>
           <dd class="mt-1">CU Boulder · Institute of Behavioral Science</dd>
         </div>
         <div>
-          <dt class="font-mono text-xs text-slate-500 dark:text-slate-500">Study</dt>
-          <dd class="mt-1">M.S. Computer Science · CU Boulder</dd>
+          <dt class="font-mono text-xs text-slate-500 dark:text-slate-400">Study</dt>
+          <dd class="mt-1">Dual M.S. programs · CU Boulder</dd>
         </div>
       </dl>
 
-      <nav aria-label="Contact links" class="mt-8 flex flex-col items-start gap-2">
-        <a
-          href="mailto:vrajmp999@gmail.com"
-          data-ph-event="contact_clicked"
-          data-ph-placement="about"
-          class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
-        >Email</a>
+      <nav aria-label="Professional links" class="mt-8 flex flex-col items-start gap-2">
         <a
           href="https://www.linkedin.com/in/vrajmp/"
           target="_blank"
@@ -76,15 +70,22 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             a ticket-classification platform.
           </p>
           <p>
-            I also work with Princeton’s Studio Lab on political-data pipelines
-            covering four decades of parliamentary records and campaign audio.
-            The work combines data engineering, applied NLP, and the less
-            glamorous job of making long-running pipelines recover cleanly.
+            I continued CU Boulder Studio Lab research remotely with the former
+            PI after they moved to Princeton; that collaboration concluded in
+            May 2026. The work covered four decades of parliamentary records
+            and campaign audio, combining data engineering, applied NLP, and
+            the less glamorous job of making long-running pipelines recover
+            cleanly.
           </p>
           <p>
-            I’m pursuing an M.S. in Computer Science at CU Boulder. Outside work,
-            I run a 24 TB TrueNAS and Docker home lab, mostly to learn by operating
-            the systems I build.
+            I’m completing dual M.S. programs in Computer Science and Engineering
+            Management at CU Boulder, where I earned a B.S. in Computer Science
+            with a Business minor. Outside work, I run a 24 TB TrueNAS and Docker
+            home lab, mostly to learn by operating the systems I build.
+          </p>
+          <p>
+            I’m also developing a paper on secure GitHub repository collaboration
+            for work governed by federal data-protection agreements.
           </p>
         </div>
       </section>
@@ -99,14 +100,21 @@ import BaseLayout from "../layouts/BaseLayout.astro";
               <dt class="font-medium text-slate-950 dark:text-white">Systems Integration Engineer</dt>
               <dd class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">University of Colorado Boulder · Institute of Behavioral Science</dd>
             </div>
-            <dd class="font-mono text-xs leading-6 text-slate-500 dark:text-slate-500">2025—present</dd>
+            <dd class="font-mono text-xs leading-6 text-slate-500 dark:text-slate-400">2025—present</dd>
           </div>
           <div class="grid gap-1 border-t border-slate-200 py-5 sm:grid-cols-[1fr_auto] sm:gap-8 dark:border-slate-800">
             <div>
-              <dt class="font-medium text-slate-950 dark:text-white">M.S. Computer Science</dt>
-              <dd class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">University of Colorado Boulder · AI subplan</dd>
+              <dt class="font-medium text-slate-950 dark:text-white">Dual M.S. programs</dt>
+              <dd class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">University of Colorado Boulder · Computer Science and Engineering Management</dd>
             </div>
-            <dd class="font-mono text-xs leading-6 text-slate-500 dark:text-slate-500">Expected 2028</dd>
+            <dd class="font-mono text-xs leading-6 text-slate-500 dark:text-slate-400">In progress</dd>
+          </div>
+          <div class="grid gap-1 border-t border-slate-200 py-5 sm:grid-cols-[1fr_auto] sm:gap-8 dark:border-slate-800">
+            <div>
+              <dt class="font-medium text-slate-950 dark:text-white">Research paper in progress</dt>
+              <dd class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">Secure GitHub collaboration for work governed by federal data-protection agreements</dd>
+            </div>
+            <dd class="font-mono text-xs leading-6 text-slate-500 dark:text-slate-400">In progress</dd>
           </div>
         </dl>
       </section>

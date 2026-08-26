@@ -9,6 +9,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "check": "astro check",
+    "privacy:check": "node scripts/check-public-privacy.mjs",
+    "test": "node --test scripts/*.test.ts",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -19,7 +22,12 @@
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.7",
     "astro-og-canvas": "^0.13.0",
-    "canvaskit-wasm": "^0.41.1",
+    "canvaskit-wasm": "0.41.1",
+    "posthog-js": "1.419.0",
     "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^6.0.3"
   }
 }

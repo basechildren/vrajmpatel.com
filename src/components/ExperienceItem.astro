@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { organizationMarks } from "../data/organizationMarks";
 import OrganizationMarks from "./OrganizationMarks.astro";
 
 interface Props {
@@ -8,6 +9,9 @@ interface Props {
 }
 
 const { entry, variant = "detailed" } = Astro.props;
+const mark = entry.data.organizationMark
+  ? organizationMarks[entry.data.organizationMark]
+  : undefined;
 ---
 
 {
@@ -15,13 +19,10 @@ const { entry, variant = "detailed" } = Astro.props;
     <article class="grid gap-2 border-t border-slate-200 py-6 sm:grid-cols-[9rem_1fr] sm:gap-7 dark:border-slate-800">
       <div>
         <OrganizationMarks
-          logo={entry.data.logo}
-          logoDark={entry.data.logoDark}
-          logo2={entry.data.logo2}
-          logo2Dark={entry.data.logo2Dark}
+          {...mark}
           size="compact"
         />
-        <p class="mt-3 font-mono text-xs leading-5 text-slate-500 dark:text-slate-500">
+        <p class="mt-3 font-mono text-xs leading-5 text-slate-500 dark:text-slate-400">
           {entry.data.period}
         </p>
       </div>
@@ -38,17 +39,14 @@ const { entry, variant = "detailed" } = Astro.props;
     <article class="grid gap-4 border-t border-slate-200 py-9 sm:grid-cols-[11rem_1fr] sm:gap-8 dark:border-slate-800">
       <div>
         <OrganizationMarks
-          logo={entry.data.logo}
-          logoDark={entry.data.logoDark}
-          logo2={entry.data.logo2}
-          logo2Dark={entry.data.logo2Dark}
-          size={entry.data.logo2 ? "compact" : "regular"}
+          {...mark}
+          size="regular"
         />
-        <p class="mt-4 font-mono text-xs leading-5 text-slate-500 dark:text-slate-500">
+        <p class="mt-4 font-mono text-xs leading-5 text-slate-500 dark:text-slate-400">
           {entry.data.period}
         </p>
         {entry.data.location && (
-          <p class="mt-2 text-sm text-slate-500 dark:text-slate-500">
+          <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">
             {entry.data.location}
           </p>
         )}

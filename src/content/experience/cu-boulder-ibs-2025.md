@@ -2,8 +2,8 @@
 organization: 'University of Colorado Boulder - Institute of Behavioral Science'
 title: 'Systems Integration Engineer'
 period: 'May 2025 – Present'
-order: 2
-logo: '/logos/cu-standalone.png.avif'
+order: 1
+organizationMark: 'cu-boulder'
 ---
 
 - Building a FastAPI and PostgreSQL ticket-classification service that uses a fine-tuned BERT model to suggest incident tags

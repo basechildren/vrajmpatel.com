@@ -1,26 +1,26 @@
 ---
 import { getCollection } from "astro:content";
 import ProjectCard from "../components/ProjectCard.astro";
+import { isCaseStudy, isPublicProject, sortProjects } from "../lib/projects";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const projects = (await getCollection("projects")).sort((a, b) => {
-  const featuredOrder = Number(Boolean(b.data.featured)) - Number(Boolean(a.data.featured));
-  return featuredOrder || (a.data.order ?? 99) - (b.data.order ?? 99);
-});
+const publicProjects = (await getCollection("projects")).filter(isPublicProject);
+const projects = publicProjects.filter(isCaseStudy).sort(sortProjects);
+const notes = publicProjects.filter((entry) => !isCaseStudy(entry)).sort(sortProjects);
 ---
 
 <BaseLayout
   title="Projects — Vraj Patel"
-  description="Applied machine-learning, backend, infrastructure, and research projects by Vraj Patel."
+  description="A focused selection of backend, machine-learning, and data-engineering work by Vraj Patel."
 >
   <header class="max-w-3xl pb-10 sm:pb-14">
-    <p class="font-mono text-xs text-slate-500 dark:text-slate-500">Work</p>
+    <p class="font-mono text-xs text-slate-500 dark:text-slate-400">Work</p>
     <h1 class="mt-3 text-4xl font-semibold tracking-[-0.035em] text-slate-950 dark:text-white sm:text-5xl">
       Projects
     </h1>
     <p class="mt-5 text-lg leading-8 text-slate-600 dark:text-slate-400">
-      Selected work across applied ML, backend systems, and data engineering.
-      Each project page covers the contribution, constraints, and result.
+      A focused selection of backend systems, applied ML, and data engineering.
+      Each case study explains the contribution, constraints, and outcome.
     </p>
   </header>
 
@@ -31,4 +31,21 @@ const projects = (await getCollection("projects")).sort((a, b) => {
       ))
     }
   </section>
+
+  {
+    notes.length > 0 && (
+      <section class="mt-12 border-t border-slate-200 pt-9 dark:border-slate-800" aria-labelledby="systems-practice-heading">
+        <p class="font-mono text-xs text-slate-500 dark:text-slate-400">Systems practice</p>
+        <h2 id="systems-practice-heading" class="mt-2 text-2xl font-semibold tracking-tight text-slate-950 dark:text-white">
+          Operating what I build
+        </h2>
+        <p class="mt-3 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-400">
+          Hands-on infrastructure work that informs the reliability and operational choices in my software projects.
+        </p>
+        <div class="mt-6">
+          {notes.map((entry) => <ProjectCard entry={entry} headingLevel="h3" showDomain={true} />)}
+        </div>
+      </section>
+    )
+  }
 </BaseLayout>

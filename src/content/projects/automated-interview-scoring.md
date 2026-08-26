@@ -3,6 +3,7 @@ title: 'Automated Interview Scoring'
 domain: 'Machine Learning'
 featured: false
 order: 7
+visibility: 'archived'
 tech: ['SentenceTransformers', 'TensorFlow', 'Scikit-Learn', 'SHAP']
 github: 'https://github.com/PatVraj/automated-interview-scoring'
 summary: 'Interview scoring model combining text embeddings with 100+ audio features. Five-fold validation produced MAE below 0.4 and Pearson r above 0.70.'

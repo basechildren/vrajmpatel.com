@@ -1,97 +1,68 @@
 # llms.txt
 
-> A plain-text summary of Vraj Patel's portfolio.
+> A plain-text summary of Vraj Patel's professional portfolio.
 
 ## Identity
 - **Name:** Vraj Patel
-- **Title:** Systems Integration Engineer
-- **Specialization:** Machine Learning and Backend Systems
-- **Contact:** @ vrajmpatel.com
-
-## Professional Summary
-I build backend services, data pipelines, and applied ML systems at CU Boulder and Princeton. I am pursuing an M.S. in Computer Science (AI) at CU Boulder.
+- **Positioning:** Backend and ML Systems Engineer
+- **Location:** Boulder, Colorado
+- **Focus:** Reliable backend systems, data pipelines, and applied machine learning
 
 ## Education
-- **M.S. in Computer Science (AI-Subplan)** - University of Colorado Boulder (Expected 2028)
-- **B.S. in Computer Science (Business Minor)** - University of Colorado Boulder
-  - GPA: 3.65/4.00, 5x Dean's List
+- **Dual M.S. programs:** Computer Science and Engineering Management, University of Colorado Boulder
+- **B.S. in Computer Science, Business Minor:** University of Colorado Boulder
 
-## Technical Skills
-- **Languages:** Python, TypeScript, JavaScript, SQL, C++, Java
-- **Frameworks & Libraries:** TensorFlow, PyTorch, Scikit-Learn, FastAPI, React, Astro
-- **Infrastructure & Tools:** Docker, PostgreSQL, AWS, TrueNAS, Git, Linux
+## Professional Summary
+Vraj Patel builds dependable backend services, operational data pipelines, and applied ML systems at CU Boulder. His work pairs practical software engineering with research-scale data processing and reliable long-running workflows.
 
 ## Professional Experience
 
 ### University of Colorado Boulder - Institute of Behavioral Science
-**Systems Integration Engineer (May 2025 – Present)**
-- Building a FastAPI and PostgreSQL ticket-classification service that uses a fine-tuned BERT model to suggest incident tags.
+**Systems Integration Engineer (May 2025 - Present)**
+- Building an internal FastAPI and PostgreSQL ticket-intelligence platform with ML-assisted incident-tag suggestions.
 - Built a React, Vite, and Recharts dashboard that identified Tuesday at 10 a.m. as peak ticket volume for staffing analysis.
-- Built a PowerShell tool that scans the IBS organizational unit in Active Directory and removes group memberships, cutting each offboarding run from 15 minutes to under one minute.
-- Managed Windows Autopilot and Jamf Pro enrollment for 50+ endpoints to meet Secure Compute requirements.
+- Built a PowerShell offboarding tool that reduced each group-membership cleanup run from 15 minutes to under one minute.
 
-**Lead Technical Research Assistant (March 2023 – May 2025)**
-- Worked with PhD researchers to build a PyTorch and ResNet50 pipeline for studying visual bias in New York Times COVID-19 imagery. Added OpenCV and scikit-image preprocessing with z-score normalization and channel-wise intensity scaling.
-- Used a truncated ResNet50 to extract image embeddings, then grouped them with k-means for analysis without labeled data.
-- Built Selenium and BeautifulSoup pipelines for 15+ years of legislative data, with JSON checkpoints for long-running jobs.
-- Built a Python wrapper for the LegiScan API with caching and rate-limit handling, cutting redundant requests by 40% during bulk ingestion.
+### Studio Lab - University of Colorado Boulder
+**Research Assistant, Data Engineering and ML (March 2023 - May 2026)**
+- Continued the CU Boulder Studio Lab research remotely with the former PI after they moved to Princeton; the collaboration concluded in May 2026.
+- Built a cloud-hybrid pipeline for 40+ GB of election speeches and parliamentary records spanning 1981-2024.
+- Built resumable Selenium crawlers, AWS transcription and translation workflows, and document-parsing pipelines for large archival datasets.
 
-### The Data Mine – Purdue University @ L3Harris
-**Undergraduate Research Assistant - Satellite Telemetry Data Analysis (August 2024 – May 2025)**
-- Presented ML cybersecurity research findings at the Data Mine of the Rockies Symposium to stakeholders from the US Space Force, Lockheed Martin, CrowdStrike, and L3Harris.
-- Trained Isolation Forest and LSTM models on synthetic NOS3 satellite telemetry to detect and classify cyberattack anomalies.
-- Used Wireshark to identify affected devices and indicators of compromise in simulated satellite communications.
-- Mapped space-cyber scenarios to the SPARTA Matrix and MITRE ATT&CK frameworks, then generated synthetic telemetry for multiple attack types.
+## Research Writing
+- Developing a paper on secure GitHub repository collaboration for work governed by federal data-protection agreements.
 
-### Studio Lab — CU Boulder → Princeton University
-**Research Assistant - Data Engineering & ML (March 2023 – Ongoing)**
-- Built a cloud-hybrid pipeline for 40+ GB of 2014 and 2019 election speeches and Lok Sabha debates from 1981–2024.
-- Built an AWS workflow with S3, Transcribe, Translate, and Boto3. Used custom language models to improve recognition of political entities and reduce word error rate.
-- Built a resumable Selenium crawler with SQLite state for the Parliament Digital Library, including dynamic pagination and OneDrive synchronization.
-- Parsed thousands of PDF statements with PyMuPDF and FuzzyWuzzy, then mapped OCR text to standardized ministry names.
+### The Data Mine - Purdue University at L3Harris
+**Undergraduate Research Assistant, Satellite Telemetry Data Analysis (August 2024 - May 2025)**
+- Trained anomaly-detection models on synthetic satellite telemetry and mapped space-cyber scenarios to SPARTA and MITRE ATT&CK.
 
-## Key Projects
+## Selected Work
 
-### Mental Health NLP
-- **Domain:** Machine Learning
-- **Tech:** PyTorch, Hugging Face, LLaMA 3.2, LoRA, Unsloth, TensorFlow
-- Built an interactive NLP system for intent classification and domain-specific responses. Fine-tuned LLaMA 3.2 1B with LoRA and QLoRA through Unsloth for clinical text generation, and trained BERT-style classifiers for mental-health labeling. The classifier reached 0.79 macro-F1 on aggregated clinical data. The training pipeline processed 53,000+ text samples.
-
-### SeeMyRace: Race Photo Search
-- **Domain:** Machine Learning
-- **Tech:** Flask, Docker, PostgreSQL, DeepFace, PaddleOCR, Google Drive API
-- SeeMyRace is a Dockerized Flask app that helps runners find race photos through selfies and bib numbers. It imports photos from Google Drive and uses Google OAuth. Built much of the main UI, flagging and moderation flows, backend connectors to the ML inference pipeline, and bib-number detection experiments. Also worked on DeepFace-based matching with a sub-50ms latency target and an asynchronous ingestion pipeline that kept model work off the request path.
+### Operational Ticket Intelligence
+- **Domain:** Software Engineering
+- **Tech:** FastAPI, PostgreSQL, React, Vite, Recharts, PyTorch
+- Internal platform joining dependable backend workflows, operational analytics, and ML-assisted incident tagging.
 
 ### Indian Parliamentary Data
-- **Domain:** Research
-- **Tech:** Web Scraping, Digitization, Data Engineering, Computational Social Science
-- For Princeton University Studio Lab, built a resumable Selenium crawler for the Parliament Digital Library, processed 40+ GB of 2014 and 2019 campaign audio through AWS Transcribe and Translate, and digitized Lok Sabha and Rajya Sabha debates from 1981–2024. Parsed thousands of PDF statements with PyMuPDF and FuzzyWuzzy.
+- **Domain:** Research and Data Engineering
+- **Tech:** Web Scraping, Digitization, AWS, PyMuPDF, Selenium
+- Data pipelines for 40+ years of parliamentary debates, 40+ GB of campaign audio, and thousands of digitized documents.
+
+### SeeMyRace: Race Photo Search
+- **Domain:** Applied ML and Backend Systems
+- **Tech:** Flask, Docker, PostgreSQL, DeepFace, PaddleOCR
+- Collaborative race-photo platform with selfie search, bib detection, moderation, and asynchronous image processing.
+
+### Mental Health NLP Research
+- **Domain:** Academic NLP Research
+- **Tech:** PyTorch, Hugging Face, LLaMA 3.2, LoRA
+- Non-clinical research project for intent classification and domain-specific response experiments.
 
 ### HateBlocker: Toxic-Content Detection
 - **Domain:** Machine Learning
-- **Tech:** FastAPI, BERT, XGBoost, TF-IDF, Chrome Extension, JavaScript
-- Built a Chrome extension and FastAPI service that score text on web pages and hide hateful or offensive content. Trained models on about 24,800 labeled tweets, combining 5,000-dimensional TF-IDF features with tweet length, punctuation, and hashtag counts. BERT reached 91.5% accuracy and XGBoost reached 90.72% on a three-class task.
+- **Tech:** FastAPI, BERT, XGBoost, Chrome Extension
+- Browser extension and FastAPI service that detect and hide toxic web content.
 
-### Diabetes Risk Modeling
-- **Domain:** Machine Learning
-- **Tech:** TensorFlow, Keras Tuner, Scikit-Learn, Pandas, NumPy
-- Compared SVM, decision trees, random forests, logistic regression, and Keras Tuner neural networks on BRFSS 2015 survey data from 400,000+ U.S. respondents. Accounted for class imbalance and screening tradeoffs. Tuned accuracy was about 75.3% for logistic regression, 74.8% for SVM, and 74.3% for the decision tree.
-
-### Automated Interview Scoring
-- **Domain:** Machine Learning
-- **Tech:** SentenceTransformers, TensorFlow, Scikit-Learn, SHAP
-- Built a regression model that combines text embeddings with 100+ audio features, including pitch variance, speech rate, and pause density. Used cosine similarity to represent conversational coherence. Five-fold validation produced MAE below 0.4 on normalized scores and Pearson r above 0.70 against human ratings.
-
-### Ralphie Bites: Student Marketplace
-- **Domain:** Software Engineering
-- **Tech:** Node.js, Express, PostgreSQL, Docker
-- Built a containerized marketplace for CU Boulder students with Node.js, Express, and PostgreSQL. Implemented bcrypt password hashing, session-based authorization, REST API endpoints, and separate Docker services.
-
-### Self-Hosted Home Lab
-- **Domain:** Systems Infrastructure
-- **Tech:** TrueNAS, Docker Swarm, Portainer, Cloudflare Tunnels, Tailscale
-- Run a 24 TB TrueNAS Scale home server. Docker Swarm and Portainer manage Jellyfin, Immich, and Tdarr, while Cloudflare Tunnel and Tailscale provide remote access.
-
-## Important Links
-- Portfolio: https://vrajmpatel.com
-- Resume: https://vrajmpatel.com/resume.pdf
+## Links
+- Portfolio: https://www.vrajmpatel.com
+- Resume: https://www.vrajmpatel.com/resume.pdf

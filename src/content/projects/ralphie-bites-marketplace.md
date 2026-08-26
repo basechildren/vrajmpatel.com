@@ -3,6 +3,7 @@ title: 'Ralphie Bites: Student Marketplace'
 domain: 'Software Engineering'
 featured: false
 order: 8
+visibility: 'archived'
 tech: ['Node.js', 'Express', 'PostgreSQL', 'Docker']
 github: 'https://github.com/PatVraj/ralphie-bites'
 privateRepo: true

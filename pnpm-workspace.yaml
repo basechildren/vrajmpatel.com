@@ -1,0 +1,8 @@
+allowBuilds:
+  esbuild: true
+  fsevents: false
+minimumReleaseAge: 1440
+minimumReleaseAgeStrict: true
+minimumReleaseAgeExcludePrune: true
+minimumReleaseAgeExclude:
+  - astro@7.2.7

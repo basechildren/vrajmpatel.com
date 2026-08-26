@@ -1,391 +1,177 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import ProjectCard from "../components/ProjectCard.astro";
-import ExperienceItem from "../components/ExperienceItem.astro";
-import { getCollection, render } from "astro:content";
 import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import ExperienceItem from "../components/ExperienceItem.astro";
+import OrganizationMarks from "../components/OrganizationMarks.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
-const featuredEntries = await getCollection(
-  "projects",
-  ({ data }) => data.featured === true,
-);
-const featured = featuredEntries.sort(
-  (a, b) => (a.data.order ?? 99) - (b.data.order ?? 99),
-);
+const featured = (await getCollection("projects", ({ data }) => data.featured))
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99))
+  .slice(0, 3);
 
-const featuredRendered = await Promise.all(
-  featured.map(async (entry) => {
-    const { Content } = await render(entry);
-    return { entry, Content };
-  }),
-);
-
-const expEntries = await getCollection("experience");
-const recentExperience = expEntries
+const recentExperience = (await getCollection("experience"))
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 3);
 ---
 
 <BaseLayout
-  title="Vraj Patel — Systems Integration Engineer"
-  description="Systems Integration Engineer specializing in ML and backend systems. M.S. Computer Science (AI) at CU Boulder."
+  title="Vraj Patel — Backend and ML Systems Engineer"
+  description="Backend and ML systems engineer building data pipelines, APIs, and applied machine-learning systems at CU Boulder and Princeton."
+  schemaType="Person"
 >
   <section
-    class="mb-24 sm:mb-32 flex flex-col items-center text-center sm:flex-row sm:text-left sm:items-center gap-10"
-    aria-labelledby="hero-heading"
+    class="grid items-start gap-10 border-b border-slate-200 pb-16 sm:grid-cols-[1fr_11rem] sm:gap-14 sm:pb-20 dark:border-slate-800"
+    aria-labelledby="intro-heading"
   >
-    <div
-      class="shrink-0 w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-white shadow-xl ring-4 ring-blue-100 dark:border-slate-800 dark:ring-blue-500/20 bg-slate-100 dark:bg-slate-800 flex items-center justify-center animate-fade-in"
-    >
-      <Image
-        src="/profile.jpg"
-        alt="Vraj Patel"
-        width={320}
-        height={320}
-        class="w-full h-full object-cover"
-        fetchpriority="high"
-        loading="eager"
-      />
-    </div>
-    <div class="flex-1 flex flex-col gap-4 items-center sm:items-start">
+    <div>
+      <p class="font-mono text-xs text-slate-500 dark:text-slate-500">
+        Boulder, Colorado
+      </p>
       <h1
-        id="hero-heading"
-        class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl animate-fade-in-up"
-        style="animation-delay: 0.1s;"
+        id="intro-heading"
+        class="mt-4 text-4xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white sm:text-6xl"
       >
         Vraj Patel
       </h1>
       <p
-        class="text-xl font-medium text-blue-600 dark:text-blue-400 sm:text-2xl animate-fade-in-up"
-        style="animation-delay: 0.2s;"
+        class="mt-5 max-w-2xl text-2xl font-medium leading-tight tracking-[-0.025em] text-slate-800 dark:text-slate-200 sm:text-3xl"
       >
-        Systems Integration Engineer · ML and Backend Systems
+        Backend and ML systems engineer.
       </p>
-      <p
-        class="max-w-2xl text-lg leading-relaxed text-slate-700 dark:text-slate-400 animate-fade-in-up"
-        style="animation-delay: 0.3s;"
-      >
-        I ship ML systems that run in production, from fine tuning LLaMA 3 and
-        deploying live BERT inference APIs, to engineering cloud ETL pipelines
-        for research at Princeton. Pursuing my M.S. in Computer Science (AI) at
-        CU Boulder.
+      <p class="mt-6 max-w-2xl text-base leading-8 text-slate-600 dark:text-slate-400 sm:text-lg">
+        I build data pipelines, APIs, and applied ML systems at CU Boulder and
+        Princeton. I’m currently pursuing an M.S. in Computer Science.
       </p>
-      <div
-        class="mt-6 flex flex-wrap justify-center sm:justify-start gap-4 animate-fade-in-up"
-        style="animation-delay: 0.4s;"
-      >
+      <div class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-medium">
         <a
-          href="/projects"
-          class="group inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-blue-700 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:bg-blue-600 dark:hover:bg-blue-500 shadow-sm"
+          href="#selected-work"
+          class="inline-flex min-h-11 items-center rounded-md bg-slate-950 px-4 text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 dark:bg-white dark:text-slate-950 dark:hover:bg-blue-200 dark:focus-visible:ring-offset-slate-950"
         >
-          View Projects
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="transition-transform group-hover:translate-x-1"
-            ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
-          </svg>
+          Selected work
         </a>
         <a
           href="/resume.pdf"
           target="_blank"
           rel="noopener noreferrer"
-          class="group inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition-all hover:bg-slate-50 hover:text-slate-900 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white shadow-sm"
+          data-ph-event="resume_clicked"
+          data-ph-placement="hero"
+          class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="transition-transform group-hover:-translate-y-0.5"
-            ><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
-            ></path><polyline points="7 10 12 15 17 10"></polyline><line
-              x1="12"
-              x2="12"
-              y1="15"
-              y2="3"></line>
-          </svg>
-          Download Resume
+          Resume
+        </a>
+        <a
+          href="mailto:vrajmp999@gmail.com"
+          data-ph-event="contact_clicked"
+          data-ph-placement="hero"
+          class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+        >
+          Email
         </a>
       </div>
+
+      <ul
+        aria-label="Current affiliations"
+        class="mt-10 flex flex-wrap gap-x-8 gap-y-4 border-t border-slate-200 pt-6 dark:border-slate-800"
+      >
+        <li class="flex items-center gap-3">
+          <OrganizationMarks logo="/logos/cu-standalone.png.avif" size="compact" />
+          <div>
+            <p class="font-mono text-[0.65rem] text-slate-500 dark:text-slate-500">Engineering</p>
+            <p class="mt-0.5 text-sm font-medium text-slate-800 dark:text-slate-200">CU Boulder</p>
+          </div>
+        </li>
+        <li class="flex items-center gap-3">
+          <OrganizationMarks logo="/logos/princeton.png" size="compact" />
+          <div>
+            <p class="font-mono text-[0.65rem] text-slate-500 dark:text-slate-500">Research</p>
+            <p class="mt-0.5 text-sm font-medium text-slate-800 dark:text-slate-200">Princeton Studio Lab</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <Image
+      src="/profile.jpg"
+      alt="Portrait of Vraj Patel"
+      width={176}
+      height={208}
+      class="h-40 w-32 rounded-lg object-cover object-center sm:h-52 sm:w-44"
+      fetchpriority="high"
+      loading="eager"
+    />
+  </section>
+
+  <section id="selected-work" class="scroll-mt-6 pt-16 sm:pt-20" aria-labelledby="work-heading">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="font-mono text-xs text-slate-500 dark:text-slate-500">Projects</p>
+        <h2 id="work-heading" class="mt-2 text-2xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+          Selected work
+        </h2>
+        <p class="mt-3 text-base text-slate-600 dark:text-slate-400">
+          Applied ML, backend, and data-engineering projects.
+        </p>
+      </div>
+      <a
+        href="/projects"
+        class="text-sm font-medium underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+      >
+        All projects
+      </a>
+    </div>
+
+    <div class="mt-8">
+      {
+        featured.map((entry) => (
+          <ProjectCard entry={entry} headingLevel="h3" showDomain={true} />
+        ))
+      }
     </div>
   </section>
 
-  <div class="grid gap-16 md:grid-cols-12 md:gap-12">
-    <div class="md:col-span-4 flex flex-col gap-16">
-      <section aria-labelledby="education-heading">
-        <h2
-          id="education-heading"
-          class="text-sm font-bold tracking-widest text-slate-900 dark:text-slate-200 uppercase border-b border-slate-200 pb-4 dark:border-white/10"
-        >
-          Education
+  <section class="pt-16 sm:pt-20" aria-labelledby="experience-heading">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="font-mono text-xs text-slate-500 dark:text-slate-500">Career</p>
+        <h2 id="experience-heading" class="mt-2 text-2xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+          Experience
         </h2>
-        <ul class="mt-6 flex flex-col gap-6">
-          <li class="flex items-start gap-3">
-            <Image src="/logos/cu-boulder.png" alt="CU Boulder" width={28} height={28} class="w-7 h-7 rounded-md object-contain shrink-0 mt-0.5 bg-white dark:bg-slate-800 ring-1 ring-slate-200 dark:ring-white/10 p-0.5" loading="lazy" />
-            <div class="z-10 w-full">
-              <h3
-                class="text-base font-semibold text-slate-900 dark:text-slate-200"
-              >
-                M.S. in Computer Science <span
-                  class="text-slate-500 font-normal block whitespace-nowrap"
-                  >(AI-Subplan)</span
-                >
-              </h3>
-              <p class="mt-1 text-sm text-blue-600 dark:text-blue-400">
-                University of Colorado Boulder
-              </p>
-              <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                Expected Graduation: 2028
-              </p>
-            </div>
-          </li>
-          <li class="flex items-start gap-3">
-            <Image src="/logos/cu-boulder.png" alt="CU Boulder" width={28} height={28} class="w-7 h-7 rounded-md object-contain shrink-0 mt-0.5 bg-white dark:bg-slate-800 ring-1 ring-slate-200 dark:ring-white/10 p-0.5" loading="lazy" />
-            <div class="z-10 w-full">
-              <h3
-                class="text-base font-semibold text-slate-900 dark:text-slate-200"
-              >
-                B.S. in Computer Science <span
-                  class="text-slate-500 font-normal block sm:inline"
-                  >(Business Minor)</span
-                >
-              </h3>
-              <p class="mt-1 text-sm text-blue-600 dark:text-blue-400">
-                University of Colorado Boulder
-              </p>
-              <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                GPA 3.65/4.00 &middot; 5x Dean's List
-              </p>
-            </div>
-          </li>
-        </ul>
-
-        <div class="mt-8 mb-12 sm:mb-0">
-          <h3
-            class="text-sm font-bold tracking-widest text-slate-900 dark:text-slate-200 uppercase mb-4"
-          >
-            Technical Skills
-          </h3>
-          <div class="flex flex-col gap-5">
-            <div>
-              <h4
-                class="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wide"
-              >
-                Languages
-              </h4>
-              <div class="flex flex-wrap gap-2">
-                {
-                  [
-                    "Python",
-                    "TypeScript",
-                    "JavaScript",
-                    "SQL",
-                    "C++",
-                    "Java",
-                  ].map((skill) => (
-                    <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 dark:bg-blue-500/10 dark:text-blue-300 ring-1 ring-inset ring-blue-700/10 dark:ring-blue-400/20">
-                      {skill}
-                    </span>
-                  ))
-                }
-              </div>
-            </div>
-            <div>
-              <h4
-                class="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wide"
-              >
-                Frameworks & Libraries
-              </h4>
-              <div class="flex flex-wrap gap-2">
-                {
-                  [
-                    "TensorFlow",
-                    "PyTorch",
-                    "Scikit-Learn",
-                    "FastAPI",
-                    "React",
-                    "Astro",
-                  ].map((skill) => (
-                    <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 dark:bg-blue-500/10 dark:text-blue-300 ring-1 ring-inset ring-blue-700/10 dark:ring-blue-400/20">
-                      {skill}
-                    </span>
-                  ))
-                }
-              </div>
-            </div>
-            <div>
-              <h4
-                class="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wide"
-              >
-                Infrastructure & Tools
-              </h4>
-              <div class="flex flex-wrap gap-2">
-                {
-                  [
-                    "Docker",
-                    "PostgreSQL",
-                    "AWS",
-                    "TrueNAS",
-                    "Git",
-                    "Linux",
-                  ].map((skill) => (
-                    <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 dark:bg-blue-500/10 dark:text-blue-300 ring-1 ring-inset ring-blue-700/10 dark:ring-blue-400/20">
-                      {skill}
-                    </span>
-                  ))
-                }
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section aria-labelledby="experience-heading">
-        <h2
-          id="experience-heading"
-          class="text-sm font-bold tracking-widest text-slate-900 dark:text-slate-200 uppercase border-b border-slate-200 pb-4 dark:border-white/10 mb-6"
-        >
-          Recent Experience
-        </h2>
-        <div class="flex flex-col gap-2">
-          {
-            recentExperience.map((entry, index) => (
-              <div
-                class="animate-fade-in-up"
-                style={`animation-delay: ${index * 0.1}s;`}
-              >
-                <ExperienceItem entry={entry} variant="compact" />
-              </div>
-            ))
-          }
-        </div>
-        <div class="mt-6">
-          <a
-            href="/experience"
-            class="group inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
-          >
-            View full experience
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="transition-transform group-hover:translate-x-1"
-              ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
-            </svg>
-          </a>
-        </div>
-      </section>
-    </div>
-
-    <div class="md:col-span-8">
-      <section aria-labelledby="featured-heading">
-        <div class="border-b border-slate-200 pb-4 dark:border-white/10">
-          <h2
-            id="featured-heading"
-            class="text-sm font-bold tracking-widest text-slate-900 dark:text-slate-200 uppercase"
-          >
-            Selected Work
-          </h2>
-          <p
-            class="mt-2 max-w-xl text-sm leading-relaxed text-slate-500 dark:text-slate-400"
-          >
-            Featured projects in ML, backend engineering, and research.
-            Source code and papers linked on each card.
-          </p>
-        </div>
-        <div class="mt-8 flex flex-col gap-10">
-          {
-            featuredRendered.map(({ entry, Content }, index) => (
-              <div
-                class="animate-fade-in-up"
-                style={`animation-delay: ${index * 0.1}s;`}
-              >
-                <ProjectCard entry={entry} showDomain={true}>
-                  <Content />
-                </ProjectCard>
-              </div>
-            ))
-          }
-        </div>
-        <div class="mt-10">
-          <a
-            href="/projects"
-            class="group inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
-          >
-            View all projects
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="transition-transform group-hover:translate-x-1"
-              ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
-            </svg>
-          </a>
-        </div>
-      </section>
-    </div>
-  </div>
-
-  <section
-    aria-labelledby="contact-heading"
-    class="mt-24 sm:mt-32 border-t border-slate-200 pt-16 dark:border-white/10 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-8"
-  >
-    <div class="animate-fade-in-up">
-      <h2
-        id="contact-heading"
-        class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl"
+      </div>
+      <a
+        href="/experience"
+        class="text-sm font-medium underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
       >
-        Let's work together.
+        Full experience
+      </a>
+    </div>
+
+    <div class="mt-8">
+      {
+        recentExperience.map((entry) => (
+          <ExperienceItem entry={entry} variant="compact" />
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mt-16 border-t border-slate-200 pt-10 sm:mt-20 sm:grid sm:grid-cols-[1fr_auto] sm:items-end sm:gap-10 dark:border-slate-800" aria-labelledby="contact-heading">
+    <div>
+      <p class="font-mono text-xs text-slate-500 dark:text-slate-500">Contact</p>
+      <h2 id="contact-heading" class="mt-2 text-2xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+        Open to backend and ML engineering roles.
       </h2>
-      <p class="mt-4 max-w-xl text-lg text-slate-600 dark:text-slate-400">
-        Always happy to connect with fellow engineers and researchers. If you're
-        building scalable systems or ML infrastructure, I'd love to chat.
+      <p class="mt-3 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-400">
+        For roles or research collaborations, send me an email.
       </p>
     </div>
     <a
       href="mailto:vrajmp999@gmail.com"
-      class="shrink-0 group inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 px-8 py-4 text-base font-semibold text-white transition-all hover:bg-slate-800 hover:shadow-lg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500 focus-visible:ring-offset-2 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 shadow-md animate-fade-in-up"
-      style="animation-delay: 0.1s;"
+      data-ph-event="contact_clicked"
+      data-ph-placement="contact_section"
+      class="mt-6 inline-flex min-h-11 items-center rounded-md border border-slate-300 px-4 text-sm font-medium text-slate-800 transition-colors hover:border-slate-500 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 sm:mt-0 dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-500 dark:hover:text-white"
     >
-      Get in touch
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="18"
-        height="18"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="transition-transform group-hover:translate-x-1"
-        ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
-      </svg>
+      Email Vraj
     </a>
   </section>
 </BaseLayout>

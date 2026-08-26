@@ -6,7 +6,7 @@ order: 1
 logo: '/logos/princeton.png'
 ---
 
-- **Political Data Pipeline (ETL):** Engineered a cloud-hybrid pipeline to ingest 40+ GB of election speeches (Modi & Gandhi, 2014/2019) and archive 40+ years (1981–2024) of Lok Sabha debates, creating the largest unified dataset for Indian political linguistic analysis
-- **ML & Cloud Optimization:** Architected an automated AWS workflow (S3, Transcribe, Translate) using Boto3, implementing Custom Language Models (CLM) to recognize niche political entities and reduce WER
-- **Web Scraping System:** Developed a resumable Selenium crawler with SQLite state management to index the Parliament Digital Library, implementing logic to handle dynamic pagination and sync with OneDrive storage
-- **Unstructured Data Parsing:** Designed a text extraction engine using PyMuPDF and FuzzyWuzzy (string matching) to structure thousands of raw PDF statements, mapping OCR text to standardized Ministry entities
+- Built a cloud-hybrid pipeline for 40+ GB of 2014 and 2019 election speeches and Lok Sabha debates from 1981–2024
+- Built an AWS workflow with S3, Transcribe, Translate, and Boto3. Used custom language models to improve recognition of political entities and reduce word error rate
+- Built a resumable Selenium crawler with SQLite state for the Parliament Digital Library, including dynamic pagination and OneDrive synchronization
+- Parsed thousands of PDF statements with PyMuPDF and FuzzyWuzzy, then mapped OCR text to standardized ministry names

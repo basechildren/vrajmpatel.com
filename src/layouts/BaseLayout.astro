@@ -1,6 +1,5 @@
 ---
 import "../styles/global.css";
-import { ClientRouter } from "astro:transitions";
 import ThemeToggle from "../components/ThemeToggle.astro";
 import Tracker from "../components/Tracker.astro";
 
@@ -8,35 +7,69 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
-  schemaType?: string;
+  schemaType?: "Person" | "SoftwareSourceCode" | "WebPage";
 }
 
 const {
   title = "Vraj Patel",
-  description = "Systems Integration Engineer specializing in ML & Backend Systems. M.S. Computer Science (AI) at CU Boulder.",
+  description = "Backend and ML systems engineer at CU Boulder and Princeton.",
   ogImage = "/profile.jpg",
-  schemaType = "Person",
+  schemaType = "WebPage",
 } = Astro.props;
 
 const nav = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
+  { href: "/projects", label: "Work" },
   { href: "/experience", label: "Experience" },
-  { href: "/projects", label: "Projects" },
+  { href: "/about", label: "About" },
 ] as const;
+
+const isCurrent = (href: string) => Astro.url.pathname.startsWith(href);
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const imageUrl = new URL(ogImage, Astro.site);
+const person = {
+  "@type": "Person",
+  name: "Vraj Patel",
+  url: "https://www.vrajmpatel.com",
+  jobTitle: "Systems Integration Engineer",
+  alumniOf: {
+    "@type": "CollegeOrUniversity",
+    name: "University of Colorado Boulder",
+  },
+  sameAs: [
+    "https://www.linkedin.com/in/vrajmp/",
+    "https://github.com/PatVraj",
+  ],
+};
+
+const structuredData =
+  schemaType === "Person"
+    ? { "@context": "https://schema.org", ...person }
+    : schemaType === "SoftwareSourceCode"
+      ? {
+          "@context": "https://schema.org",
+          "@type": "SoftwareSourceCode",
+          name: title.replace(" — Vraj Patel", ""),
+          description,
+          url: canonicalUrl,
+          author: person,
+        }
+      : {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: title,
+          description,
+          url: canonicalUrl,
+          author: person,
+        };
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="min-h-full scroll-smooth">
+<html lang="en" class="min-h-full">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta
-      name="keywords"
-      content="Vraj Patel, Systems Integration Engineer, Machine Learning, AI Researcher, Software Engineer, CU Boulder, Data Engineering, Princeton"
-    />
     <meta name="author" content="Vraj Patel" />
     <meta name="robots" content="index, follow" />
     <meta
@@ -53,101 +86,74 @@ const nav = [
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url} />
-    <meta property="og:site_name" content="Vraj Patel Portfolio" />
-    <meta property="og:image" content={new URL(ogImage, Astro.site)} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="Vraj Patel" />
+    <meta property="og:image" content={imageUrl} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={new URL(ogImage, Astro.site)} />
+    <meta name="twitter:image" content={imageUrl} />
 
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="sitemap" href="/sitemap-index.xml" />
-
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
 
-    <ClientRouter />
-    <Tracker projectKey={import.meta.env.PUBLIC_POSTHOG_KEY} />
-
     <script
       type="application/ld+json"
-      set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": schemaType,
-        name: title !== "Vraj Patel" ? title : "Vraj Patel",
-        jobTitle: schemaType === "Person" ? "Systems Integration Engineer — ML & Backend Systems" : undefined,
-        url: "https://www.vrajmpatel.com",
-        alumniOf: [
-          {
-            "@type": "CollegeOrUniversity",
-            name: "University of Colorado Boulder",
-          },
-          { "@type": "CollegeOrUniversity", name: "Princeton University" },
-        ],
-        sameAs: [
-          "https://www.linkedin.com/in/vrajmp/",
-          "https://github.com/PatVraj",
-        ],
-      })}
+      set:html={JSON.stringify(structuredData)}
     ></script>
     <script is:inline>
-      const theme = (() => {
-        if (
-          typeof localStorage !== "undefined" &&
-          localStorage.getItem("theme")
-        ) {
-          return localStorage.getItem("theme");
-        }
-        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-          return "dark";
-        }
-        return "light";
+      (() => {
+        const savedTheme = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        const isDark = savedTheme ? savedTheme === "dark" : prefersDark;
+        document.documentElement.classList.toggle("dark", isDark);
+        document.documentElement.style.colorScheme = isDark ? "dark" : "light";
       })();
-
-      if (theme === "light") {
-        document.documentElement.classList.remove("dark");
-      } else {
-        document.documentElement.classList.add("dark");
-      }
     </script>
+    <Tracker
+      projectKey={import.meta.env.PUBLIC_POSTHOG_KEY}
+      apiHost={import.meta.env.PUBLIC_POSTHOG_HOST}
+    />
   </head>
   <body
-    class="flex min-h-screen flex-col bg-slate-50 font-sans text-slate-900 selection:bg-blue-500/30 dark:bg-slate-950 dark:text-slate-300"
+    class="flex min-h-screen flex-col overflow-x-hidden bg-slate-50 font-sans text-slate-950 selection:bg-blue-200 dark:bg-slate-950 dark:text-slate-100 dark:selection:bg-blue-900"
   >
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-slate-900 focus:px-4 focus:py-2 focus:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:underline"
-      >Skip to content</a
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-slate-950 focus:px-4 focus:py-2 focus:text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
     >
+      Skip to content
+    </a>
 
-    <header
-      class="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/80 backdrop-blur-xl dark:border-white/5 dark:bg-slate-950/80"
-    >
-      <div class="mx-auto max-w-4xl px-4 sm:px-6">
-        <div class="flex h-16 items-center justify-between">
-          <a
-            href="/"
-            class="group flex items-center gap-2 no-underline outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50 rounded-md dark:focus-visible:ring-offset-slate-950"
-          >
-            <span
-              class="font-mono text-sm font-bold tracking-tight text-slate-900 dark:text-slate-200"
-              >VRAJ PATEL</span
-            >
-          </a>
-          <nav aria-label="Primary" class="hidden md:flex items-center gap-1">
+    <header class="border-b border-slate-200 dark:border-slate-800">
+      <div
+        class="mx-auto flex min-h-16 max-w-5xl items-center justify-between gap-4 px-5 sm:px-8"
+      >
+        <a
+          href="/"
+          class="text-sm font-semibold tracking-tight text-slate-950 underline-offset-4 hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:text-white"
+        >
+          Vraj Patel
+        </a>
+
+        <div class="flex items-center gap-2 sm:gap-5">
+          <nav aria-label="Primary" class="hidden items-center gap-5 sm:flex">
             {
               nav.map(({ href, label }) => (
                 <a
                   href={href}
+                  aria-current={isCurrent(href) ? "page" : undefined}
                   class:list={[
-                    "rounded-md px-3 py-2 text-sm font-medium transition-all outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
-                    Astro.url.pathname === href ||
-                    (href !== "/" && Astro.url.pathname.startsWith(href))
-                      ? "bg-slate-100 text-slate-900 shadow-sm ring-1 ring-slate-200 dark:bg-white/10 dark:text-white dark:ring-white/10"
-                      : "text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-slate-200",
+                    "inline-flex min-h-10 items-center border-b px-0.5 text-sm transition-colors focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600",
+                    isCurrent(href)
+                      ? "border-blue-600 font-medium text-slate-950 dark:text-white"
+                      : "border-transparent text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white",
                   ]}
                 >
                   {label}
@@ -158,155 +164,91 @@ const nav = [
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              class="ml-2 rounded-md bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700 transition-all hover:bg-blue-100 hover:text-blue-800 outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ring-1 ring-blue-200 dark:bg-blue-500/10 dark:text-blue-300 dark:hover:bg-blue-500/20 dark:hover:text-blue-200 dark:ring-blue-500/20"
+              data-ph-event="resume_clicked"
+              data-ph-placement="header"
+              class="inline-flex min-h-10 items-center text-sm text-slate-600 underline decoration-slate-300 underline-offset-4 transition-colors hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:text-slate-400 dark:decoration-slate-700 dark:hover:text-white"
             >
               Resume
             </a>
-            <ThemeToggle />
           </nav>
-        </div>
-        <nav
-          aria-label="Mobile"
-          class="md:hidden flex items-center gap-4 border-t border-slate-200 py-3 dark:border-white/5"
-        >
-          {
-            nav.map(({ href, label }) => (
+
+          <ThemeToggle />
+
+          <details class="group relative sm:hidden">
+            <summary
+              class="inline-flex min-h-10 cursor-pointer list-none items-center rounded-md border border-slate-300 px-3 text-xs font-medium text-slate-700 transition-colors hover:border-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 [&::-webkit-details-marker]:hidden dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-500"
+            >
+              Menu
+            </summary>
+            <nav
+              aria-label="Mobile"
+              class="absolute right-0 top-12 z-50 w-48 rounded-lg border border-slate-200 bg-white p-2 shadow-lg shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-900 dark:shadow-black/20"
+            >
+              {
+                nav.map(({ href, label }) => (
+                  <a
+                    href={href}
+                    aria-current={isCurrent(href) ? "page" : undefined}
+                    class:list={[
+                      "flex min-h-11 items-center rounded-md px-3 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600",
+                      isCurrent(href)
+                        ? "bg-slate-100 font-medium text-slate-950 dark:bg-slate-800 dark:text-white"
+                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-950 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white",
+                    ]}
+                  >
+                    {label}
+                  </a>
+                ))
+              }
               <a
-                href={href}
-                class:list={[
-                  "text-sm font-medium transition-colors",
-                  Astro.url.pathname === href ||
-                  (href !== "/" && Astro.url.pathname.startsWith(href))
-                    ? "text-slate-900 dark:text-white"
-                    : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200",
-                ]}
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-ph-event="resume_clicked"
+                data-ph-placement="mobile_menu"
+                class="flex min-h-11 items-center rounded-md px-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
               >
-                {label}
+                Resume
               </a>
-            ))
-          }
-          <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-sm font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
-            >Resume</a
-          >
-          <div class="ml-auto">
-            <ThemeToggle />
-          </div>
-        </nav>
+            </nav>
+          </details>
+        </div>
       </div>
     </header>
 
-    <main
-      id="main"
-      class="mx-auto w-full max-w-4xl flex-1 px-4 py-12 sm:px-6 md:py-20"
-    >
+    <main id="main" class="mx-auto w-full max-w-5xl flex-1 px-5 py-14 sm:px-8 sm:py-20">
       <slot />
     </main>
 
-    <footer
-      class="mt-auto border-t border-slate-200 bg-slate-50/50 dark:border-white/5 dark:bg-slate-950/50"
-    >
-      <div class="mx-auto max-w-4xl px-4 sm:px-6">
-        <div class="flex justify-center py-6">
+    <footer class="border-t border-slate-200 dark:border-slate-800">
+      <div
+        class="mx-auto flex max-w-5xl flex-col gap-4 px-5 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-8 dark:text-slate-500"
+      >
+        <p>&copy; {new Date().getFullYear()} Vraj Patel · Boulder, Colorado</p>
+        <nav aria-label="Social" class="flex flex-wrap gap-x-5 gap-y-2">
           <a
-            href="#main"
-            class="group inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-800 dark:hover:text-slate-300 transition-colors"
-          >
-            Back to top
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="transition-transform group-hover:-translate-y-0.5"
-              ><path d="m18 15-6-6-6 6"></path>
-            </svg>
-          </a>
-        </div>
-        <div
-          class="flex flex-col items-center justify-between gap-6 border-t border-slate-200 py-8 dark:border-white/5 sm:flex-row"
-        >
-          <p class="font-mono text-sm text-slate-500">
-            &copy; {new Date().getFullYear()} Vraj Patel &middot; Boulder, CO &middot;
-            Built with Astro &amp; Tailwind
-          </p>
-          <div class="flex gap-5">
-            <a
-              href="https://www.linkedin.com/in/vrajmp/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-slate-500 hover:text-slate-800 dark:hover:text-slate-300 transition-transform hover:scale-110"
-            >
-              <span class="sr-only">LinkedIn</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                ><path
-                  d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
-                ></path><rect width="4" height="12" x="2" y="9"></rect><circle
-                  cx="4"
-                  cy="4"
-                  r="2"></circle>
-              </svg>
-            </a>
-            <a
-              href="https://github.com/PatVraj"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-slate-500 hover:text-slate-800 dark:hover:text-slate-300 transition-transform hover:scale-110"
-            >
-              <span class="sr-only">GitHub</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                ><path
-                  d="M15 22v-4a4.8 4.8 0 0 0-1-3.24c3-.34 6-1.53 6-6.76a5.2 5.2 0 0 0-1.5-3.8 5.4 5.4 0 0 0-.15-3.8s-1.2-.38-3.9 1.4a12.8 12.8 0 0 0-7 0C6.2 2.12 5 2.5 5 2.5a5.4 5.4 0 0 0-.15 3.8A5.2 5.2 0 0 0 3 10.1c0 5.22 3 6.42 6 6.76a4.8 4.8 0 0 0-1 3.24v4"
-                ></path><path d="M3 19c3 1 4-1 5-1"></path>
-              </svg>
-            </a>
-            <a
-              href="mailto:vrajmp999@gmail.com"
-              class="text-slate-500 hover:text-slate-800 dark:hover:text-slate-300 transition-transform hover:scale-110"
-            >
-              <span class="sr-only">Email</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                ><rect width="20" height="16" x="2" y="4" rx="2"></rect><path
-                  d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-              </svg>
-            </a>
-          </div>
-        </div>
+            href="mailto:vrajmp999@gmail.com"
+            data-ph-event="contact_clicked"
+            data-ph-placement="footer"
+            class="underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-white"
+          >Email</a>
+          <a
+            href="https://www.linkedin.com/in/vrajmp/"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-ph-event="social_profile_clicked"
+            data-ph-network="linkedin"
+            class="underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-white"
+          >LinkedIn</a>
+          <a
+            href="https://github.com/PatVraj"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-ph-event="social_profile_clicked"
+            data-ph-network="github"
+            class="underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-white"
+          >GitHub</a>
+        </nav>
       </div>
     </footer>
   </body>

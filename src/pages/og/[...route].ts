@@ -11,8 +11,13 @@ export const { getStaticPaths, GET } = await OGImageRoute({
   pages,
   getImageOptions: async (_path, page: any) => ({
     title: page.title,
-    description: page.summary || "Machine Learning & Backend Systems by Vraj Patel.",
-    bgGradient: [[15, 23, 42], [30, 58, 138]], // Slate 900 to Blue 900
+    description: page.summary || "Selected work by Vraj Patel.",
+    bgGradient: [[15, 23, 42]],
+    border: {
+      color: [37, 99, 235],
+      width: 10,
+      side: "inline-start",
+    },
     font: {
       title: {
         weight: 'bold',
@@ -24,8 +29,8 @@ export const { getStaticPaths, GET } = await OGImageRoute({
       }
     },
     fonts: [
-      'https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.ttf',
-      'https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-700-normal.ttf'
+      './node_modules/@fontsource/inter/files/inter-latin-400-normal.woff',
+      './node_modules/@fontsource/inter/files/inter-latin-700-normal.woff'
     ]
   }),
 });

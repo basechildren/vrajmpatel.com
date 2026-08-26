@@ -3,10 +3,10 @@ organization: 'University of Colorado Boulder - Institute of Behavioral Science'
 title: 'Systems Integration Engineer'
 period: 'May 2025 – Present'
 order: 2
-logo: '/logos/cu-boulder.png'
+logo: '/logos/cu-standalone.png.avif'
 ---
 
-- Developing a full-stack ticket classification system using FastAPI and PostgreSQL, architecting a microservices based solution to automate incident tagging via a fine-tuned BERT transformer model
-- Developed an interactive analytics dashboard using React (Vite) and Recharts, utilizing complex state management to visualize historical data and identify critical operational trends, such as pinpointing peak ticket volume (Tuesdays at 10 AM) to proactively optimize staffing schedules
-- Engineered a PowerShell automation tool to recursively scan IBS OU under Colorado AD and purge group memberships, reducing per user offboarding time by 93% (15 mins to <1 min)
-- Enforced Secure Compute compliance standards across 50+ endpoints by implementing Windows Autopilot and Jamf Pro enrollment workflows
+- Building a FastAPI and PostgreSQL ticket-classification service that uses a fine-tuned BERT model to suggest incident tags
+- Built a React, Vite, and Recharts dashboard that identified Tuesday at 10 a.m. as peak ticket volume for staffing analysis
+- Built a PowerShell tool that scans the IBS organizational unit in Active Directory and removes group memberships, cutting each offboarding run from 15 minutes to under one minute
+- Managed Windows Autopilot and Jamf Pro enrollment for 50+ endpoints to meet Secure Compute requirements

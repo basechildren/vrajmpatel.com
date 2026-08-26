@@ -1,135 +1,126 @@
 ---
-import type { CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
 
 interface Props {
-	entry: CollectionEntry<'projects'>;
-	showDomain?: boolean;
+  entry: CollectionEntry<"projects">;
+  headingLevel?: "h2" | "h3";
+  showDomain?: boolean;
 }
 
-const { entry, showDomain = false } = Astro.props;
-const hasSummary = !!entry.data.summary;
+const {
+  entry,
+  headingLevel = "h3",
+  showDomain = true,
+} = Astro.props;
+const Heading = headingLevel;
+const technologies = entry.data.tech?.slice(0, 4) ?? [];
 ---
 
-<article class="group flex flex-col justify-between rounded-xl sm:rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm dark:border-white/10 dark:bg-white/5 transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:border-blue-500/30 dark:hover:border-blue-500/30 h-full">
-	<div class="z-10 w-full">
-		<div class="flex items-start justify-between gap-4 flex-wrap mb-4">
-			{showDomain ? (
-				<div class="flex items-center gap-3">
-					<span class="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-500/10 dark:text-blue-300">
-						{entry.data.domain}
-					</span>
-				</div>
-			) : (
-				<a href={`/projects/${entry.id}`} class="transition-colors hover:underline decoration-blue-500 decoration-2 underline-offset-4">
-					<h3 class="text-lg font-bold text-slate-900 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-						{entry.data.title}
-					</h3>
-				</a>
-			)}
-			<div class="flex items-center gap-3 shrink-0 ml-auto">
-				{entry.data.notebook && (
-					<a href={entry.data.notebook} target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300" title="View Jupyter Notebook">
-						<span class="sr-only">Jupyter Notebook</span>
-						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="10" y1="12" x2="10" y2="18"/><line x1="14" y1="12" x2="14" y2="18"/><line x1="10" y1="15" x2="14" y2="15"/></svg>
-					</a>
-				)}
-				{entry.data.paper && (
-					<a href={entry.data.paper} target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300" title="View Research Paper">
-						<span class="sr-only">Research Paper</span>
-						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-					</a>
-				)}
-				{entry.data.github && (
-					entry.data.privateRepo ? (
-						<a
-							href={entry.data.github}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 flex items-center justify-center"
-							title="Private GitHub repository (sign-in required)"
-						>
-							<span class="sr-only">GitHub (private repository)</span>
-							<div class="relative inline-flex">
-								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-60"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.24c3-.34 6-1.53 6-6.76a5.2 5.2 0 0 0-1.5-3.8 5.4 5.4 0 0 0-.15-3.8s-1.2-.38-3.9 1.4a12.8 12.8 0 0 0-7 0C6.2 2.12 5 2.5 5 2.5a5.4 5.4 0 0 0-.15 3.8A5.2 5.2 0 0 0 3 10.1c0 5.22 3 6.42 6 6.76a4.8 4.8 0 0 0-1 3.24v4"/><path d="M3 19c3 1 4-1 5-1"/></svg>
-								<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute -bottom-1 -right-1 text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900 rounded-full ring-1 ring-white dark:ring-slate-900"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-							</div>
-						</a>
-					) : (
-						<a href={entry.data.github} target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
-							<span class="sr-only">GitHub</span>
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.24c3-.34 6-1.53 6-6.76a5.2 5.2 0 0 0-1.5-3.8 5.4 5.4 0 0 0-.15-3.8s-1.2-.38-3.9 1.4a12.8 12.8 0 0 0-7 0C6.2 2.12 5 2.5 5 2.5a5.4 5.4 0 0 0-.15 3.8A5.2 5.2 0 0 0 3 10.1c0 5.22 3 6.42 6 6.76a4.8 4.8 0 0 0-1 3.24v4"/><path d="M3 19c3 1 4-1 5-1"/></svg>
-						</a>
-					)
-				)}
-				{entry.data.link && (
-					<a href={entry.data.link} target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
-						<span class="sr-only">External Link</span>
-						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-					</a>
-				)}
-			</div>
-		</div>
-		{showDomain && (
-			<a href={`/projects/${entry.id}`} class="inline-block mb-2 transition-colors hover:underline decoration-blue-500 decoration-2 underline-offset-4">
-				<h3 class="text-xl font-bold text-slate-900 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-					{entry.data.title}
-				</h3>
-			</a>
-		)}
+<article
+  class="grid gap-3 border-t border-slate-200 py-7 sm:grid-cols-[9rem_1fr] sm:gap-7 dark:border-slate-800"
+>
+  <div>
+    {
+      showDomain && (
+        <p class="font-mono text-xs leading-5 text-slate-500 dark:text-slate-500">
+          {entry.data.domain}
+        </p>
+      )
+    }
+  </div>
 
-		{/* Summary — always visible */}
-		{hasSummary && (
-			<p class="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-				{entry.data.summary}
-			</p>
-		)}
+  <div class="min-w-0">
+    <a
+      href={`/projects/${entry.id}`}
+      data-ph-event="project_opened"
+      data-ph-project={entry.id}
+      data-ph-placement="project_list"
+      class="group inline-block rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950"
+    >
+      <Heading
+        class="text-xl font-semibold tracking-tight text-slate-950 decoration-slate-300 underline-offset-4 group-hover:underline dark:text-white dark:decoration-slate-700 sm:text-2xl"
+      >
+        {entry.data.title}
+      </Heading>
+    </a>
 
-		{/* Full detail — collapsible */}
-		<div class="project-detail-wrapper">
-			<div class:list={["project-detail mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-400 [&_p]:mb-3 [&_p:last-child]:mb-0 [&_a]:text-blue-600 [&_a]:underline hover:[&_a]:text-blue-800 dark:[&_a]:text-blue-400 dark:hover:[&_a]:text-blue-300", hasSummary ? "hidden" : ""]}>
-				<slot />
-			</div>
-			{hasSummary && (
-				<button
-					type="button"
-					class="project-toggle mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors cursor-pointer"
-					aria-expanded="false"
-				>
-					<span class="toggle-text">Read more</span>
-					<svg class="toggle-icon w-3.5 h-3.5 transition-transform duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-				</button>
-			)}
-		</div>
-	</div>
-	{entry.data.tech && entry.data.tech.length > 0 && (
-		<div class="mt-6 flex flex-wrap gap-2">
-			{entry.data.tech.map((techItem: string) => (
-				<span class="inline-flex items-center rounded-md bg-slate-100 px-2 py-1 text-xs font-medium text-slate-600 dark:bg-white/5 dark:text-slate-300 ring-1 ring-inset ring-slate-200 dark:ring-white/10">
-					{techItem}
-				</span>
-			))}
-		</div>
-	)}
+    {
+      entry.data.summary && (
+        <p class="mt-3 max-w-2xl text-[0.95rem] leading-7 text-slate-600 dark:text-slate-400">
+          {entry.data.summary}
+        </p>
+      )
+    }
+
+    <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+      {
+        entry.data.github && (
+          <a
+            href={entry.data.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-ph-event="outbound_link_clicked"
+            data-ph-resource="github"
+            data-ph-project={entry.id}
+            class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+          >
+            {entry.data.privateRepo ? "Private repository" : "Source"}
+          </a>
+        )
+      }
+      {
+        entry.data.paper && (
+          <a
+            href={entry.data.paper}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-ph-event="outbound_link_clicked"
+            data-ph-resource="paper"
+            data-ph-project={entry.id}
+            class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+          >
+            Paper
+          </a>
+        )
+      }
+      {
+        entry.data.notebook && (
+          <a
+            href={entry.data.notebook}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-ph-event="outbound_link_clicked"
+            data-ph-resource="notebook"
+            data-ph-project={entry.id}
+            class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+          >
+            Notebook
+          </a>
+        )
+      }
+      {
+        entry.data.link && (
+          <a
+            href={entry.data.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-ph-event="outbound_link_clicked"
+            data-ph-resource="project_site"
+            data-ph-project={entry.id}
+            class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+          >
+            Live site
+          </a>
+        )
+      }
+    </div>
+
+    {
+      technologies.length > 0 && (
+        <p class="mt-4 font-mono text-xs leading-5 text-slate-500 dark:text-slate-500">
+          {technologies.join(" · ")}
+        </p>
+      )
+    }
+  </div>
 </article>
-
-<script>
-	document.addEventListener('astro:page-load', () => {
-		document.querySelectorAll('.project-toggle').forEach((btn) => {
-			btn.addEventListener('click', () => {
-				const wrapper = btn.closest('.project-detail-wrapper');
-				if (!wrapper) return;
-				const detail = wrapper.querySelector('.project-detail');
-				if (!detail) return;
-
-				const isHidden = detail.classList.contains('hidden');
-				detail.classList.toggle('hidden', !isHidden);
-				btn.setAttribute('aria-expanded', String(isHidden));
-
-				const text = btn.querySelector('.toggle-text');
-				const icon = btn.querySelector('.toggle-icon');
-				if (text) text.textContent = isHidden ? 'Show less' : 'Read more';
-				if (icon) icon.style.transform = isHidden ? 'rotate(180deg)' : '';
-			});
-		});
-	});
-</script>

@@ -1,11 +1,11 @@
 ---
-title: 'Automated Interview Scoring Engine'
+title: 'Automated Interview Scoring'
 domain: 'Machine Learning'
 featured: false
 order: 7
 tech: ['SentenceTransformers', 'TensorFlow', 'Scikit-Learn', 'SHAP']
 github: 'https://github.com/PatVraj/automated-interview-scoring'
-summary: 'Multimodal pipeline fusing text embeddings and 100+ audio features to predict interview scores. MAE < 0.4, Pearson r > 0.70 with human raters.'
+summary: 'Interview scoring model combining text embeddings with 100+ audio features. Five-fold validation produced MAE below 0.4 and Pearson r above 0.70.'
 ---
 
-Designed a **multimodal predictive regression pipeline** fusing dense text embeddings (`sentence-transformers/all-mpnet-base-v2`) with **100+ prosodic audio features** (pitch variance, speech rate, pause density). Used **Cosine Similarity** over multi-turn dialogue structures to model conversational coherence. Deployed **K-Fold Cross-Validation** (k=5) to minimize prediction error, achieving **MAE < 0.4** on normalized score predictions and **Pearson r > 0.70** correlation with human rater scores. Applied **SHAP** explainability to identify which linguistic and tonal features most strongly predicted candidate ratings across competency dimensions.
+Built a regression model that combines `sentence-transformers/all-mpnet-base-v2` text embeddings with 100+ audio features, including pitch variance, speech rate, and pause density. Used cosine similarity to represent conversational coherence and evaluated the model with five-fold cross-validation. It produced MAE below 0.4 on normalized scores and Pearson r above 0.70 against human ratings. Used SHAP to inspect which language and audio features affected the scores.

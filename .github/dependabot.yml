@@ -4,35 +4,67 @@ updates:
   - package-ecosystem: npm
     directory: "/"
     schedule:
-      interval: weekly
-      day: monday
+      interval: daily
       time: "09:00"
       timezone: America/Denver
-    open-pull-requests-limit: 5
+    cooldown:
+      default-days: 1
+      semver-major-days: 7
+      semver-minor-days: 1
+      semver-patch-days: 1
+    open-pull-requests-limit: 10
     groups:
-      npm-compatible:
+      posthog:
+        applies-to: version-updates
         patterns:
-          - "*"
+          - posthog-js
         update-types:
           - minor
           - patch
+      routine-compatible:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        exclude-patterns:
+          - posthog-js
+        update-types:
+          - minor
+          - patch
+    ignore:
+      # astro-og-canvas 0.13.0 currently requires canvaskit-wasm ^0.41.1.
+      - dependency-name: canvaskit-wasm
+        versions:
+          - ">=0.42.0"
+      # @astrojs/check 0.9.10 currently declares TypeScript <=6.
+      - dependency-name: typescript
+        versions:
+          - ">=7.0.0"
+    labels:
+      - dependencies
     commit-message:
       prefix: "chore(deps)"
 
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: weekly
-      day: monday
+      interval: daily
       time: "09:30"
       timezone: America/Denver
-    open-pull-requests-limit: 3
+    cooldown:
+      default-days: 1
+      semver-major-days: 7
+      semver-minor-days: 1
+      semver-patch-days: 1
+    open-pull-requests-limit: 5
     groups:
       github-actions-compatible:
+        applies-to: version-updates
         patterns:
           - "*"
         update-types:
           - minor
           - patch
+    labels:
+      - dependencies
     commit-message:
       prefix: "chore(actions)"

@@ -2,6 +2,14 @@ import type { CaptureResult, Properties } from "posthog-js";
 
 const publicProjectTokenPattern = /^phc_[A-Za-z0-9_-]{8,128}$/;
 
+const allowedEventNames = new Set([
+  "$pageview",
+  "outbound_link_clicked",
+  "project_opened",
+  "resume_clicked",
+  "social_profile_clicked",
+]);
+
 export const isPostHogProjectToken = (value: string | undefined) =>
   Boolean(value && publicProjectTokenPattern.test(value));
 
@@ -90,7 +98,7 @@ const scrubAttribution = (properties: Properties | undefined) => {
 export const sanitizePostHogEvent = (
   event: CaptureResult | null,
 ): CaptureResult | null => {
-  if (!event) return null;
+  if (!event || !allowedEventNames.has(event.event)) return null;
 
   return {
     ...event,

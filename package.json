@@ -23,11 +23,12 @@
     "astro": "^7.2.7",
     "astro-og-canvas": "^0.13.0",
     "canvaskit-wasm": "0.41.1",
-    "posthog-js": "1.419.0",
+    "posthog-js": "1.419.3",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "yaml": "2.9.0"
   }
 }

@@ -17,3 +17,7 @@ Reports may cover:
 - site source and generated client code;
 - dependency, CI, and GitHub Pages deployment configuration;
 - PostHog data-minimization or token-handling boundaries; and
+- accidental disclosure of private data through public assets or generated pages.
+
+Availability issues in GitHub Pages, PostHog, or other third-party services are
+out of scope unless the site's configuration causes or materially worsens them.

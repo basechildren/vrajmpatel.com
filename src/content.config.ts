@@ -10,7 +10,11 @@ const experience = defineCollection({
     period: z.string(),
     order: z.number(),
     location: z.string().optional(),
-    organizationMark: z.enum(['cu-boulder', 'purdue-l3harris']).optional(),
+    poster: z.string().optional(),
+    posterLabel: z.string().optional(),
+    organizationMark: z
+      .enum(['cu-boulder', 'princeton', 'purdue', 'l3harris', 'purdue-l3harris'])
+      .optional(),
   }),
 });
 
@@ -32,6 +36,8 @@ const projects = defineCollection({
     github: z.url().optional(),
     link: z.url().optional(),
     paper: z.string().optional(),
+    paperLabel: z.string().optional(),
+    paperResource: z.enum(['paper', 'funding_proposal']).optional(),
     notebook: z.url().optional(),
     privateRepo: z.boolean().optional(),
     tags: z.array(z.string()).optional(),

@@ -1,67 +1,59 @@
-# vrajmpatel-portfolio
+# vrajmpatel.com
 
-Personal portfolio site for Vraj Patel — Backend and ML Systems Engineer, built with Astro 7, Tailwind CSS 4, and deployed at [vrajmpatel.com](https://www.vrajmpatel.com).
+Source for [vrajmpatel.com](https://www.vrajmpatel.com), Vraj Patel's personal
+portfolio. It is a static Astro site deployed with GitHub Pages.
 
-## Tech Stack
+## Local development
 
-- **Framework:** [Astro](https://astro.build/) v7
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/) v4 (via Vite plugin)
-- **Fonts:** Inter & IBM Plex Mono (self-hosted with Fontsource)
-- **SEO:** `@astrojs/sitemap`, JSON-LD structured data, Open Graph meta
-
-## Project Structure
-
-```text
-src/
-├── components/         # Reusable Astro components (ProjectCard, ExperienceItem)
-├── content/
-│   ├── experience/     # Markdown entries for work experience
-│   └── projects/       # Markdown entries for projects
-├── layouts/            # BaseLayout with head, nav, footer
-├── pages/              # index, /projects, /experience
-└── styles/             # Global CSS (Tailwind imports, theme)
-public/                 # Static assets (resume, research papers, images)
-```
-
-## Getting Started
+Use Node.js 24 LTS and the pnpm version declared in `package.json`.
 
 ```bash
 pnpm install --frozen-lockfile
-pnpm dev        # Start dev server at localhost:4321
-pnpm check      # Type-check Astro templates and content
-pnpm build      # Build for production to ./dist/
-pnpm test       # Exercise the outbound analytics privacy boundary
-pnpm privacy:check # Reject public email addresses and mailto links after a build
-pnpm preview    # Preview the production build locally
+pnpm dev
 ```
 
-Use pnpm 11.24.0 with Node.js 24 LTS for production and CI. Node.js 26 Current is also supported; odd-numbered releases are intentionally excluded. This project has no Python runtime or dependencies, so uv is intentionally not part of the toolchain.
+The development server starts at `http://localhost:4321`. Node.js 26 is also
+tested in CI as a forward-compatibility check.
 
-## Analytics
+## Updating the site
 
-PostHog is optional during local development. Copy `.env.example` to `.env` and set `PUBLIC_POSTHOG_KEY` to the public `phc_...` project token. The token is embedded in the generated site by design; never use a PostHog personal API key here. Values without the public `phc_` token shape are rejected before they can be rendered, and production CI fails closed on the same contract.
+- Shared profile details and affiliations live in `src/data/profile.ts`.
+- Projects and experience entries are Markdown files under `src/content/`.
+- Page layouts and copy live under `src/pages/` and `src/components/`.
+- Public PDFs and images live under `public/`.
+- Vendored organization marks and their provenance are documented in
+  `public/logos/SOURCES.md`.
 
-`PUBLIC_POSTHOG_HOST` is optional and defaults to `https://us.i.posthog.com`. Set it only when the project uses a different PostHog region or an HTTPS first-party proxy. The production build must receive these variables through its build environment; the current GitHub Pages workflow already maps `PUBLIC_POSTHOG_KEY`.
+## PostHog
 
-The tracker sends data only from the canonical production hostnames. It records one query-free manual pageview after each Astro navigation, respects Do Not Track and Global Privacy Control, keeps visitors anonymous unless they are explicitly identified in future code, and disables automatic interaction capture, session replay, surveys, feature flags, and remote dependency loading. A final outbound hook removes campaign, referrer, search, initial-attribution, and session-entry properties before transport.
+Analytics is optional in local development. Copy `.env.example` to `.env`
+and set `PUBLIC_POSTHOG_KEY` to the public `phc_...` project token. Never put
+a PostHog personal API key in this repository.
 
-Custom click events are explicit. Add `data-ph-event` to the clickable element and use only the supported low-cardinality properties: `data-ph-kind`, `data-ph-network`, `data-ph-placement`, `data-ph-project`, and `data-ph-resource`.
+`PUBLIC_POSTHOG_HOST` is optional and defaults to
+`https://us.i.posthog.com`. The production tracker runs only on the canonical
+site, respects browser privacy signals, and limits events and properties in
+`src/components/Tracker.astro` and `src/lib/posthogPrivacy.ts`.
 
-```html
-<a
-  href="/resume.pdf"
-  data-ph-event="resume_clicked"
-  data-ph-kind="resume"
-  data-ph-placement="hero"
->
-  Download resume
-</a>
+## Checks
+
+```bash
+pnpm test
+pnpm check
+pnpm build
+pnpm audit --prod --audit-level=moderate
+pnpm privacy:check
 ```
 
-The tracker accepts only the event names already used by the site: `resume_clicked`, `project_opened`, `outbound_link_clicked`, and `social_profile_clicked`. Property values must be short lowercase slugs; do not include names, email addresses, full URLs, search terms, free text, user IDs, or other personal/high-cardinality values.
+`privacy:check` runs against the built site, so run `pnpm build` first.
 
-## Dependency Maintenance
+## Dependencies and deployment
 
-Dependabot checks Node packages and GitHub Actions every week. Compatible minor and patch releases are grouped into one pull request; major releases stay separate so breaking changes can be reviewed on their own. Security updates remain ungrouped and urgent.
+Dependabot checks npm packages and GitHub Actions every day. pnpm holds newly
+published releases for 24 hours before they can enter the lockfile. Compatible
+PostHog minor and patch updates merge only after the full CI workflow passes;
+major updates remain manual.
 
-pnpm enforces a 24-hour minimum release age for new dependency resolutions. Every pull request runs a frozen pnpm install, the focused analytics privacy regression test, a high-severity production dependency audit, Astro template/content checks, and a full static build on Node.js 24 LTS and Node.js 26 Current. Node.js 24 also runs the public-asset privacy scan. A successful push to \`main\` deploys the exact verified Node.js 24 artifact; every third-party Action is pinned to an immutable commit.
+Pull requests build the site on Node.js 24 and 26. A successful push to `main`
+deploys the exact artifact produced by the Node.js 24 quality job. Third-party
+GitHub Actions are pinned to immutable commit SHAs.

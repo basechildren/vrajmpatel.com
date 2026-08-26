@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import ThemeToggle from "../components/ThemeToggle.astro";
 import Tracker from "../components/Tracker.astro";
+import { profile } from "../data/profile";
 
 interface Props {
   title?: string;
@@ -32,9 +33,17 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const imageUrl = new URL(ogImage, Astro.site);
 const person = {
   "@type": "Person",
-  name: "Vraj Patel",
+  name: profile.name,
   url: "https://www.vrajmpatel.com",
-  jobTitle: "Systems Integration Engineer",
+  jobTitle: profile.role,
+  worksFor: {
+    "@type": "Organization",
+    name: profile.employer.name,
+    parentOrganization: {
+      "@type": "CollegeOrUniversity",
+      name: profile.employer.parent,
+    },
+  },
   alumniOf: {
     "@type": "CollegeOrUniversity",
     name: "University of Colorado Boulder",
@@ -222,7 +231,7 @@ const structuredData =
       <div
         class="mx-auto flex max-w-5xl flex-col gap-4 px-5 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-8 dark:text-slate-400"
       >
-        <p>&copy; {new Date().getFullYear()} Vraj Patel · Boulder, Colorado</p>
+        <p>&copy; {new Date().getFullYear()} {profile.name} · {profile.location}</p>
         <nav aria-label="Professional profiles" class="flex flex-wrap gap-x-5 gap-y-2">
           <a
             href="https://www.linkedin.com/in/vrajmp/"

@@ -30,8 +30,8 @@ importers:
         specifier: 0.41.1
         version: 0.41.1
       posthog-js:
-        specifier: 1.419.0
-        version: 1.419.0
+        specifier: 1.419.3
+        version: 1.419.3
       tailwindcss:
         specifier: ^4.3.3
         version: 4.3.3
@@ -42,6 +42,9 @@ importers:
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
+      yaml:
+        specifier: 2.9.0
+        version: 2.9.0
 
 packages:
 
@@ -615,9 +618,6 @@ packages:
 
   '@posthog/core@1.48.11':
     resolution: {integrity: sha512-fvKbxGaUM8RuCDB1jdhSqAHYjk42INfJDWT1KVezn74sCrfnr1YaUafxzmcS+87D5FzbA2tu7IT0GQRV2WkkRg==}
-
-  '@posthog/types@1.405.3':
-    resolution: {integrity: sha512-HApKJSYfwo/z2KIVB98E/8XwEL3pTXawBp0AB7FKRVtStz9hizRlaO6n9RR7sjgXLnOLvqj++CGsZb8rQbOS2g==}
 
   '@posthog/types@1.406.0':
     resolution: {integrity: sha512-JR00vHgZjqWA+d+HwOdGJ/dsWFcQwnnsNiq9SC9HsQK8woefW1jrhiz0top26oxn/y5MsgfKpxtrQYeG2QocIQ==}
@@ -1554,8 +1554,16 @@ packages:
     resolution: {integrity: sha512-u82N74LFzG8ca+dD8puPnplTXoGH4fTPpVGuIbt36G3qvNlkvfD0lEAZSxaly3KX8TS/L1A1gsCEmvKmBcVbkQ==}
     engines: {node: ^10 || ^12 || >=14}
 
-  posthog-js@1.419.0:
-    resolution: {integrity: sha512-twFNo9cO2W6zwBc2u690GIpsZ9c11nG2lhLFW3PjFEO1Mlxgmkh6aEdON2/D/VSvCnx1geYt6r8yiSo2yzG6Fg==}
+  posthog-js@1.419.3:
+    resolution: {integrity: sha512-0qkCqA/B0WnDSSAATaFdyWu2+nCiCXuNVn3LFIoG7cTxzt9TA1g+NFpCR5mYq4oHVo4MG3eUK9CB/saixRO5ww==}
+    peerDependencies:
+      '@types/react': '>=16.8.0'
+      react: '>=16.8.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react:
+        optional: true
 
   preact@10.29.8:
     resolution: {integrity: sha512-ej2aVZ+vZ8WO7tvlQWRM9N63A0KzF9q4mWJfDUHgYaIofWY9hu74QdnQrjoPMmZi2/nZ5gN0bJCQF49xQqx09Q==}
@@ -2502,13 +2510,11 @@ snapshots:
   '@posthog/browser-common@0.5.2':
     dependencies:
       '@posthog/core': 1.48.11
-      '@posthog/types': 1.405.3
+      '@posthog/types': 1.406.0
 
   '@posthog/core@1.48.11':
     dependencies:
-      '@posthog/types': 1.405.3
-
-  '@posthog/types@1.405.3': {}
+      '@posthog/types': 1.406.0
 
   '@posthog/types@1.406.0': {}
 
@@ -3402,7 +3408,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  posthog-js@1.419.0:
+  posthog-js@1.419.3:
     dependencies:
       '@posthog/browser-common': 0.5.2
       '@posthog/core': 1.48.11

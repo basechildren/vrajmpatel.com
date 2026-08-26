@@ -2,8 +2,9 @@
 interface Mark {
   logo: string;
   logoDark?: string;
-  aspect?: "square" | "wide";
-  scale?: number;
+  label: string;
+  surface?: "princeton";
+  opticalScale?: "crop-padding";
 }
 
 interface Props {
@@ -12,43 +13,56 @@ interface Props {
 }
 
 const { marks = [], size = "regular" } = Astro.props;
-const imageSize = size === "compact" ? 36 : 48;
+const railWidth = size === "compact" ? 160 : 176;
+const railHeight = size === "compact" ? 64 : 72;
 ---
 
 {
   marks.length > 0 && (
-    <span class="flex shrink-0 items-center gap-2" aria-hidden="true">
+    <span
+      class:list={[
+        "flex shrink-0 gap-2",
+        marks.length > 1 ? "flex-col items-start" : "items-center",
+      ]}
+      aria-hidden="true"
+    >
       {
-        marks.map(({ logo, logoDark, aspect = "square", scale = 1 }) => (
+        marks.map(({ logo, logoDark, label, surface, opticalScale }) => (
           <span
             class:list={[
-              "grid shrink-0 place-items-center overflow-hidden rounded-sm bg-white",
-              aspect === "wide"
-                ? size === "compact" ? "h-9 w-16" : "h-12 w-20"
-                : size === "compact" ? "h-9 w-9" : "h-12 w-12",
+              "grid shrink-0 place-items-center overflow-hidden rounded-md border",
+              surface === "princeton"
+                ? "border-[#e77500] bg-[#e77500] dark:border-[#e77500] dark:bg-[#e77500]"
+                : "border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900",
+              size === "compact" ? "h-16 w-40" : "h-[4.5rem] w-44",
             ]}
           >
             <img
               src={logo}
               alt=""
-              width={aspect === "wide" ? imageSize * 2 : imageSize}
-              height={imageSize}
-              loading="lazy"
+              width={railWidth}
+              height={railHeight}
+              title={label}
               decoding="async"
-              class:list={["h-full w-full object-contain", logoDark && "dark:hidden"]}
-              style={scale === 1 ? undefined : "transform: scale(" + scale + ")"}
+              class:list={[
+                "max-h-[calc(100%-1rem)] max-w-[calc(100%-1rem)] object-contain",
+                logoDark && "dark:hidden",
+                opticalScale === "crop-padding" && "scale-[1.75]",
+              ]}
             />
             {
               logoDark && (
                 <img
                   src={logoDark}
                   alt=""
-                  width={aspect === "wide" ? imageSize * 2 : imageSize}
-                  height={imageSize}
-                  loading="lazy"
+                  width={railWidth}
+                  height={railHeight}
+                  title={label}
                   decoding="async"
-                  class="hidden h-full w-full object-contain dark:block"
-                  style={scale === 1 ? undefined : "transform: scale(" + scale + ")"}
+                  class:list={[
+                    "hidden max-h-[calc(100%-1rem)] max-w-[calc(100%-1rem)] object-contain dark:block",
+                    opticalScale === "crop-padding" && "scale-[1.75]",
+                  ]}
                 />
               )
             }

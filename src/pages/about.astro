@@ -1,10 +1,13 @@
 ---
+import OrganizationMarks from "../components/OrganizationMarks.astro";
+import { organizationMarks } from "../data/organizationMarks";
+import { profile } from "../data/profile";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout
   title="About — Vraj Patel"
-  description="About Vraj Patel, a backend and ML systems engineer completing dual M.S. programs at CU Boulder."
+  description="About Vraj Patel, a systems integration engineer and dual M.S. student at CU Boulder."
 >
   <header class="max-w-3xl pb-10 sm:pb-14">
     <p class="font-mono text-xs text-slate-500 dark:text-slate-400">Profile</p>
@@ -18,15 +21,15 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <dl class="space-y-5">
         <div>
           <dt class="font-mono text-xs text-slate-500 dark:text-slate-400">Location</dt>
-          <dd class="mt-1">Boulder, Colorado</dd>
+          <dd class="mt-1">{profile.location}</dd>
         </div>
         <div>
           <dt class="font-mono text-xs text-slate-500 dark:text-slate-400">Work</dt>
-          <dd class="mt-1">CU Boulder · Institute of Behavioral Science</dd>
+          <dd class="mt-1">{profile.employer.short}</dd>
         </div>
         <div>
           <dt class="font-mono text-xs text-slate-500 dark:text-slate-400">Study</dt>
-          <dd class="mt-1">Dual M.S. programs · CU Boulder</dd>
+          <dd class="mt-1">{profile.education}</dd>
         </div>
       </dl>
 
@@ -66,8 +69,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <div class="mt-5 space-y-5 text-base leading-8 text-slate-600 dark:text-slate-400 sm:text-lg">
           <p>
             I’m a systems integration engineer at CU Boulder’s Institute of
-            Behavioral Science, where I build backend services, automation, and
-            a ticket-classification platform.
+            Behavioral Science, where I build internal services, automation,
+            and an ML-assisted ticket-intelligence platform.
           </p>
           <p>
             I continued CU Boulder Studio Lab research remotely with the former
@@ -78,10 +81,16 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             cleanly.
           </p>
           <p>
+            Through Purdue’s Data Mine of the Rockies, I worked directly with
+            L3Harris senior engineers on synthetic satellite telemetry,
+            cyberattack anomalies, and the research presented to space and
+            cybersecurity stakeholders.
+          </p>
+          <p>
             I’m completing dual M.S. programs in Computer Science and Engineering
             Management at CU Boulder, where I earned a B.S. in Computer Science
             with a Business minor. Outside work, I run a 24 TB TrueNAS and Docker
-            home lab, mostly to learn by operating the systems I build.
+            home lab to learn by operating the systems I build.
           </p>
           <p>
             I’m also developing a paper on secure GitHub repository collaboration
@@ -98,14 +107,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           <div class="grid gap-1 border-t border-slate-200 py-5 sm:grid-cols-[1fr_auto] sm:gap-8 dark:border-slate-800">
             <div>
               <dt class="font-medium text-slate-950 dark:text-white">Systems Integration Engineer</dt>
-              <dd class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">University of Colorado Boulder · Institute of Behavioral Science</dd>
+              <dd class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">{profile.employer.parent} · {profile.employer.name}</dd>
             </div>
-            <dd class="font-mono text-xs leading-6 text-slate-500 dark:text-slate-400">2025—present</dd>
+            <dd class="font-mono text-xs leading-6 text-slate-500 dark:text-slate-400">May 2025—present</dd>
           </div>
           <div class="grid gap-1 border-t border-slate-200 py-5 sm:grid-cols-[1fr_auto] sm:gap-8 dark:border-slate-800">
             <div>
-              <dt class="font-medium text-slate-950 dark:text-white">Dual M.S. programs</dt>
-              <dd class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">University of Colorado Boulder · Computer Science and Engineering Management</dd>
+              <dt class="font-medium text-slate-950 dark:text-white">Dual M.S. · Computer Science + Engineering Management</dt>
+              <dd class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">University of Colorado Boulder</dd>
             </div>
             <dd class="font-mono text-xs leading-6 text-slate-500 dark:text-slate-400">In progress</dd>
           </div>
@@ -119,14 +128,37 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </dl>
       </section>
 
+      <section class="mt-10 border-t border-slate-200 pt-9 dark:border-slate-800" aria-labelledby="affiliations-heading">
+        <h2 id="affiliations-heading" class="text-2xl font-semibold tracking-tight text-slate-950 dark:text-white">
+          Research affiliations
+        </h2>
+        <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+          {
+            profile.affiliations
+              .filter(({ discipline }) => discipline === "Research")
+              .map((affiliation) => (
+                <li class="flex items-center gap-4 border-t border-slate-200 py-4 dark:border-slate-800">
+                  <OrganizationMarks
+                    {...organizationMarks[affiliation.mark]}
+                    size="compact"
+                  />
+                  <span class="text-sm font-medium leading-6 text-slate-800 dark:text-slate-200">
+                    {affiliation.organization}
+                  </span>
+                </li>
+              ))
+          }
+        </ul>
+      </section>
+
       <section class="mt-10 border-t border-slate-200 pt-9 dark:border-slate-800" aria-labelledby="focus-heading">
         <h2 id="focus-heading" class="text-2xl font-semibold tracking-tight text-slate-950 dark:text-white">
           Focus
         </h2>
         <p class="mt-5 text-base leading-8 text-slate-600 dark:text-slate-400">
-          Backend systems, data engineering, applied NLP, model deployment, and
-          self-hosted infrastructure. I work primarily in Python, TypeScript,
-          PostgreSQL, Docker, and AWS.
+          Systems integration, backend services, data engineering, applied NLP,
+          and self-hosted infrastructure. I work primarily in Python,
+          TypeScript, PostgreSQL, Docker, and AWS.
         </p>
       </section>
     </div>

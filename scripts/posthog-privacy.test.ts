@@ -95,6 +95,19 @@ test("drops an invalid current URL rather than forwarding it", () => {
   });
 });
 
+test("drops automatic events outside the explicit analytics contract", () => {
+  const event: CaptureResult = {
+    uuid: "00000000-0000-7000-8000-000000000002",
+    event: "$web_vitals",
+    properties: {
+      $current_url: "https://vrajmpatel.com/",
+      $pathname: "/",
+    },
+  };
+
+  assert.equal(sanitizePostHogEvent(event), null);
+});
+
 test("passes through a dropped PostHog event", () => {
   assert.equal(sanitizePostHogEvent(null), null);
 });

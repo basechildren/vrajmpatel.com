@@ -70,11 +70,11 @@ const { Content } = await render(entry);
               target="_blank"
               rel="noopener noreferrer"
               data-ph-event="outbound_link_clicked"
-              data-ph-resource="paper"
+              data-ph-resource={entry.data.paperResource ?? "paper"}
               data-ph-project={entry.id}
               class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
             >
-              Paper
+              {entry.data.paperLabel ?? "Paper"}
             </a>
           )
         }

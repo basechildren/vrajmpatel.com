@@ -1,7 +1,7 @@
 ---
-organization: 'Studio Lab - University of Colorado Boulder'
-title: 'Research Assistant (Data Engineering & ML)'
-period: 'March 2023 - May 2026'
+organization: 'Studio Lab · University of Colorado Boulder'
+title: 'Research Assistant, Data Engineering and ML'
+period: 'March 2023–May 2026'
 order: 2
 organizationMark: 'cu-boulder'
 ---

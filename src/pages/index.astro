@@ -5,6 +5,7 @@ import ExperienceItem from "../components/ExperienceItem.astro";
 import OrganizationMarks from "../components/OrganizationMarks.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import { organizationMarks } from "../data/organizationMarks";
+import { profile } from "../data/profile";
 import { isCaseStudy, isPublicProject, sortProjects } from "../lib/projects";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
@@ -30,23 +31,23 @@ const recentExperience = (await getCollection("experience"))
   >
     <div>
       <p class="font-mono text-xs text-slate-500 dark:text-slate-400">
-        Boulder, Colorado
+        {profile.location}
       </p>
       <h1
         id="intro-heading"
         class="mt-4 text-4xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white sm:text-6xl"
       >
-        Vraj Patel
+        {profile.name}
       </h1>
       <p
         class="mt-5 max-w-2xl text-2xl font-medium leading-tight tracking-[-0.025em] text-slate-800 dark:text-slate-200 sm:text-3xl"
       >
-        Systems integration engineer building backend and ML systems.
+        Systems integration engineer building reliable services and data systems.
       </p>
       <p class="mt-6 max-w-2xl text-base leading-8 text-slate-600 dark:text-slate-400 sm:text-lg">
-        I build reliable backend services, data pipelines, and applied ML systems
-        for operations at CU Boulder, with a research background in public-interest
-        data systems.
+        At CU Boulder’s Institute of Behavioral Science, I build internal services,
+        automation, and applied ML tools for day-to-day operations. My research
+        spans public-interest data, satellite telemetry, and cybersecurity.
       </p>
       <div class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-medium">
         <a
@@ -79,29 +80,27 @@ const recentExperience = (await getCollection("experience"))
       </div>
 
       <ul
-        aria-label="Current work and study"
+        aria-label="Professional affiliations"
         class="mt-10 grid gap-x-8 gap-y-4 border-t border-slate-200 pt-6 sm:grid-cols-2"
       >
-        <li class="flex items-center gap-3">
-          <OrganizationMarks {...organizationMarks["cu-boulder"]} size="compact" />
-          <div>
-            <p class="font-mono text-[0.65rem] text-slate-500 dark:text-slate-400">Current role</p>
-            <p class="mt-0.5 text-sm font-medium text-slate-800 dark:text-slate-200">CU Boulder · Institute of Behavioral Science</p>
-          </div>
-        </li>
-        <li class="flex items-center gap-3">
-          <OrganizationMarks {...organizationMarks["cu-boulder"]} size="compact" />
-          <div>
-            <p class="font-mono text-[0.65rem] text-slate-500 dark:text-slate-400">Graduate study</p>
-            <p class="mt-0.5 text-sm font-medium text-slate-800 dark:text-slate-200">Dual M.S. · Computer Science + Engineering Management</p>
-          </div>
-        </li>
-        <li class="sm:col-span-2">
-          <div>
-            <p class="font-mono text-[0.65rem] text-slate-500 dark:text-slate-400">Research writing</p>
-            <p class="mt-0.5 text-sm font-medium text-slate-800 dark:text-slate-200">Paper in progress · secure GitHub collaboration governed by federal data-protection agreements</p>
-          </div>
-        </li>
+        {
+          profile.affiliations.map((affiliation) => (
+            <li class="flex items-center gap-4">
+              <OrganizationMarks
+                {...organizationMarks[affiliation.mark]}
+                size="compact"
+              />
+              <div class="min-w-0">
+                <p class="font-mono text-[0.65rem] text-slate-500 dark:text-slate-400">
+                  {affiliation.discipline}
+                </p>
+                <p class="mt-0.5 text-sm font-medium leading-5 text-slate-800 dark:text-slate-200">
+                  {affiliation.organization}
+                </p>
+              </div>
+            </li>
+          ))
+        }
       </ul>
     </div>
 

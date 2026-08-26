@@ -16,7 +16,7 @@ const mark = entry.data.organizationMark
 
 {
   variant === "compact" ? (
-    <article class="grid gap-2 border-t border-slate-200 py-6 sm:grid-cols-[9rem_1fr] sm:gap-7 dark:border-slate-800">
+    <article class="grid gap-2 border-t border-slate-200 py-6 sm:grid-cols-[11rem_1fr] sm:gap-7 dark:border-slate-800">
       <div>
         <OrganizationMarks
           {...mark}
@@ -61,6 +61,21 @@ const mark = entry.data.organizationMark
         <div class="mt-5 text-[0.95rem] leading-7 text-slate-600 [&_a]:underline [&_a]:decoration-slate-300 [&_a]:underline-offset-4 [&_a]:hover:text-blue-700 [&_li]:pl-1 [&_strong]:font-semibold [&_strong]:text-slate-800 [&_ul]:list-disc [&_ul]:space-y-3 [&_ul]:pl-5 dark:text-slate-400 dark:[&_a]:decoration-slate-700 dark:[&_a]:hover:text-blue-400 dark:[&_strong]:text-slate-200">
           <slot />
         </div>
+        {entry.data.poster && (
+          <div class="mt-6 text-sm font-medium">
+            <a
+              href={entry.data.poster}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-ph-event="outbound_link_clicked"
+              data-ph-resource="poster"
+              data-ph-project={entry.id}
+              class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+            >
+              {entry.data.posterLabel ?? "Research poster"}
+            </a>
+          </div>
+        )}
       </div>
     </article>
   )

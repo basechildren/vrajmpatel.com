@@ -4,37 +4,40 @@
 
 ## Identity
 - **Name:** Vraj Patel
-- **Positioning:** Backend and ML Systems Engineer
+- **Positioning:** Systems Integration Engineer
 - **Location:** Boulder, Colorado
-- **Focus:** Reliable backend systems, data pipelines, and applied machine learning
+- **Focus:** Systems integration, backend services, data engineering, and applied machine learning
 
 ## Education
 - **Dual M.S. programs:** Computer Science and Engineering Management, University of Colorado Boulder
 - **B.S. in Computer Science, Business Minor:** University of Colorado Boulder
 
 ## Professional Summary
-Vraj Patel builds dependable backend services, operational data pipelines, and applied ML systems at CU Boulder. His work pairs practical software engineering with research-scale data processing and reliable long-running workflows.
+Vraj Patel builds internal services, operational data pipelines, automation, and applied ML tools at CU Boulder. His research background includes public-interest data systems, satellite telemetry, and cybersecurity.
 
 ## Professional Experience
 
-### University of Colorado Boulder - Institute of Behavioral Science
-**Systems Integration Engineer (May 2025 - Present)**
+### University of Colorado Boulder · Institute of Behavioral Science
+**Systems Integration Engineer (May 2025–present)**
 - Building an internal FastAPI and PostgreSQL ticket-intelligence platform with ML-assisted incident-tag suggestions.
 - Built a React, Vite, and Recharts dashboard that identified Tuesday at 10 a.m. as peak ticket volume for staffing analysis.
 - Built a PowerShell offboarding tool that reduced each group-membership cleanup run from 15 minutes to under one minute.
 
-### Studio Lab - University of Colorado Boulder
-**Research Assistant, Data Engineering and ML (March 2023 - May 2026)**
+### Studio Lab · University of Colorado Boulder
+**Research Assistant, Data Engineering and ML (March 2023–May 2026)**
 - Continued the CU Boulder Studio Lab research remotely with the former PI after they moved to Princeton; the collaboration concluded in May 2026.
-- Built a cloud-hybrid pipeline for 40+ GB of election speeches and parliamentary records spanning 1981-2024.
+- Built a cloud-hybrid pipeline for 40+ GB of election speeches and parliamentary records spanning 1981–2024.
 - Built resumable Selenium crawlers, AWS transcription and translation workflows, and document-parsing pipelines for large archival datasets.
+
+### The Data Mine of the Rockies · Purdue University and L3Harris
+**Undergraduate Research Assistant, Satellite Telemetry Data Analysis (August 2024–May 2025)**
+- Worked directly with L3Harris senior engineers through Purdue's Data Mine of the Rockies.
+- Trained anomaly-detection models on synthetic satellite telemetry and mapped space-cyber scenarios to SPARTA and MITRE ATT&CK.
+- Co-authored and presented “L3Harris: Satellite Cyberattack Detection” at the inaugural Data Mine of the Rockies Symposium in Colorado Springs.
+- Spring 2025 research poster: https://datamine.purdue.edu/posters/1-DMR_S25_Poster_L3_48-x-36-1.pdf
 
 ## Research Writing
 - Developing a paper on secure GitHub repository collaboration for work governed by federal data-protection agreements.
-
-### The Data Mine - Purdue University at L3Harris
-**Undergraduate Research Assistant, Satellite Telemetry Data Analysis (August 2024 - May 2025)**
-- Trained anomaly-detection models on synthetic satellite telemetry and mapped space-cyber scenarios to SPARTA and MITRE ATT&CK.
 
 ## Selected Work
 
@@ -47,6 +50,7 @@ Vraj Patel builds dependable backend services, operational data pipelines, and a
 - **Domain:** Research and Data Engineering
 - **Tech:** Web Scraping, Digitization, AWS, PyMuPDF, Selenium
 - Data pipelines for 40+ years of parliamentary debates, 40+ GB of campaign audio, and thousands of digitized documents.
+- Draft funding proposal: https://www.vrajmpatel.com/indian-parliament-data-grant.pdf
 
 ### SeeMyRace: Race Photo Search
 - **Domain:** Applied ML and Backend Systems

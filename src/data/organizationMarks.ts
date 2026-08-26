@@ -20,6 +20,7 @@ const l3harris = {
   logo: "/logos/official/l3harris-light.svg",
   logoDark: "/logos/official/l3harris-dark.svg",
   label: "L3Harris",
+  opticalScale: "crop-padding",
 } as const;
 
 export const organizationMarks = {

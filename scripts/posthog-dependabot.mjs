@@ -101,7 +101,10 @@ export function hasRequiredMergeRules(rules) {
   const contexts = new Set(
     statusRule?.parameters?.required_status_checks?.map(({ context }) => context),
   );
-  return [...requiredMergeChecks].every((context) => contexts.has(context));
+  return (
+    statusRule?.parameters?.strict_required_status_checks_policy === true &&
+    [...requiredMergeChecks].every((context) => contexts.has(context))
+  );
 }
 
 export function autoMergeVariables(pullRequestId, expectedHeadOid) {

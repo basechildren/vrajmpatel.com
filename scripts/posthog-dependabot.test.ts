@@ -113,6 +113,7 @@ test("requires all merge checks before enabling auto-merge", () => {
   const rule = {
     type: "required_status_checks",
     parameters: {
+      strict_required_status_checks_policy: true,
       required_status_checks: [
         { context: "Quality (Node 24 LTS)" },
         { context: "Compatibility (Node 26 Current)" },
@@ -121,6 +122,9 @@ test("requires all merge checks before enabling auto-merge", () => {
     },
   };
   assert.equal(hasRequiredMergeRules([rule]), true);
+  rule.parameters.strict_required_status_checks_policy = false;
+  assert.equal(hasRequiredMergeRules([rule]), false);
+  rule.parameters.strict_required_status_checks_policy = true;
   rule.parameters.required_status_checks.pop();
   assert.equal(hasRequiredMergeRules([rule]), false);
 });

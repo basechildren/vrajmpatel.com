@@ -3,10 +3,10 @@ organization: 'University of Colorado Boulder - Institute of Behavioral Science'
 title: 'Lead Technical Research Assistant'
 period: 'March 2023 – May 2025'
 order: 4
-logo: '/logos/cu-boulder.png'
+logo: '/logos/cu-standalone.png.avif'
 ---
 
-- **Computer Vision Pipeline (PyTorch/ResNet50):** Collaborated with PhD researchers in weekly Agile sprints to architect a visual bias analysis pipeline for NYT COVID-19 imagery. Engineered a custom preprocessing workflow using OpenCV and Scikit-image to perform Z-score normalization and channel-wise intensity rescaling
-- **Unsupervised Learning:** Leveraged Transfer Learning by deploying a truncated ResNet50 model to extract high dimensional feature embeddings, which were fed into K-Means clustering algorithms to uncover latent patterns in media datasets without reliance on labeled data
-- **ETL Architecture:** Engineered a resilient Data Engineering pipeline to aggregate 15+ years of legislative data. Built a custom Selenium and BeautifulSoup scraper to navigate dynamic DOM elements, implementing JSON checkpointing to ensure data integrity during long running jobs
-- **API Optimization:** Developed a Python wrapper for the LegiScan API with in-memory caching and rate-limit handling, reducing redundant network requests by 40% during bulk data ingestion
+- Worked with PhD researchers to build a PyTorch and ResNet50 pipeline for studying visual bias in New York Times COVID-19 imagery. Added OpenCV and scikit-image preprocessing with z-score normalization and channel-wise intensity scaling
+- Used a truncated ResNet50 to extract image embeddings, then grouped them with k-means for analysis without labeled data
+- Built Selenium and BeautifulSoup pipelines for 15+ years of legislative data, with JSON checkpoints for long-running jobs
+- Built a Python wrapper for the LegiScan API with caching and rate-limit handling, cutting redundant requests by 40% during bulk ingestion

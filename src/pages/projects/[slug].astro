@@ -1,79 +1,112 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection, render } from 'astro:content';
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
 export async function getStaticPaths() {
-	const projectEntries = await getCollection('projects');
-	return projectEntries.map(entry => ({
-		params: { slug: entry.id },
-		props: { entry },
-	}));
+  const projects = await getCollection("projects");
+  return projects.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
 }
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const ogImageUrl = `/og/${entry.id}.png`;
 ---
 
-<BaseLayout 
-	title={`${entry.data.title} — Vraj Patel`}
-	description={entry.data.summary}
-	ogImage={ogImageUrl}
-	schemaType="SoftwareSourceCode"
+<BaseLayout
+  title={`${entry.data.title} — Vraj Patel`}
+  description={entry.data.summary}
+  ogImage={`/og/${entry.id}.png`}
+  schemaType="SoftwareSourceCode"
 >
-	<div class="mb-8 border-b border-slate-200 pb-8 dark:border-white/10 animate-fade-in-up">
-		<div class="flex items-center gap-3 mb-6">
-			<a href="/projects" class="text-sm font-medium text-slate-500 hover:text-slate-800 dark:hover:text-slate-300 inline-flex items-center gap-1 transition-colors">
-				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-				Back to Projects
-			</a>
-			<span class="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-500/10 dark:text-blue-300 ml-auto">
-				{entry.data.domain}
-			</span>
-		</div>
-		<h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">{entry.data.title}</h1>
-		{entry.data.summary && (
-			<p class="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-slate-400">
-				{entry.data.summary}
-			</p>
-		)}
-		
-		<div class="mt-8 flex flex-wrap items-center gap-4">
-			{entry.data.github && (
-				<a href={entry.data.github} target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition-all hover:bg-slate-50 hover:text-slate-900 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.24c3-.34 6-1.53 6-6.76a5.2 5.2 0 0 0-1.5-3.8 5.4 5.4 0 0 0-.15-3.8s-1.2-.38-3.9 1.4a12.8 12.8 0 0 0-7 0C6.2 2.12 5 2.5 5 2.5a5.4 5.4 0 0 0-.15 3.8A5.2 5.2 0 0 0 3 10.1c0 5.22 3 6.42 6 6.76a4.8 4.8 0 0 0-1 3.24v4"/><path d="M3 19c3 1 4-1 5-1"/></svg>
-					{entry.data.privateRepo ? 'Private Repo' : 'View Source'}
-				</a>
-			)}
-			{entry.data.paper && (
-				<a href={entry.data.paper} target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition-all hover:bg-slate-50 hover:text-slate-900 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-					Read Paper
-				</a>
-			)}
-			{entry.data.link && (
-				<a href={entry.data.link} target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition-all hover:bg-slate-50 hover:text-slate-900 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-					Visit Link
-				</a>
-			)}
-		</div>
-	</div>
+  <article class="mx-auto max-w-3xl">
+    <a
+      href="/projects"
+      class="text-sm underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+    >
+      All projects
+    </a>
 
-	<article class="prose prose-slate dark:prose-invert prose-blue max-w-none text-slate-700 dark:text-slate-400 [&_a]:text-blue-600 dark:[&_a]:text-blue-400 [&_p]:text-lg [&_p]:leading-relaxed animate-fade-in-up" style="animation-delay: 0.1s;">
-		<Content />
-	</article>
+    <header class="mt-10 border-b border-slate-200 pb-10 dark:border-slate-800">
+      <p class="font-mono text-xs text-slate-500 dark:text-slate-500">
+        {entry.data.domain}
+      </p>
+      <h1 class="mt-3 text-4xl font-semibold tracking-[-0.035em] text-slate-950 dark:text-white sm:text-5xl">
+        {entry.data.title}
+      </h1>
+      {
+        entry.data.summary && (
+          <p class="mt-6 text-lg leading-8 text-slate-600 dark:text-slate-400">
+            {entry.data.summary}
+          </p>
+        )
+      }
 
-	{entry.data.tech && entry.data.tech.length > 0 && (
-		<div class="mt-12 pt-8 border-t border-slate-200 dark:border-white/10 animate-fade-in-up" style="animation-delay: 0.2s;">
-			<h3 class="text-sm font-bold tracking-widest text-slate-900 dark:text-slate-200 uppercase mb-4">Technologies Used</h3>
-			<div class="flex flex-wrap gap-2">
-				{entry.data.tech.map((techItem: string) => (
-					<span class="inline-flex items-center rounded-md bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-700 dark:bg-white/10 dark:text-slate-300 ring-1 ring-inset ring-slate-200 dark:ring-white/20">
-						{techItem}
-					</span>
-				))}
-			</div>
-		</div>
-	)}
+      <div class="mt-7 flex flex-wrap gap-x-5 gap-y-3 text-sm font-medium">
+        {
+          entry.data.github && (
+            <a
+              href={entry.data.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-ph-event="outbound_link_clicked"
+              data-ph-resource="github"
+              data-ph-project={entry.id}
+              class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+            >
+              {entry.data.privateRepo ? "Private repository" : "Source"}
+            </a>
+          )
+        }
+        {
+          entry.data.paper && (
+            <a
+              href={entry.data.paper}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-ph-event="outbound_link_clicked"
+              data-ph-resource="paper"
+              data-ph-project={entry.id}
+              class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+            >
+              Paper
+            </a>
+          )
+        }
+        {
+          entry.data.link && (
+            <a
+              href={entry.data.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-ph-event="outbound_link_clicked"
+              data-ph-resource="project_site"
+              data-ph-project={entry.id}
+              class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+            >
+              Live site
+            </a>
+          )
+        }
+      </div>
+    </header>
+
+    <div class="py-10 text-base leading-8 text-slate-600 [&_a]:underline [&_a]:decoration-slate-300 [&_a]:underline-offset-4 [&_a]:hover:text-blue-700 [&_p+p]:mt-5 [&_strong]:font-semibold [&_strong]:text-slate-900 dark:text-slate-400 dark:[&_a]:decoration-slate-700 dark:[&_a]:hover:text-blue-400 dark:[&_strong]:text-slate-200 sm:text-lg">
+      <Content />
+    </div>
+
+    {
+      entry.data.tech && entry.data.tech.length > 0 && (
+        <section class="border-t border-slate-200 pt-8 dark:border-slate-800" aria-labelledby="technologies-heading">
+          <h2 id="technologies-heading" class="text-lg font-semibold text-slate-950 dark:text-white">
+            Technologies
+          </h2>
+          <p class="mt-3 font-mono text-xs leading-6 text-slate-500 dark:text-slate-500">
+            {entry.data.tech.join(" · ")}
+          </p>
+        </section>
+      )
+    }
+  </article>
 </BaseLayout>

@@ -1,37 +1,114 @@
 ---
 export interface Props {
-	/**
-	 * Your PostHog Project API Key (phc_...)
-	 */
+	/** Public PostHog project token (phc_...). */
 	projectKey?: string;
+	/** Optional PostHog ingestion host or first-party proxy URL. */
+	apiHost?: string;
 }
 
-const { projectKey } = Astro.props;
+const DEFAULT_API_HOST = "https://us.i.posthog.com";
+
+function normalizeApiHost(configuredHost?: string): string {
+	if (!configuredHost?.trim()) return DEFAULT_API_HOST;
+
+	try {
+		const url = new URL(configuredHost.trim());
+		if (
+			url.protocol !== "https:" ||
+			url.username ||
+			url.password ||
+			url.search ||
+			url.hash
+		) {
+			return DEFAULT_API_HOST;
+		}
+
+		return url.href.replace(/\/+$/, "");
+	} catch {
+		return DEFAULT_API_HOST;
+	}
+}
+
+const projectKey = Astro.props.projectKey?.trim();
+const apiHost = normalizeApiHost(
+	Astro.props.apiHost ?? import.meta.env.PUBLIC_POSTHOG_HOST,
+);
 ---
 
 {projectKey ? (
-	<script is:inline define:vars={{ projectKey }}>
-		!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys getNextSurveyStep onSessionId setPersonProperties".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
-		
-		// Only track in production, ignore localhost
-		if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-			posthog.init(projectKey, {
-				api_host: 'https://us.i.posthog.com',
-				person_profiles: 'always', // 'always' creates profiles for anonymous users to track them better
-				capture_pageview: false, // We handle this manually for Astro transitions
-				autocapture: true, // Captures all clicks, inputs, etc.
-				session_recording: {
-					recordCrossOriginIframes: true
-				}
+	<script is:inline define:vars={{ projectKey, apiHost }}>
+		!function(t,e){var o,n,p,r;e.__SV||(window.posthog&&window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}p||((p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",p.onerror=function(){p=null},(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r));var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group identify setPersonProperties setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags resetGroups onFeatureFlags addFeatureFlagsHandler onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+
+		const localHosts = new Set(['localhost', '127.0.0.1', '::1', '[::1]']);
+		if (!localHosts.has(window.location.hostname)) {
+			window.posthog.init(projectKey, {
+				api_host: apiHost,
+				person_profiles: 'identified_only',
+				capture_pageview: false,
+				capture_pageleave: true,
+				autocapture: false,
+				disable_session_recording: true,
+				respect_dnt: true
 			});
 		}
 	</script>
 	<script>
-		// Handle Astro view transitions
-		document.addEventListener('astro:page-load', () => {
-			if (window.posthog && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-				window.posthog.capture('$pageview');
+		type PostHogClient = {
+			capture: (eventName: string, properties?: Record<string, string>) => void;
+		};
+
+		const localHosts = new Set(["localhost", "127.0.0.1", "::1", "[::1]"]);
+		const shouldTrack = () => !localHosts.has(window.location.hostname);
+		const getPostHog = () =>
+			(window as typeof window & { posthog?: PostHogClient }).posthog;
+
+			let lastTrackedPage = "";
+			const capturePageview = () => {
+				const posthog = getPostHog();
+				const currentPage = `${window.location.pathname}${window.location.search}`;
+				if (posthog && shouldTrack() && currentPage !== lastTrackedPage) {
+					posthog.capture("$pageview");
+					lastTrackedPage = currentPage;
+				}
+			};
+
+			// Capture traditional page loads and remain compatible with Astro's client router.
+			capturePageview();
+			document.addEventListener("astro:page-load", capturePageview);
+
+		const eventNamePattern = /^[a-z][a-z0-9_]{0,63}$/;
+		const propertyValuePattern = /^[a-z0-9][a-z0-9_-]{0,47}$/;
+		const allowedPropertyNames = new Set([
+			"kind",
+			"network",
+			"placement",
+			"project",
+			"resource",
+		]);
+
+		// Custom events are opt-in: only elements with data-ph-event are captured.
+		document.addEventListener("click", (event) => {
+			const posthog = getPostHog();
+			if (!posthog || !shouldTrack() || !(event.target instanceof Element)) {
+				return;
 			}
+
+			const trackedElement = event.target.closest<HTMLElement>("[data-ph-event]");
+			if (!trackedElement) return;
+
+			const eventName = trackedElement.dataset.phEvent?.trim();
+			if (!eventName || !eventNamePattern.test(eventName)) return;
+
+			const properties: Record<string, string> = {};
+			for (const propertyName of allowedPropertyNames) {
+				const datasetKey = `ph${propertyName[0].toUpperCase()}${propertyName.slice(1)}`;
+				const value = trackedElement.dataset[datasetKey]?.trim();
+				if (value && propertyValuePattern.test(value)) {
+					properties[propertyName] = value;
+				}
+			}
+
+			posthog.capture(eventName, properties);
 		});
 	</script>
 ) : null}

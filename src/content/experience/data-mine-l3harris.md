@@ -1,12 +1,9 @@
 ---
-organization: 'The Data Mine – Purdue University @ L3Harris'
+organization: 'The Data Mine - Purdue University at L3Harris'
 title: 'Undergraduate Research Assistant - Satellite Telemetry Data Analysis'
-period: 'August 2024 – May 2025'
+period: 'August 2024 - May 2025'
 order: 3
-logo: '/logos/purdue-datamine-dark.png'
-logoDark: '/logos/purdue-datamine-light.jpeg'
-logo2: '/logos/l3harris-light.png'
-logo2Dark: '/logos/l3harris-dark.png'
+organizationMark: 'purdue-l3harris'
 ---
 
 - Presented ML cybersecurity research at the Data Mine of the Rockies Symposium to stakeholders from the US Space Force, Lockheed Martin, CrowdStrike, and L3Harris

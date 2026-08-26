@@ -7,7 +7,6 @@ const pages = Object.fromEntries(
 );
 
 export const { getStaticPaths, GET } = await OGImageRoute({
-  param: 'route',
   pages,
   getImageOptions: async (_path, page: any) => ({
     title: page.title,
@@ -20,11 +19,11 @@ export const { getStaticPaths, GET } = await OGImageRoute({
     },
     font: {
       title: {
-        weight: 'bold',
+        weight: 'Bold',
         families: ['Inter']
       },
       description: {
-        weight: 'normal',
+        weight: 'Normal',
         families: ['Inter']
       }
     },

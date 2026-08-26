@@ -4,10 +4,14 @@ import { getCollection } from "astro:content";
 import ExperienceItem from "../components/ExperienceItem.astro";
 import OrganizationMarks from "../components/OrganizationMarks.astro";
 import ProjectCard from "../components/ProjectCard.astro";
+import { organizationMarks } from "../data/organizationMarks";
+import { isCaseStudy, isPublicProject, sortProjects } from "../lib/projects";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const featured = (await getCollection("projects", ({ data }) => data.featured))
-  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99))
+  .filter(isPublicProject)
+  .filter(isCaseStudy)
+  .sort(sortProjects)
   .slice(0, 3);
 
 const recentExperience = (await getCollection("experience"))
@@ -16,8 +20,8 @@ const recentExperience = (await getCollection("experience"))
 ---
 
 <BaseLayout
-  title="Vraj Patel — Backend and ML Systems Engineer"
-  description="Backend and ML systems engineer building data pipelines, APIs, and applied machine-learning systems at CU Boulder and Princeton."
+  title="Vraj Patel — Systems Integration Engineer"
+  description="Systems integration engineer building reliable backend services, data pipelines, and applied machine-learning systems at CU Boulder."
   schemaType="Person"
 >
   <section
@@ -25,7 +29,7 @@ const recentExperience = (await getCollection("experience"))
     aria-labelledby="intro-heading"
   >
     <div>
-      <p class="font-mono text-xs text-slate-500 dark:text-slate-500">
+      <p class="font-mono text-xs text-slate-500 dark:text-slate-400">
         Boulder, Colorado
       </p>
       <h1
@@ -37,11 +41,12 @@ const recentExperience = (await getCollection("experience"))
       <p
         class="mt-5 max-w-2xl text-2xl font-medium leading-tight tracking-[-0.025em] text-slate-800 dark:text-slate-200 sm:text-3xl"
       >
-        Backend and ML systems engineer.
+        Systems integration engineer building backend and ML systems.
       </p>
       <p class="mt-6 max-w-2xl text-base leading-8 text-slate-600 dark:text-slate-400 sm:text-lg">
-        I build data pipelines, APIs, and applied ML systems at CU Boulder and
-        Princeton. I’m currently pursuing an M.S. in Computer Science.
+        I build reliable backend services, data pipelines, and applied ML systems
+        for operations at CU Boulder, with a research background in public-interest
+        data systems.
       </p>
       <div class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-medium">
         <a
@@ -61,31 +66,40 @@ const recentExperience = (await getCollection("experience"))
           Resume
         </a>
         <a
-          href="mailto:vrajmp999@gmail.com"
-          data-ph-event="contact_clicked"
+          href="https://www.linkedin.com/in/vrajmp/"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-ph-event="social_profile_clicked"
+          data-ph-network="linkedin"
           data-ph-placement="hero"
           class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
         >
-          Email
+          LinkedIn
         </a>
       </div>
 
       <ul
-        aria-label="Current affiliations"
-        class="mt-10 flex flex-wrap gap-x-8 gap-y-4 border-t border-slate-200 pt-6 dark:border-slate-800"
+        aria-label="Current work and study"
+        class="mt-10 grid gap-x-8 gap-y-4 border-t border-slate-200 pt-6 sm:grid-cols-2"
       >
         <li class="flex items-center gap-3">
-          <OrganizationMarks logo="/logos/cu-standalone.png.avif" size="compact" />
+          <OrganizationMarks {...organizationMarks["cu-boulder"]} size="compact" />
           <div>
-            <p class="font-mono text-[0.65rem] text-slate-500 dark:text-slate-500">Engineering</p>
-            <p class="mt-0.5 text-sm font-medium text-slate-800 dark:text-slate-200">CU Boulder</p>
+            <p class="font-mono text-[0.65rem] text-slate-500 dark:text-slate-400">Current role</p>
+            <p class="mt-0.5 text-sm font-medium text-slate-800 dark:text-slate-200">CU Boulder · Institute of Behavioral Science</p>
           </div>
         </li>
         <li class="flex items-center gap-3">
-          <OrganizationMarks logo="/logos/princeton.png" size="compact" />
+          <OrganizationMarks {...organizationMarks["cu-boulder"]} size="compact" />
           <div>
-            <p class="font-mono text-[0.65rem] text-slate-500 dark:text-slate-500">Research</p>
-            <p class="mt-0.5 text-sm font-medium text-slate-800 dark:text-slate-200">Princeton Studio Lab</p>
+            <p class="font-mono text-[0.65rem] text-slate-500 dark:text-slate-400">Graduate study</p>
+            <p class="mt-0.5 text-sm font-medium text-slate-800 dark:text-slate-200">Dual M.S. · Computer Science + Engineering Management</p>
+          </div>
+        </li>
+        <li class="sm:col-span-2">
+          <div>
+            <p class="font-mono text-[0.65rem] text-slate-500 dark:text-slate-400">Research writing</p>
+            <p class="mt-0.5 text-sm font-medium text-slate-800 dark:text-slate-200">Paper in progress · secure GitHub collaboration governed by federal data-protection agreements</p>
           </div>
         </li>
       </ul>
@@ -105,12 +119,12 @@ const recentExperience = (await getCollection("experience"))
   <section id="selected-work" class="scroll-mt-6 pt-16 sm:pt-20" aria-labelledby="work-heading">
     <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <p class="font-mono text-xs text-slate-500 dark:text-slate-500">Projects</p>
+        <p class="font-mono text-xs text-slate-500 dark:text-slate-400">Projects</p>
         <h2 id="work-heading" class="mt-2 text-2xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
           Selected work
         </h2>
         <p class="mt-3 text-base text-slate-600 dark:text-slate-400">
-          Applied ML, backend, and data-engineering projects.
+          Applied ML, backend systems, and data-engineering projects.
         </p>
       </div>
       <a
@@ -133,7 +147,7 @@ const recentExperience = (await getCollection("experience"))
   <section class="pt-16 sm:pt-20" aria-labelledby="experience-heading">
     <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <p class="font-mono text-xs text-slate-500 dark:text-slate-500">Career</p>
+        <p class="font-mono text-xs text-slate-500 dark:text-slate-400">Career</p>
         <h2 id="experience-heading" class="mt-2 text-2xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
           Experience
         </h2>
@@ -155,23 +169,4 @@ const recentExperience = (await getCollection("experience"))
     </div>
   </section>
 
-  <section class="mt-16 border-t border-slate-200 pt-10 sm:mt-20 sm:grid sm:grid-cols-[1fr_auto] sm:items-end sm:gap-10 dark:border-slate-800" aria-labelledby="contact-heading">
-    <div>
-      <p class="font-mono text-xs text-slate-500 dark:text-slate-500">Contact</p>
-      <h2 id="contact-heading" class="mt-2 text-2xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
-        Open to backend and ML engineering roles.
-      </h2>
-      <p class="mt-3 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-400">
-        For roles or research collaborations, send me an email.
-      </p>
-    </div>
-    <a
-      href="mailto:vrajmp999@gmail.com"
-      data-ph-event="contact_clicked"
-      data-ph-placement="contact_section"
-      class="mt-6 inline-flex min-h-11 items-center rounded-md border border-slate-300 px-4 text-sm font-medium text-slate-800 transition-colors hover:border-slate-500 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 sm:mt-0 dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-500 dark:hover:text-white"
-    >
-      Email Vraj
-    </a>
-  </section>
 </BaseLayout>

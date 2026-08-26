@@ -1,102 +1,60 @@
 ---
-interface Props {
-  logo?: string;
+interface Mark {
+  logo: string;
   logoDark?: string;
-  logo2?: string;
-  logo2Dark?: string;
+  aspect?: "square" | "wide";
+  scale?: number;
+}
+
+interface Props {
+  marks?: readonly Mark[];
   size?: "compact" | "regular";
 }
 
-const { logo, logo2, size = "regular" } = Astro.props;
-const { logoDark, logo2Dark } = Astro.props;
+const { marks = [], size = "regular" } = Astro.props;
 const imageSize = size === "compact" ? 36 : 48;
-const isL3Harris = (source: string) =>
-  source.toLowerCase().includes("l3harris");
-const isWideMark = (source: string) =>
-  source.toLowerCase().includes("datamine");
-const needsCanvasZoom = (source: string) =>
-  source.toLowerCase().endsWith("/princeton.png");
-const marks = [
-  { light: logo, dark: logoDark },
-  { light: logo2, dark: logo2Dark },
-].filter((mark): mark is { light: string; dark?: string } => Boolean(mark.light));
 ---
 
 {
   marks.length > 0 && (
     <span class="flex shrink-0 items-center gap-2" aria-hidden="true">
-      {marks.map(({ light, dark }) => {
-        return (
-          <span class:list={[
-            "relative block shrink-0",
-            isL3Harris(light)
-              ? size === "compact" ? "h-9 w-20 overflow-hidden" : "h-12 w-24 overflow-hidden"
-              : isWideMark(light)
-                ? size === "compact" ? "h-9 w-14" : "h-12 w-20"
+      {
+        marks.map(({ logo, logoDark, aspect = "square", scale = 1 }) => (
+          <span
+            class:list={[
+              "grid shrink-0 place-items-center overflow-hidden rounded-sm bg-white",
+              aspect === "wide"
+                ? size === "compact" ? "h-9 w-16" : "h-12 w-20"
                 : size === "compact" ? "h-9 w-9" : "h-12 w-12",
-            needsCanvasZoom(light) && "overflow-hidden",
-          ]}>
-            {isL3Harris(light) ? (
-              <>
+            ]}
+          >
+            <img
+              src={logo}
+              alt=""
+              width={aspect === "wide" ? imageSize * 2 : imageSize}
+              height={imageSize}
+              loading="lazy"
+              decoding="async"
+              class:list={["h-full w-full object-contain", logoDark && "dark:hidden"]}
+              style={scale === 1 ? undefined : "transform: scale(" + scale + ")"}
+            />
+            {
+              logoDark && (
                 <img
-                  src={light}
+                  src={logoDark}
                   alt=""
-                  width={imageSize * 2}
+                  width={aspect === "wide" ? imageSize * 2 : imageSize}
                   height={imageSize}
                   loading="lazy"
                   decoding="async"
-                  class:list={[
-                    "absolute left-0 top-[-0.75rem] h-auto w-full max-w-none",
-                    dark && "dark:hidden",
-                  ]}
+                  class="hidden h-full w-full object-contain dark:block"
+                  style={scale === 1 ? undefined : "transform: scale(" + scale + ")"}
                 />
-                {dark && (
-                  <img
-                    src={dark}
-                    alt=""
-                    width={imageSize * 2}
-                    height={imageSize}
-                    loading="lazy"
-                    decoding="async"
-                    class="absolute left-0 top-[-0.75rem] hidden h-auto w-full max-w-none dark:block"
-                  />
-                )}
-              </>
-            ) : (
-              <>
-                <img
-                  src={light}
-                  alt=""
-                  width={imageSize}
-                  height={imageSize}
-                  loading="lazy"
-                  decoding="async"
-                  class:list={[
-                    "h-full w-full object-contain",
-                    dark && "dark:hidden",
-                    isWideMark(light) && "mix-blend-multiply",
-                    needsCanvasZoom(light) && "scale-[1.65] dark:drop-shadow-[0_0_1px_rgba(255,255,255,0.65)]",
-                  ]}
-                />
-                {dark && (
-                  <img
-                    src={dark}
-                    alt=""
-                    width={imageSize}
-                    height={imageSize}
-                    loading="lazy"
-                    decoding="async"
-                    class:list={[
-                      "hidden h-full w-full object-contain dark:block",
-                      isWideMark(light) && "mix-blend-screen",
-                    ]}
-                  />
-                )}
-              </>
-            )}
+              )
+            }
           </span>
-        );
-      })}
+        ))
+      }
     </span>
   )
 }

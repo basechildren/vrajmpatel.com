@@ -22,7 +22,7 @@ const technologies = entry.data.tech?.slice(0, 4) ?? [];
   <div>
     {
       showDomain && (
-        <p class="font-mono text-xs leading-5 text-slate-500 dark:text-slate-500">
+        <p class="font-mono text-xs leading-5 text-slate-500 dark:text-slate-400">
           {entry.data.domain}
         </p>
       )
@@ -54,7 +54,9 @@ const technologies = entry.data.tech?.slice(0, 4) ?? [];
 
     <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
       {
-        entry.data.github && (
+        entry.data.privateRepo ? (
+          <span class="text-slate-500 dark:text-slate-400">Private project</span>
+        ) : entry.data.github && (
           <a
             href={entry.data.github}
             target="_blank"
@@ -64,7 +66,7 @@ const technologies = entry.data.tech?.slice(0, 4) ?? [];
             data-ph-project={entry.id}
             class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
           >
-            {entry.data.privateRepo ? "Private repository" : "Source"}
+            Source
           </a>
         )
       }
@@ -117,7 +119,7 @@ const technologies = entry.data.tech?.slice(0, 4) ?? [];
 
     {
       technologies.length > 0 && (
-        <p class="mt-4 font-mono text-xs leading-5 text-slate-500 dark:text-slate-500">
+        <p class="mt-4 font-mono text-xs leading-5 text-slate-500 dark:text-slate-400">
           {technologies.join(" · ")}
         </p>
       )

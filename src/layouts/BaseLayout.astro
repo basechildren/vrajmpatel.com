@@ -7,14 +7,18 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
-  schemaType?: "Person" | "SoftwareSourceCode" | "WebPage";
+  ogImageAlt?: string;
+  schemaType?: "Person" | "WebPage";
+  robots?: "index, follow" | "noindex, follow";
 }
 
 const {
   title = "Vraj Patel",
-  description = "Backend and ML systems engineer at CU Boulder and Princeton.",
+  description = "Systems integration engineer building backend and ML systems at CU Boulder.",
   ogImage = "/profile.jpg",
+  ogImageAlt = "Portrait of Vraj Patel",
   schemaType = "WebPage",
+  robots = "index, follow",
 } = Astro.props;
 
 const nav = [
@@ -44,23 +48,14 @@ const person = {
 const structuredData =
   schemaType === "Person"
     ? { "@context": "https://schema.org", ...person }
-    : schemaType === "SoftwareSourceCode"
-      ? {
-          "@context": "https://schema.org",
-          "@type": "SoftwareSourceCode",
-          name: title.replace(" — Vraj Patel", ""),
-          description,
-          url: canonicalUrl,
-          author: person,
-        }
-      : {
-          "@context": "https://schema.org",
-          "@type": "WebPage",
-          name: title,
-          description,
-          url: canonicalUrl,
-          author: person,
-        };
+    : {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: title,
+        description,
+        url: canonicalUrl,
+        author: person,
+      };
 ---
 
 <!DOCTYPE html>
@@ -71,7 +66,7 @@ const structuredData =
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content="Vraj Patel" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={robots} />
     <meta
       name="theme-color"
       content="#f8fafc"
@@ -89,11 +84,13 @@ const structuredData =
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content="Vraj Patel" />
     <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:alt" content={ogImageAlt} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     <link rel="canonical" href={canonicalUrl} />
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -102,6 +99,7 @@ const structuredData =
     <meta name="generator" content={Astro.generator} />
 
     <script
+      is:inline
       type="application/ld+json"
       set:html={JSON.stringify(structuredData)}
     ></script>
@@ -222,16 +220,10 @@ const structuredData =
 
     <footer class="border-t border-slate-200 dark:border-slate-800">
       <div
-        class="mx-auto flex max-w-5xl flex-col gap-4 px-5 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-8 dark:text-slate-500"
+        class="mx-auto flex max-w-5xl flex-col gap-4 px-5 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-8 dark:text-slate-400"
       >
         <p>&copy; {new Date().getFullYear()} Vraj Patel · Boulder, Colorado</p>
-        <nav aria-label="Social" class="flex flex-wrap gap-x-5 gap-y-2">
-          <a
-            href="mailto:vrajmp999@gmail.com"
-            data-ph-event="contact_clicked"
-            data-ph-placement="footer"
-            class="underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-white"
-          >Email</a>
+        <nav aria-label="Professional profiles" class="flex flex-wrap gap-x-5 gap-y-2">
           <a
             href="https://www.linkedin.com/in/vrajmp/"
             target="_blank"

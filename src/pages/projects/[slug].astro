@@ -18,7 +18,9 @@ const { Content } = await render(entry);
   title={`${entry.data.title} — Vraj Patel`}
   description={entry.data.summary}
   ogImage={`/og/${entry.id}.png`}
-  schemaType="SoftwareSourceCode"
+  ogImageAlt={`Project preview for ${entry.data.title}`}
+  schemaType="WebPage"
+  robots={entry.data.visibility === "archived" ? "noindex, follow" : "index, follow"}
 >
   <article class="mx-auto max-w-3xl">
     <a
@@ -29,7 +31,7 @@ const { Content } = await render(entry);
     </a>
 
     <header class="mt-10 border-b border-slate-200 pb-10 dark:border-slate-800">
-      <p class="font-mono text-xs text-slate-500 dark:text-slate-500">
+      <p class="font-mono text-xs text-slate-500 dark:text-slate-400">
         {entry.data.domain}
       </p>
       <h1 class="mt-3 text-4xl font-semibold tracking-[-0.035em] text-slate-950 dark:text-white sm:text-5xl">
@@ -45,7 +47,9 @@ const { Content } = await render(entry);
 
       <div class="mt-7 flex flex-wrap gap-x-5 gap-y-3 text-sm font-medium">
         {
-          entry.data.github && (
+          entry.data.privateRepo ? (
+            <span class="text-slate-500 dark:text-slate-400">Private project</span>
+          ) : entry.data.github && (
             <a
               href={entry.data.github}
               target="_blank"
@@ -55,7 +59,7 @@ const { Content } = await render(entry);
               data-ph-project={entry.id}
               class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
             >
-              {entry.data.privateRepo ? "Private repository" : "Source"}
+              Source
             </a>
           )
         }
@@ -102,7 +106,7 @@ const { Content } = await render(entry);
           <h2 id="technologies-heading" class="text-lg font-semibold text-slate-950 dark:text-white">
             Technologies
           </h2>
-          <p class="mt-3 font-mono text-xs leading-6 text-slate-500 dark:text-slate-500">
+          <p class="mt-3 font-mono text-xs leading-6 text-slate-500 dark:text-slate-400">
             {entry.data.tech.join(" · ")}
           </p>
         </section>

@@ -28,8 +28,11 @@ updates:
       timezone: America/Denver
     open-pull-requests-limit: 3
     groups:
-      github-actions:
+      github-actions-compatible:
         patterns:
           - "*"
+        update-types:
+          - minor
+          - patch
     commit-message:
       prefix: "chore(actions)"

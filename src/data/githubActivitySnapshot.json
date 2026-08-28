@@ -1,0 +1,2980 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-27T23:31:24.024Z",
+  "source": "public-profile-snapshot",
+  "range": {
+    "from": "2025-08-24",
+    "to": "2026-08-27"
+  },
+  "accounts": [
+    {
+      "key": "personal",
+      "label": "Personal",
+      "login": "basechildren",
+      "url": "https://github.com/basechildren",
+      "totalContributions": 10
+    },
+    {
+      "key": "academic",
+      "label": "Academic",
+      "login": "PatVraj",
+      "url": "https://github.com/PatVraj",
+      "totalContributions": 65
+    }
+  ],
+  "totalContributions": 75,
+  "days": [
+    {
+      "date": "2025-08-24",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-08-25",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-08-26",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-08-27",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-08-28",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-08-29",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-08-30",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-08-31",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-01",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-02",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-03",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-04",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-05",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-06",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-07",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-08",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-09",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-10",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-11",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-12",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-13",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-14",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-15",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-16",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-17",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-18",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-19",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-20",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-21",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-22",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-23",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-24",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-25",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-26",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-27",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-28",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-29",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-09-30",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-01",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-02",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-03",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-04",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-05",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-06",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-07",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-08",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-09",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-10",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-11",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-12",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-13",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-14",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-15",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-16",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-17",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-18",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-19",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-20",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-21",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-22",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-23",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-24",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-25",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-26",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-27",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-28",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-29",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-30",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-10-31",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-01",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-02",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-03",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-04",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-05",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-06",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-07",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-08",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-09",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-10",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-11",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-12",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-13",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-14",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-15",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-16",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-17",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-18",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-19",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-20",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-21",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-22",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-23",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-24",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-25",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-26",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-27",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-28",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-29",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-11-30",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-01",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-02",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-03",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-04",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-05",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-06",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-07",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-08",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-09",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-10",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-11",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-12",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-13",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-14",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-15",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-16",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-17",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-18",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-19",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-20",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-21",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-22",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-23",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-24",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-25",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-26",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-27",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-28",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-29",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-30",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2025-12-31",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-01",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-02",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-03",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 2,
+      "academicLevel": 2,
+      "total": 2
+    },
+    {
+      "date": "2026-01-04",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-05",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-06",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-07",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-08",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-09",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-10",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-11",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-12",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-13",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-14",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-15",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-16",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-17",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-18",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-19",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-20",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-21",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-22",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-23",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-24",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-25",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-26",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-27",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-28",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-29",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-30",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-01-31",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-01",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-02",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-03",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-04",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-05",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-06",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-07",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-08",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-09",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-10",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-11",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-12",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-13",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-14",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-15",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-16",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-17",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-18",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-19",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-20",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-21",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-22",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-23",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-24",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-25",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-26",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-27",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-02-28",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-01",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-02",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-03",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-04",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-05",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-06",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-07",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-08",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-09",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-10",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-11",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-12",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-13",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-14",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-15",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-16",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-17",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-18",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-19",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-20",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-21",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-22",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-23",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-24",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-25",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-26",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-27",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-28",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-03-29",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 11,
+      "academicLevel": 4,
+      "total": 11
+    },
+    {
+      "date": "2026-03-30",
+      "personalCount": 1,
+      "personalLevel": 1,
+      "academicCount": 33,
+      "academicLevel": 4,
+      "total": 34
+    },
+    {
+      "date": "2026-03-31",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 6,
+      "academicLevel": 4,
+      "total": 6
+    },
+    {
+      "date": "2026-04-01",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-02",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-03",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-04",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-05",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-06",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-07",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-08",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 4,
+      "academicLevel": 3,
+      "total": 4
+    },
+    {
+      "date": "2026-04-09",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-10",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-11",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-12",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-13",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-14",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-15",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-16",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-17",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-18",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-19",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-20",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-21",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-22",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 3,
+      "academicLevel": 2,
+      "total": 3
+    },
+    {
+      "date": "2026-04-23",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-24",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-25",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-26",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-27",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-28",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-29",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-04-30",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-01",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-02",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-03",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-04",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-05",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-06",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-07",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-08",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-09",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-10",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-11",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-12",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-13",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-14",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-15",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-16",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-17",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-18",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-19",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-20",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-21",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-22",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-23",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-24",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-25",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-26",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-27",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-28",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-29",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-30",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-05-31",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-01",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-02",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-03",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-04",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 3,
+      "academicLevel": 2,
+      "total": 3
+    },
+    {
+      "date": "2026-06-05",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-06",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-07",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-08",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-09",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-10",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-11",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-12",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-13",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-14",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-15",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-16",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-17",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-18",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-19",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-20",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-21",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-22",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-23",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-24",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-25",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-26",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-27",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-28",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-29",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-06-30",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-01",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-02",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-03",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-04",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-05",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-06",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-07",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-08",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-09",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-10",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-11",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-12",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-13",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-14",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-15",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-16",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-17",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-18",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-19",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-20",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-21",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-22",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-23",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-24",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-25",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-26",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-27",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-28",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-29",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-30",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-07-31",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-01",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-02",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-03",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-04",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-05",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-06",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 1,
+      "academicLevel": 1,
+      "total": 1
+    },
+    {
+      "date": "2026-08-07",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-08",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-09",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-10",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-11",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-12",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-13",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-14",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-15",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-16",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-17",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 1,
+      "academicLevel": 1,
+      "total": 1
+    },
+    {
+      "date": "2026-08-18",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-19",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-20",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-21",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-22",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-23",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-24",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    },
+    {
+      "date": "2026-08-25",
+      "personalCount": 3,
+      "personalLevel": 2,
+      "academicCount": 1,
+      "academicLevel": 1,
+      "total": 4
+    },
+    {
+      "date": "2026-08-26",
+      "personalCount": 6,
+      "personalLevel": 4,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 6
+    },
+    {
+      "date": "2026-08-27",
+      "personalCount": 0,
+      "personalLevel": 0,
+      "academicCount": 0,
+      "academicLevel": 0,
+      "total": 0
+    }
+  ]
+}

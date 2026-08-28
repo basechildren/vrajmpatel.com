@@ -4,6 +4,8 @@ on:
   pull_request:
   push:
     branches: [main]
+  schedule:
+    - cron: "17 */6 * * *"
   workflow_dispatch:
 
 permissions:
@@ -29,6 +31,11 @@ jobs:
           node-version: 24
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
+      - name: Refresh public GitHub activity
+        if: github.event_name != 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/refresh-github-activity.mjs
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Audit production dependencies
@@ -89,7 +96,6 @@ jobs:
         env:
           PUBLIC_POSTHOG_KEY: phc_ci_build_only
           PUBLIC_POSTHOG_HOST: https://us.i.posthog.com
-
   dependency-review:
     name: Dependency review
     if: github.event_name == 'pull_request'

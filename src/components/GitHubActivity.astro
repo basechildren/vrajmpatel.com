@@ -1,0 +1,122 @@
+---
+import snapshotJson from "../data/githubActivitySnapshot.json";
+import {
+  accountFor,
+  activityColors,
+  activityLabel,
+  activitySource,
+  formattedRefreshTime,
+  isGitHubActivityData,
+  monthMarkers,
+} from "../lib/githubActivity";
+
+if (!isGitHubActivityData(snapshotJson)) {
+  throw new Error("The checked-in GitHub activity snapshot is invalid");
+}
+
+const data = snapshotJson;
+const personal = accountFor(data, "personal");
+const academic = accountFor(data, "academic");
+const markers = monthMarkers(data.days);
+const weekCount = Math.ceil(data.days.length / 7);
+
+const cellStyle = (day: (typeof data.days)[number]) => {
+  const colors = activityColors(day);
+  return `--personal-color:${colors.personal};--academic-color:${colors.academic}`;
+};
+---
+
+<div
+  class="mt-7"
+  data-github-activity
+  data-ph-component="github_activity"
+>
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <p class="text-lg font-semibold tracking-tight text-slate-950 dark:text-white">
+      <span data-activity-total>{data.totalContributions}</span> contributions across two accounts
+    </p>
+    <p class="font-mono text-xs leading-5 text-slate-500 dark:text-slate-400" data-activity-status>
+      Last synced {formattedRefreshTime(data.generatedAt)}
+    </p>
+  </div>
+
+  <dl class="mt-6 grid border-y border-slate-200 sm:grid-cols-2 dark:border-slate-800">
+    <div class="py-5 sm:pr-6">
+      <dt class="flex items-center gap-2 text-sm font-medium text-slate-800 dark:text-slate-200">
+        <span class="github-activity-key github-activity-key--personal" aria-hidden="true"></span>
+        Personal
+      </dt>
+      <dd class="mt-2 flex items-baseline justify-between gap-4">
+        <a class="text-sm underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400" href={personal.url} target="_blank" rel="noopener noreferrer">
+          @{personal.login}
+        </a>
+        <span class="font-mono text-xs text-slate-500 dark:text-slate-400"><span data-account-total="personal">{personal.totalContributions}</span> contributions</span>
+      </dd>
+    </div>
+    <div class="border-t border-slate-200 py-5 sm:border-l sm:border-t-0 sm:pl-6 dark:border-slate-800">
+      <dt class="flex items-center gap-2 text-sm font-medium text-slate-800 dark:text-slate-200">
+        <span class="github-activity-key github-activity-key--academic" aria-hidden="true"></span>
+        Academic
+      </dt>
+      <dd class="mt-2 flex items-baseline justify-between gap-4">
+        <a class="text-sm underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400" href={academic.url} target="_blank" rel="noopener noreferrer">
+          @{academic.login}
+        </a>
+        <span class="font-mono text-xs text-slate-500 dark:text-slate-400"><span data-account-total="academic">{academic.totalContributions}</span> contributions</span>
+      </dd>
+    </div>
+  </dl>
+
+  <div class="mt-7" data-activity-calendar>
+    <div class="overflow-x-auto pb-3" tabindex="0" aria-label="Scrollable GitHub contribution calendar">
+      <div class="min-w-[50rem]">
+        <div
+          class="github-activity-months ml-[2.35rem] grid h-5 text-[0.65rem] text-slate-500 dark:text-slate-400"
+          style={`grid-template-columns:repeat(${weekCount},0.75rem);column-gap:3px`}
+          data-month-labels
+          aria-hidden="true"
+        >
+          {markers.map((marker) => (
+            <span style={`grid-column:${marker.week} / span 3`}>{marker.label}</span>
+          ))}
+        </div>
+
+        <div class="flex gap-[3px]">
+          <div
+            class="grid w-8 shrink-0 text-[0.6rem] leading-3 text-slate-500 dark:text-slate-400"
+            style="grid-template-rows:repeat(7,0.75rem);row-gap:3px"
+            aria-hidden="true"
+          >
+            <span class="col-start-1 row-start-2">Mon</span>
+            <span class="col-start-1 row-start-4">Wed</span>
+            <span class="col-start-1 row-start-6">Fri</span>
+          </div>
+          <ol
+            class="github-activity-grid grid list-none"
+            style={`grid-template-rows:repeat(7,0.75rem);grid-auto-flow:column;grid-auto-columns:0.75rem;gap:3px`}
+            data-day-grid
+            aria-label="Daily contributions for the past year"
+          >
+            {data.days.map((day) => (
+              <li
+                class="github-activity-cell h-3 w-3 rounded-[2px] border border-slate-200 dark:border-slate-800"
+                data-source={activitySource(day)}
+                data-date={day.date}
+                style={cellStyle(day)}
+                title={activityLabel(day)}
+              >
+                <span class="sr-only">{activityLabel(day)}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-500 dark:text-slate-400" aria-label="Account color key">
+    <span class="inline-flex items-center gap-2"><span class="github-activity-key github-activity-key--personal" aria-hidden="true"></span>Personal</span>
+    <span class="inline-flex items-center gap-2"><span class="github-activity-key github-activity-key--academic" aria-hidden="true"></span>Academic</span>
+    <span class="inline-flex items-center gap-2"><span class="github-activity-key github-activity-key--both" aria-hidden="true"></span>Both on the same day</span>
+  </div>
+</div>

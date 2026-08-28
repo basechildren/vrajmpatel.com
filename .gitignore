@@ -6,6 +6,7 @@ dist/
 
 # dependencies
 node_modules/
+.pnpm-store/
 
 # logs
 npm-debug.log*
@@ -19,6 +20,10 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+# local portfolio evidence notes and unpublished source artifacts
+docs/content-evidence-backlog.md
+docs/private/
 
 # jetbrains setting folder
 .idea/

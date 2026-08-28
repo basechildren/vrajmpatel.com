@@ -6,28 +6,43 @@
 - **Name:** Vraj Patel
 - **Positioning:** Systems Integration Engineer
 - **Location:** Boulder, Colorado
-- **Focus:** Systems integration, backend services, data engineering, and applied machine learning
+- **Focus:** Systems integration, backend/platform engineering, automation, data engineering, and applied-ML infrastructure
 
 ## Education
 - **Dual M.S. programs:** Computer Science and Engineering Management, University of Colorado Boulder
 - **B.S. in Computer Science, Business Minor:** University of Colorado Boulder
 
 ## Professional Summary
-Vraj Patel builds internal services, operational data pipelines, automation, and applied ML tools at CU Boulder. His research background includes public-interest data systems, satellite telemetry, and cybersecurity.
+Vraj Patel turns operational friction into reliable software and data systems. At CU Boulder, he builds internal backend services, operational analytics, automation, and human-reviewed ML workflows. His research background includes public-interest data systems and satellite cybersecurity.
 
 ## Professional Experience
 
 ### University of Colorado Boulder · Institute of Behavioral Science
 **Systems Integration Engineer (May 2025–present)**
-- Building an internal FastAPI and PostgreSQL ticket-intelligence platform with ML-assisted incident-tag suggestions.
-- Built a React, Vite, and Recharts dashboard that identified Tuesday at 10 a.m. as peak ticket volume for staffing analysis.
-- Built a PowerShell offboarding tool that reduced each group-membership cleanup run from 15 minutes to under one minute.
+- Building an internal FastAPI, React/TypeScript, and PostgreSQL support-operations platform around a current 10,803-ticket Freshdesk-backed corpus, with support-group IDs recorded for 96.7% of records.
+- Developed and evaluated an unreleased BERT routing candidate on 6,137 training tickets, reaching 82.63% sealed-test accuracy and 0.7563 macro-F1.
+- Built a React, Vite, and Recharts dashboard that separates source intake from reportable volume and exposes busiest weekdays and peak hours independently.
+- Reduced the analytics visualization payload by 61% raw and 66% gzip by replacing Plotly with Recharts and accessible chart tables.
+- Built a PowerShell offboarding tool that reduced a typical group-membership cleanup from about 15 minutes to under one minute.
+
+### University of Colorado Boulder · Institute of Behavioral Science
+**Lead Technical Research Assistant (March 2023–May 2025)**
+- Held a separate, concurrent IBS appointment with independent visual-bias and legislative-data workstreams.
+- Built PyTorch and ResNet50 workflows for visual-bias research using New York Times COVID-19 imagery.
+- Built checkpointed Selenium, BeautifulSoup, and LegiScan pipelines for 15+ years of legislative data, reducing redundant bulk-ingestion requests by approximately 40%.
 
 ### Studio Lab · University of Colorado Boulder
-**Research Assistant, Data Engineering and ML (March 2023–May 2026)**
-- Continued the CU Boulder Studio Lab research remotely with the former PI after they moved to Princeton; the collaboration concluded in May 2026.
-- Built a cloud-hybrid pipeline for 40+ GB of election speeches and parliamentary records spanning 1981–2024.
-- Built resumable Selenium crawlers, AWS transcription and translation workflows, and document-parsing pipelines for large archival datasets.
+**Research Assistant, Data Engineering and ML (January 21–April 13, 2024)**
+- Held a paid CU Boulder appointment for the evaluation phase of the Indian parliamentary-data project.
+- Continued collaborating on the research after the Studio Lab appointment ended; that collaboration was not an extension of the Studio Lab payroll appointment.
+- Designed WER-oriented comparisons across Deepgram, Google Speech-to-Text, Amazon Transcribe, and Azure Speech.
+- Set up translation comparisons across Google Cloud Translation, Amazon Translate, and Azure Translator to determine workflow fit.
+
+### Princeton University
+**Research Assistant — Indian Parliamentary Data, functional title (January 15, 2025–May 2026)**
+- Paid directly by Princeton under a separate appointment to continue the Studio Lab project.
+- Built the scraping logic and orchestrated collection, speech and translation processing, PDF text extraction, normalization, and structured outputs end to end.
+- Processed 40+ GB of campaign audio and thousands of parliamentary documents with restartable state and reviewable intermediate artifacts.
 
 ### The Data Mine of the Rockies · Purdue University and L3Harris
 **Undergraduate Research Assistant, Satellite Telemetry Data Analysis (August 2024–May 2025)**
@@ -43,30 +58,33 @@ Vraj Patel builds internal services, operational data pipelines, automation, and
 
 ### Operational Ticket Intelligence
 - **Domain:** Software Engineering
-- **Tech:** FastAPI, PostgreSQL, React, Vite, Recharts, PyTorch
-- Internal platform joining dependable backend workflows, operational analytics, and ML-assisted incident tagging.
+- **Tech:** FastAPI, PostgreSQL, React, TypeScript, SQLAlchemy, Recharts, scikit-learn, Docker
+- Full-stack support operations joining dependable backend workflows, lifecycle-aware analytics, and advisory support-group routing suggestions.
+- Separates offline training and candidate packaging from serving while keeping interactive predictions advisory and auditable.
+- Validated a historical 10,399-ticket canonical rebuild with 35,001 conversations and 1,525 attachment-metadata rows.
+- Verified a current local database of 10,803 tickets on August 27, 2026; 96.7% carried nonblank support-group IDs. Fourteen IDs were observed, but 13 mapped to the current runtime configuration and one legacy unmapped ID appeared on three records.
+- Applied lifecycle, provenance, text-quality, group-policy, and minimum-support gates to produce a current 6,487-record, seven-class training-eligible corpus.
+- Measured 524 newly created tickets and 610 records with source update timestamps in the preceding 30 days. These are overlapping cohorts: the 610 includes every new ticket plus 86 older tickets.
+- Evaluated an unreleased BERT candidate with 82.63% sealed-test accuracy and 0.7563 macro-F1.
+- Measured the authenticated stored analytics-snapshot endpoint at 24.2 ms p50 and 45.8 ms p95 across 248 successful in-container requests; this is local warm-read evidence, not a production SLA, browser benchmark, or analytics-recomputation result.
+- Reduced analytics visualization assets from about 1.07 MB to 415 KB raw and 361 KB to 123 KB gzip.
+- Keeps external updates bounded by approval, lifecycle checks, and a checked-in hosted policy with automatic delivery disabled.
 
 ### Indian Parliamentary Data
 - **Domain:** Research and Data Engineering
-- **Tech:** Web Scraping, Digitization, AWS, PyMuPDF, Selenium
-- Data pipelines for 40+ years of parliamentary debates, 40+ GB of campaign audio, and thousands of digitized documents.
-- Draft funding proposal: https://www.vrajmpatel.com/indian-parliament-data-grant.pdf
+- **Tech:** Python, Selenium, SQLite, AWS, Google Cloud, Azure, Deepgram, PyMuPDF
+- Multi-vendor speech and translation evaluation followed by a recoverable end-to-end pipeline for parliamentary records, campaign audio, and structured analysis data.
+- Designed the evaluation phase at Studio Lab, then built the scraping, orchestration, extraction, normalization, and recovery logic under the Princeton appointment.
 
 ### SeeMyRace: Race Photo Search
 - **Domain:** Applied ML and Backend Systems
 - **Tech:** Flask, Docker, PostgreSQL, DeepFace, PaddleOCR
-- Collaborative race-photo platform with selfie search, bib detection, moderation, and asynchronous image processing.
-
-### Mental Health NLP Research
-- **Domain:** Academic NLP Research
-- **Tech:** PyTorch, Hugging Face, LLaMA 3.2, LoRA
-- Non-clinical research project for intent classification and domain-specific response experiments.
-
-### HateBlocker: Toxic-Content Detection
-- **Domain:** Machine Learning
-- **Tech:** FastAPI, BERT, XGBoost, Chrome Extension
-- Browser extension and FastAPI service that detect and hide toxic web content.
+- Collaborative Flask prototype exploring selfie- and bib-based race-photo discovery, moderation workflows, and asynchronous processing.
+- Vraj contributed UI implementation, moderation-workflow design, ML-pipeline connectors, and bib-detection experiments.
 
 ## Links
 - Portfolio: https://www.vrajmpatel.com
+- Recruiter brief: https://www.vrajmpatel.com/brief
 - Resume: https://www.vrajmpatel.com/resume.pdf
+- Personal GitHub: https://github.com/basechildren
+- Academic GitHub: https://github.com/PatVraj

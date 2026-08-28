@@ -2,8 +2,9 @@
 organization: 'University of Colorado Boulder - Institute of Behavioral Science'
 title: 'Lead Technical Research Assistant'
 period: 'March 2023 – May 2025'
-order: 4
+order: 3
 organizationMark: 'cu-boulder'
+context: 'Separate concurrent IBS appointment · independent research workstreams'
 ---
 
 - Worked with PhD researchers to build a PyTorch and ResNet50 pipeline for studying visual bias in New York Times COVID-19 imagery. Added OpenCV and scikit-image preprocessing with z-score normalization and channel-wise intensity scaling

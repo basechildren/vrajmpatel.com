@@ -1,11 +1,11 @@
 ---
 title: 'Mental Health NLP Research'
 domain: 'Machine Learning'
-featured: true
+featured: false
 order: 4
+visibility: 'archived'
 tech: ['PyTorch', 'Hugging Face', 'LLaMA 3.2', 'LoRA', 'Unsloth', 'TensorFlow']
 github: 'https://github.com/PatVraj/mental-health-nlp-pipeline/tree/main'
-paper: '/mental-health-classification-chatbot.pdf'
 summary: 'Academic NLP research that fine-tuned LLaMA 3.2 and trained BERT classifiers for mental-health text; not a clinical product.'
 ---
 

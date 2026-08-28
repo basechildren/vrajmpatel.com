@@ -2,10 +2,10 @@
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import ExperienceItem from "../components/ExperienceItem.astro";
-import OrganizationMarks from "../components/OrganizationMarks.astro";
+import ProofGrid from "../components/ProofGrid.astro";
 import ProjectCard from "../components/ProjectCard.astro";
-import { organizationMarks } from "../data/organizationMarks";
 import { profile } from "../data/profile";
+import { capabilities, proofPoints } from "../data/recruiter";
 import { isCaseStudy, isPublicProject, sortProjects } from "../lib/projects";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
@@ -26,12 +26,12 @@ const recentExperience = (await getCollection("experience"))
   schemaType="Person"
 >
   <section
-    class="grid items-start gap-10 border-b border-slate-200 pb-16 sm:grid-cols-[1fr_11rem] sm:gap-14 sm:pb-20 dark:border-slate-800"
+    class="grid items-start gap-10 sm:grid-cols-[1fr_11rem] sm:gap-14"
     aria-labelledby="intro-heading"
   >
     <div>
       <p class="font-mono text-xs text-slate-500 dark:text-slate-400">
-        {profile.location}
+        {profile.role} · {profile.location}
       </p>
       <h1
         id="intro-heading"
@@ -42,17 +42,24 @@ const recentExperience = (await getCollection("experience"))
       <p
         class="mt-5 max-w-2xl text-2xl font-medium leading-tight tracking-[-0.025em] text-slate-800 dark:text-slate-200 sm:text-3xl"
       >
-        Systems integration engineer building reliable services and data systems.
+        I turn operational bottlenecks into reliable software and data systems.
       </p>
       <p class="mt-6 max-w-2xl text-base leading-8 text-slate-600 dark:text-slate-400 sm:text-lg">
-        At CU Boulder’s Institute of Behavioral Science, I build internal services,
-        automation, and applied ML tools for day-to-day operations. My research
-        spans public-interest data, satellite telemetry, and cybersecurity.
+        At CU Boulder’s Institute of Behavioral Science, I build backend services,
+        automation, operational analytics, and ML-assisted workflows designed for
+        day-to-day use. My research background spans public-interest data and
+        satellite cybersecurity.
       </p>
       <div class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-medium">
         <a
-          href="#selected-work"
+          href="/brief"
           class="inline-flex min-h-11 items-center rounded-md bg-slate-950 px-4 text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 dark:bg-white dark:text-slate-950 dark:hover:bg-blue-200 dark:focus-visible:ring-offset-slate-950"
+        >
+          Recruiter brief
+        </a>
+        <a
+          href="#selected-work"
+          class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
         >
           Selected work
         </a>
@@ -66,42 +73,7 @@ const recentExperience = (await getCollection("experience"))
         >
           Resume
         </a>
-        <a
-          href="https://www.linkedin.com/in/vrajmp/"
-          target="_blank"
-          rel="noopener noreferrer"
-          data-ph-event="social_profile_clicked"
-          data-ph-network="linkedin"
-          data-ph-placement="hero"
-          class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
-        >
-          LinkedIn
-        </a>
       </div>
-
-      <ul
-        aria-label="Professional affiliations"
-        class="mt-10 grid gap-x-8 gap-y-4 border-t border-slate-200 pt-6 sm:grid-cols-2"
-      >
-        {
-          profile.affiliations.map((affiliation) => (
-            <li class="flex items-center gap-4">
-              <OrganizationMarks
-                {...organizationMarks[affiliation.mark]}
-                size="compact"
-              />
-              <div class="min-w-0">
-                <p class="font-mono text-[0.65rem] text-slate-500 dark:text-slate-400">
-                  {affiliation.discipline}
-                </p>
-                <p class="mt-0.5 text-sm font-medium leading-5 text-slate-800 dark:text-slate-200">
-                  {affiliation.organization}
-                </p>
-              </div>
-            </li>
-          ))
-        }
-      </ul>
     </div>
 
     <Image
@@ -115,6 +87,53 @@ const recentExperience = (await getCollection("experience"))
     />
   </section>
 
+  <section class="border-b border-slate-200 pb-16 pt-10 sm:pb-20 sm:pt-14 dark:border-slate-800" aria-labelledby="proof-heading">
+    <p id="proof-heading" class="mb-5 font-mono text-xs text-slate-500 dark:text-slate-400">
+      Evidence at a glance
+    </p>
+    <ProofGrid items={proofPoints} />
+  </section>
+
+  <section class="pt-16 sm:pt-20" aria-labelledby="capabilities-heading">
+    <div class="max-w-3xl">
+      <p class="font-mono text-xs text-slate-500 dark:text-slate-400">How I contribute</p>
+      <h2 id="capabilities-heading" class="mt-2 text-2xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+        Engineering range, backed by specific work
+      </h2>
+      <p class="mt-3 text-base leading-7 text-slate-600 dark:text-slate-400">
+        I work across systems integration, backend engineering, automation, and
+        applied ML, with an emphasis on explicit state, review boundaries, and
+        recovery when a long-running job fails.
+      </p>
+    </div>
+
+    <div class="mt-8 border-y border-slate-200 dark:border-slate-800">
+      {
+        capabilities.map((capability, index) => (
+          <article class:list={["grid gap-4 py-7 md:grid-cols-[15rem_1fr] md:gap-10", index > 0 && "border-t border-slate-200 dark:border-slate-800"]}>
+            <h3 class="text-lg font-semibold leading-7 text-slate-950 dark:text-white">
+              {capability.title}
+            </h3>
+            <div>
+              <p class="max-w-2xl text-[0.95rem] leading-7 text-slate-600 dark:text-slate-400">
+                {capability.summary}
+              </p>
+              <p class="mt-3 font-mono text-xs leading-5 text-slate-500 dark:text-slate-400">
+                {capability.evidence}
+              </p>
+              <a
+                href={capability.href}
+                class="mt-4 inline-block text-sm font-medium underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+              >
+                {capability.linkLabel}
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
   <section id="selected-work" class="scroll-mt-6 pt-16 sm:pt-20" aria-labelledby="work-heading">
     <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
@@ -123,7 +142,7 @@ const recentExperience = (await getCollection("experience"))
           Selected work
         </h2>
         <p class="mt-3 text-base text-slate-600 dark:text-slate-400">
-          Applied ML, backend systems, and data-engineering projects.
+          Case studies with contribution, constraints, system decisions, and evidence.
         </p>
       </div>
       <a

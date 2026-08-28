@@ -1,7 +1,8 @@
 import { OGImageRoute } from 'astro-og-canvas';
 import { getCollection } from 'astro:content';
+import { isPublicProject } from '../../lib/projects';
 
-const collection = await getCollection('projects');
+const collection = (await getCollection('projects')).filter(isPublicProject);
 const pages = Object.fromEntries(
   collection.map(({ id, data }) => [id, data])
 );

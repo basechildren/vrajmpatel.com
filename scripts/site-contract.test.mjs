@@ -32,6 +32,7 @@ test("about leads with the combined public GitHub activity", async () => {
   assert.ok(headingIndex > -1, "GitHub activity heading was not generated");
   assert.ok(backgroundIndex > headingIndex, "GitHub activity should precede the biography");
   assert.match(about, /contributions across two accounts/);
+  assert.match(about, /<time[^>]+datetime="[^"]+Z"[^>]+data-activity-sync-time/);
   assert.match(about, /github\.com\/basechildren/);
   assert.match(about, /github\.com\/PatVraj/);
   assert.match(about, /data-source="both"/);

@@ -36,7 +36,7 @@ const cellStyle = (day: (typeof data.days)[number]) => {
       <span data-activity-total>{data.totalContributions}</span> contributions across two accounts
     </p>
     <p class="font-mono text-xs leading-5 text-slate-500 dark:text-slate-400" data-activity-status>
-      Last synced {formattedRefreshTime(data.generatedAt)}
+      Last synced <time datetime={data.generatedAt} data-activity-sync-time>{formattedRefreshTime(data.generatedAt)}</time>
     </p>
   </div>
 
@@ -120,3 +120,25 @@ const cellStyle = (day: (typeof data.days)[number]) => {
     <span class="inline-flex items-center gap-2"><span class="github-activity-key github-activity-key--both" aria-hidden="true"></span>Both on the same day</span>
   </div>
 </div>
+
+<script>
+  const localTimeFormatter = new Intl.DateTimeFormat(undefined, {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZoneName: "short",
+  });
+  const localTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  for (const time of document.querySelectorAll<HTMLTimeElement>("[data-activity-sync-time]")) {
+    const generatedAt = new Date(time.dateTime);
+    if (Number.isNaN(generatedAt.valueOf())) continue;
+
+    time.textContent = localTimeFormatter.format(generatedAt);
+    time.title = localTimeZone
+      ? `Shown in your local time (${localTimeZone})`
+      : "Shown in your local time";
+  }
+</script>

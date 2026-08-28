@@ -2,8 +2,9 @@
 organization: 'The Data Mine of the Rockies · Purdue University and L3Harris'
 title: 'Undergraduate Research Assistant, Satellite Telemetry Data Analysis'
 period: 'August 2024–May 2025'
-order: 3
+order: 4
 organizationMark: 'purdue-l3harris'
+context: 'Purdue research program · L3Harris industry collaboration'
 poster: 'https://datamine.purdue.edu/posters/1-DMR_S25_Poster_L3_48-x-36-1.pdf'
 posterLabel: 'Spring 2025 research poster'
 ---

@@ -33,6 +33,11 @@ const mark = entry.data.organizationMark
         <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">
           {entry.data.organization}
         </p>
+        {entry.data.context && (
+          <p class="mt-2 text-xs leading-5 text-slate-500 dark:text-slate-400">
+            {entry.data.context}
+          </p>
+        )}
       </div>
     </article>
   ) : (
@@ -58,6 +63,11 @@ const mark = entry.data.organizationMark
         <p class="mt-1 text-sm font-medium leading-6 text-slate-600 dark:text-slate-400 sm:text-base">
           {entry.data.organization}
         </p>
+        {entry.data.context && (
+          <p class="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400">
+            {entry.data.context}
+          </p>
+        )}
         <div class="mt-5 text-[0.95rem] leading-7 text-slate-600 [&_a]:underline [&_a]:decoration-slate-300 [&_a]:underline-offset-4 [&_a]:hover:text-blue-700 [&_li]:pl-1 [&_strong]:font-semibold [&_strong]:text-slate-800 [&_ul]:list-disc [&_ul]:space-y-3 [&_ul]:pl-5 dark:text-slate-400 dark:[&_a]:decoration-slate-700 dark:[&_a]:hover:text-blue-400 dark:[&_strong]:text-slate-200">
           <slot />
         </div>

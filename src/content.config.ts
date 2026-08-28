@@ -10,6 +10,7 @@ const experience = defineCollection({
     period: z.string(),
     order: z.number(),
     location: z.string().optional(),
+    context: z.string().optional(),
     poster: z.string().optional(),
     posterLabel: z.string().optional(),
     organizationMark: z
@@ -42,6 +43,30 @@ const projects = defineCollection({
     privateRepo: z.boolean().optional(),
     tags: z.array(z.string()).optional(),
     summary: z.string().optional(),
+    contribution: z.string().optional(),
+    setting: z.string().optional(),
+    status: z.string().optional(),
+    systemPathLabel: z.string().optional(),
+    systemPathHeading: z.string().optional(),
+    systemPathDescription: z.string().optional(),
+    proof: z
+      .array(
+        z.object({
+          value: z.string(),
+          label: z.string(),
+        }),
+      )
+      .max(3)
+      .optional(),
+    systemPath: z
+      .array(
+        z.object({
+          title: z.string(),
+          purpose: z.string(),
+          technical: z.string(),
+        }),
+      )
+      .optional(),
   }),
 });
 

@@ -4,10 +4,10 @@ domain: 'Systems Infrastructure'
 featured: false
 order: 6
 presentation: 'note'
-tech: ['TrueNAS', 'Docker Swarm', 'Portainer', 'Cloudflare Tunnels', 'Tailscale']
-github: 'https://github.com/PatVraj/homelab-infrastructure'
+visibility: 'archived'
+tech: ['TrueNAS', 'Docker Swarm', 'Portainer', 'Cloudflare Tunnel', 'Tailscale']
 privateRepo: true
-summary: '24 TB TrueNAS server running Docker Swarm services with Cloudflare Tunnel and Tailscale access.'
+summary: 'Personal TrueNAS SCALE home-lab work involving containerized media services and private remote-access tooling.'
 ---
 
-Run a 24 TB TrueNAS Scale home server. Docker Swarm and Portainer manage Jellyfin, Immich, and Tdarr, while Cloudflare Tunnel and Tailscale provide remote access.
+Personal TrueNAS SCALE home-lab work involving containerized media services and private remote-access tooling. Exact capacity, topology, and current access boundaries remain unpublished until reverified.

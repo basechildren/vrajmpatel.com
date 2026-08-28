@@ -1,13 +1,14 @@
 ---
 organization: 'Studio Lab · University of Colorado Boulder'
 title: 'Research Assistant, Data Engineering and ML'
-period: 'March 2023–May 2026'
-order: 2
+period: 'January 21–April 13, 2024'
+order: 5
 organizationMark: 'cu-boulder'
+context: 'Paid CU Boulder appointment · speech and translation tool evaluation'
 ---
 
-- Continued the CU Boulder Studio Lab research remotely at the PI's invitation after they moved to Princeton; the collaboration concluded in May 2026
-- Built a cloud-hybrid pipeline for 40+ GB of 2014 and 2019 election speeches and Lok Sabha debates from 1981-2024
-- Built an AWS workflow with S3, Transcribe, Translate, and Boto3. Used custom language models to improve recognition of political entities and reduce word error rate
-- Built a resumable Selenium crawler with SQLite state for the Parliament Digital Library, including dynamic pagination and OneDrive synchronization
-- Parsed thousands of PDF statements with PyMuPDF and FuzzyWuzzy, then mapped OCR text to standardized ministry names
+- Designed comparative speech-to-text evaluations using word error rate to study Deepgram, Google Speech-to-Text, Amazon Transcribe, and Azure Speech for the research workflow
+- Set up parallel translation comparisons across Google Cloud Translation, Amazon Translate, and Azure Translator
+- Researched service configuration and language-adaptation options for political names and domain-specific vocabulary
+- Documented tool behavior and tradeoffs so the project could choose components based on workflow fit rather than vendor claims
+- Began the Indian parliamentary-data research under this paid Studio Lab appointment; the later Princeton appointment covered the end-to-end data-engineering phase

@@ -6,6 +6,12 @@ interface Affiliation {
   mark: OrganizationMark;
 }
 
+interface GitHubProfile {
+  label: "Personal GitHub" | "Academic GitHub";
+  username: string;
+  href: `https://github.com/${string}`;
+}
+
 export const profile = {
   name: "Vraj Patel",
   location: "Boulder, Colorado",
@@ -16,6 +22,18 @@ export const profile = {
     short: "CU Boulder · Institute of Behavioral Science",
   },
   education: "Dual M.S. · Computer Science + Engineering Management",
+  githubProfiles: [
+    {
+      label: "Personal GitHub",
+      username: "basechildren",
+      href: "https://github.com/basechildren",
+    },
+    {
+      label: "Academic GitHub",
+      username: "PatVraj",
+      href: "https://github.com/PatVraj",
+    },
+  ] satisfies readonly GitHubProfile[],
   affiliations: [
     {
       discipline: "Engineering",
@@ -24,17 +42,22 @@ export const profile = {
     },
     {
       discipline: "Research",
-      organization: "Princeton · Studio Lab",
+      organization: "Studio Lab · CU Boulder",
+      mark: "cu-boulder",
+    },
+    {
+      discipline: "Research",
+      organization: "Princeton University",
       mark: "princeton",
     },
     {
       discipline: "Research",
-      organization: "Purdue University",
+      organization: "The Data Mine · Purdue University",
       mark: "purdue",
     },
     {
       discipline: "Research",
-      organization: "L3Harris",
+      organization: "L3Harris collaboration",
       mark: "l3harris",
     },
   ] satisfies readonly Affiliation[],

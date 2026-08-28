@@ -5,6 +5,7 @@ import test from "node:test";
 import {
   accountFor,
   activitySource,
+  formattedRefreshTime,
   isGitHubActivityData,
   monthMarkers,
 } from "../src/lib/githubActivity.ts";
@@ -61,4 +62,11 @@ test("calendar helpers preserve overlay source and useful month markers", () => 
   assert.ok(markers.length >= 11);
   assert.equal(markers[0]?.label, "Sep");
   assert.ok(markers.every(({ week }, index) => index === 0 || week > markers[index - 1].week));
+});
+
+test("refresh time keeps a deterministic UTC fallback before local enhancement", () => {
+  assert.equal(
+    formattedRefreshTime("2026-08-28T00:42:00.000Z"),
+    "Aug 28, 2026, 12:42 AM UTC",
+  );
 });

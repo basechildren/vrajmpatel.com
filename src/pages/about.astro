@@ -1,5 +1,6 @@
 ---
 import OrganizationMarks from "../components/OrganizationMarks.astro";
+import GitHubActivity from "../components/GitHubActivity.astro";
 import { organizationMarks } from "../data/organizationMarks";
 import { profile } from "../data/profile";
 import BaseLayout from "../layouts/BaseLayout.astro";
@@ -16,7 +17,21 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </h1>
   </header>
 
-  <div class="grid gap-12 md:grid-cols-[12rem_1fr] md:gap-16">
+  <section class="border-y border-slate-200 py-10 sm:py-12 dark:border-slate-800" aria-labelledby="github-activity-heading">
+    <div class="max-w-3xl">
+      <p class="font-mono text-xs text-slate-500 dark:text-slate-400">Public engineering activity</p>
+      <h2 id="github-activity-heading" class="mt-2 text-2xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+        GitHub activity across personal and academic work
+      </h2>
+      <p class="mt-3 text-base leading-7 text-slate-600 dark:text-slate-400">
+        One calendar overlays the public contribution histories of my personal
+        and academic profiles. GitHub data is synced four times daily.
+      </p>
+    </div>
+    <GitHubActivity />
+  </section>
+
+  <div class="mt-14 grid gap-12 sm:mt-16 md:grid-cols-[12rem_1fr] md:gap-16">
     <aside class="text-sm leading-6 text-slate-600 dark:text-slate-400">
       <dl class="space-y-5">
         <div>
@@ -42,14 +57,19 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           data-ph-network="linkedin"
           class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
         >LinkedIn</a>
-        <a
-          href="https://github.com/PatVraj"
-          target="_blank"
-          rel="noopener noreferrer"
-          data-ph-event="social_profile_clicked"
-          data-ph-network="github"
-          class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
-        >GitHub</a>
+        {
+          profile.githubProfiles.map(({ href, label, username }) => (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-ph-event="social_profile_clicked"
+              data-ph-network="github"
+              data-ph-account={username}
+              class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+            >{label}</a>
+          ))
+        }
         <a
           href="/resume.pdf"
           target="_blank"
@@ -73,12 +93,15 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             and an ML-assisted ticket-intelligence platform.
           </p>
           <p>
-            I continued CU Boulder Studio Lab research remotely with the former
-            PI after they moved to Princeton; that collaboration concluded in
-            May 2026. The work covered four decades of parliamentary records
-            and campaign audio, combining data engineering, applied NLP, and
-            the less glamorous job of making long-running pipelines recover
-            cleanly.
+            My Indian parliamentary-data work began under a paid CU Boulder
+            Studio Lab appointment from January 21 through April 13, 2024. After
+            that appointment ended, I continued collaborating on the research.
+            Princeton later paid me directly under a separate appointment from
+            January 15, 2025 through May 2026. Studio Lab was the speech and
+            translation tool-evaluation phase; Princeton was the scraping,
+            orchestration, and data-structuring phase. Both were distinct from my
+            concurrent Lead Technical Research Assistant appointment at CU
+            Boulder’s Institute of Behavioral Science.
           </p>
           <p>
             Through Purdue’s Data Mine of the Rockies, I worked directly with
@@ -89,8 +112,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           <p>
             I’m completing dual M.S. programs in Computer Science and Engineering
             Management at CU Boulder, where I earned a B.S. in Computer Science
-            with a Business minor. Outside work, I run a 24 TB TrueNAS and Docker
-            home lab to learn by operating the systems I build.
+            with a Business minor. Outside work, I use a personal TrueNAS and
+            Docker home lab to learn by operating the systems I build.
           </p>
           <p>
             I’m also developing a paper on secure GitHub repository collaboration
@@ -130,7 +153,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
       <section class="mt-10 border-t border-slate-200 pt-9 dark:border-slate-800" aria-labelledby="affiliations-heading">
         <h2 id="affiliations-heading" class="text-2xl font-semibold tracking-tight text-slate-950 dark:text-white">
-          Research affiliations
+          Research appointments and collaborations
         </h2>
         <ul class="mt-6 grid gap-4 sm:grid-cols-2">
           {
@@ -151,16 +174,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </ul>
       </section>
 
-      <section class="mt-10 border-t border-slate-200 pt-9 dark:border-slate-800" aria-labelledby="focus-heading">
-        <h2 id="focus-heading" class="text-2xl font-semibold tracking-tight text-slate-950 dark:text-white">
-          Focus
-        </h2>
-        <p class="mt-5 text-base leading-8 text-slate-600 dark:text-slate-400">
-          Systems integration, backend services, data engineering, applied NLP,
-          and self-hosted infrastructure. I work primarily in Python,
-          TypeScript, PostgreSQL, Docker, and AWS.
-        </p>
-      </section>
     </div>
   </div>
+
 </BaseLayout>

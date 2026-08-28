@@ -1,0 +1,39 @@
+---
+import type { ProofPoint } from "../data/recruiter";
+
+interface Props {
+  items: readonly ProofPoint[];
+  class?: string;
+}
+
+const { items, class: className } = Astro.props;
+---
+
+<dl
+  class:list={[
+    "grid border-y border-slate-200 sm:grid-cols-2 dark:border-slate-800",
+    className,
+  ]}
+>
+  {
+    items.map((item, index) => (
+      <div
+        class:list={[
+          "py-5 sm:px-6",
+          index > 0 && "border-t border-slate-200 dark:border-slate-800",
+          index === 1 && "sm:border-t-0",
+          index % 2 === 1 && "sm:border-l sm:border-slate-200 dark:sm:border-slate-800",
+          index > 1 && "sm:border-t",
+          index % 2 === 0 && "sm:pl-0",
+        ]}
+      >
+        <dt class="text-lg font-semibold tracking-tight text-slate-950 dark:text-white sm:text-xl">
+          {item.value}
+        </dt>
+        <dd class="mt-1 max-w-sm text-sm leading-6 text-slate-600 dark:text-slate-400">
+          {item.label}
+        </dd>
+      </div>
+    ))
+  }
+</dl>

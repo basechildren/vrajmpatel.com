@@ -42,3 +42,84 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+@media print {
+  html,
+  body {
+    background: white !important;
+    color: #0f172a !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: none !important;
+    color: #0f172a !important;
+    text-shadow: none !important;
+  }
+
+  a {
+    color: #0f172a !important;
+    text-decoration: underline !important;
+  }
+
+  details > :not(summary) {
+    display: block !important;
+  }
+
+  details summary {
+    display: none !important;
+  }
+}
+
+.github-activity-cell,
+.github-activity-key {
+  background: #e2e8f0;
+}
+
+.github-activity-cell[data-source="personal"] {
+  background: var(--personal-color);
+}
+
+.github-activity-cell[data-source="academic"] {
+  background: var(--academic-color);
+}
+
+.github-activity-cell[data-source="both"] {
+  background: linear-gradient(
+    135deg,
+    var(--personal-color) 0 50%,
+    var(--academic-color) 50% 100%
+  );
+}
+
+.github-activity-key {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  flex: 0 0 auto;
+  border: 1px solid #cbd5e1;
+  border-radius: 2px;
+}
+
+.github-activity-key--personal {
+  background: #3b82f6;
+}
+
+.github-activity-key--academic {
+  background: #22c55e;
+}
+
+.github-activity-key--both {
+  background: linear-gradient(135deg, #3b82f6 0 50%, #22c55e 50% 100%);
+}
+
+.dark .github-activity-cell[data-source="none"] {
+  background: #1e293b;
+}
+
+.dark .github-activity-key {
+  border-color: #334155;
+}

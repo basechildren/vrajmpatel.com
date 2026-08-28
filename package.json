@@ -12,6 +12,7 @@
     "check": "astro check",
     "privacy:check": "node scripts/check-public-privacy.mjs",
     "test": "node --test scripts/*.test.ts",
+    "test:site": "node --test scripts/site-contract.test.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },

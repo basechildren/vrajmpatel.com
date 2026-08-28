@@ -23,6 +23,7 @@ const {
 } = Astro.props;
 
 const nav = [
+  { href: "/brief", label: "Brief" },
   { href: "/projects", label: "Work" },
   { href: "/experience", label: "Experience" },
   { href: "/about", label: "About" },
@@ -50,7 +51,7 @@ const person = {
   },
   sameAs: [
     "https://www.linkedin.com/in/vrajmp/",
-    "https://github.com/PatVraj",
+    ...profile.githubProfiles.map(({ href }) => href),
   ],
 };
 
@@ -138,7 +139,7 @@ const structuredData =
       Skip to content
     </a>
 
-    <header class="border-b border-slate-200 dark:border-slate-800">
+    <header class="border-b border-slate-200 print:hidden dark:border-slate-800">
       <div
         class="mx-auto flex min-h-16 max-w-5xl items-center justify-between gap-4 px-5 sm:px-8"
       >
@@ -223,11 +224,11 @@ const structuredData =
       </div>
     </header>
 
-    <main id="main" class="mx-auto w-full max-w-5xl flex-1 px-5 py-14 sm:px-8 sm:py-20">
+    <main id="main" class="mx-auto w-full max-w-5xl flex-1 px-5 py-14 print:max-w-none print:px-0 print:py-0 sm:px-8 sm:py-20">
       <slot />
     </main>
 
-    <footer class="border-t border-slate-200 dark:border-slate-800">
+    <footer class="border-t border-slate-200 print:hidden dark:border-slate-800">
       <div
         class="mx-auto flex max-w-5xl flex-col gap-4 px-5 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-8 dark:text-slate-400"
       >
@@ -241,14 +242,19 @@ const structuredData =
             data-ph-network="linkedin"
             class="underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-white"
           >LinkedIn</a>
-          <a
-            href="https://github.com/PatVraj"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-ph-event="social_profile_clicked"
-            data-ph-network="github"
-            class="underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-white"
-          >GitHub</a>
+          {
+            profile.githubProfiles.map(({ href, label, username }) => (
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-ph-event="social_profile_clicked"
+                data-ph-network="github"
+                data-ph-account={username}
+                class="underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-white"
+              >{label}</a>
+            ))
+          }
         </nav>
       </div>
     </footer>

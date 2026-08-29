@@ -93,7 +93,7 @@ test("archived projects and retired research PDFs are not published", async () =
   }
 });
 
-test("privacy policy is published, linked, and consent-gated", async () => {
+test("privacy policy is published, linked, and opt-out capable", async () => {
   const [homepage, privacy] = await Promise.all([
     readPage(),
     readPage("privacy"),
@@ -101,15 +101,20 @@ test("privacy policy is published, linked, and consent-gated", async () => {
 
   assert.match(homepage, /href="\/privacy"/);
   assert.match(homepage, /Privacy choices/);
-  assert.match(homepage, /data-consent-analytics/);
-  assert.match(homepage, /data-consent-replay/);
   assert.match(homepage, /name="posthog-config"/);
   assert.match(homepage, /data-ui-host="https:\/\/us\.posthog\.com"/);
+  assert.match(homepage, /data-consent-analytics[^>]*checked/);
+  assert.match(homepage, /data-consent-replay[^>]*checked/);
+  assert.match(homepage, /turn either off/i);
+  assert.doesNotMatch(homepage, /stay off until you save/i);
 
   assert.match(privacy, /<h1[^>]*>[\s\S]*Privacy/);
   assert.match(privacy, /session replay/i);
+  assert.match(privacy, /on by default/i);
+  assert.match(privacy, /opt out/i);
   assert.match(privacy, /Do Not Track/);
   assert.match(privacy, /Global Privacy Control/);
+  assert.doesNotMatch(privacy, /both default to off/i);
   assert.doesNotMatch(privacy, /Terms of Service/);
   assert.doesNotMatch(privacy, /mailto:/i);
 

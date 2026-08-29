@@ -140,26 +140,26 @@ const apiHost = normalizeApiHost(
         }
       };
 
+      const initialConsent = readConsent();
+
       posthog.init(projectKey, {
         api_host: apiHost,
         ui_host: uiHost,
         person_profiles: "identified_only",
-        autocapture: false,
+        autocapture: initialConsent.analytics,
         rageclick: false,
         capture_pageview: false,
-        capture_pageleave: false,
-        capture_performance: false,
-        capture_heatmaps: false,
+        capture_pageleave: initialConsent.analytics,
+        capture_performance: initialConsent.analytics,
+        capture_heatmaps: initialConsent.analytics,
         capture_dead_clicks: false,
         capture_exceptions: false,
-        disable_session_recording: true,
+        disable_session_recording: !initialConsent.replay,
         disable_surveys: true,
         disable_scroll_properties: false,
         disableDeviceModel: true,
         disable_external_dependency_loading: false,
         advanced_disable_flags: true,
-        opt_out_capturing_by_default: true,
-        opt_out_persistence_by_default: true,
         save_campaign_params: true,
         save_referrer: true,
         disable_capture_url_hashes: true,
@@ -167,7 +167,8 @@ const apiHost = normalizeApiHost(
         cross_subdomain_cookie: false,
         secure_cookie: true,
         session_recording: maskedRecording,
-        before_send: (event) => filterConsentedPostHogEvent(event, readConsent()),
+        before_send: (event) =>
+          filterConsentedPostHogEvent(event, readConsent()),
         loaded: () => applyConsent(readConsent()),
       });
 

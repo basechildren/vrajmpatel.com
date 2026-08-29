@@ -1,4 +1,5 @@
 export const CONSENT_STORAGE_KEY = "vrajmpatel-analytics-consent";
+export const CONSENT_NOTICE_KEY = "vrajmpatel-analytics-notice";
 export const CONSENT_CHANGE_EVENT = "vraj:consent-change";
 
 export type PostHogConsent = {
@@ -7,6 +8,11 @@ export type PostHogConsent = {
 };
 
 export const defaultConsent = (): PostHogConsent => ({
+  analytics: true,
+  replay: true,
+});
+
+export const optedOutConsent = (): PostHogConsent => ({
   analytics: false,
   replay: false,
 });

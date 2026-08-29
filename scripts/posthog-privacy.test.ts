@@ -205,7 +205,7 @@ test("passes through a dropped PostHog event", () => {
   assert.equal(sanitizePostHogEvent(null), null);
 });
 
-test("enforces independent analytics and replay grants before send", () => {
+test("enforces independent analytics and replay opt-outs before send", () => {
   const pageview: CaptureResult = {
     uuid: "00000000-0000-7000-8000-000000000007",
     event: "$pageview",
@@ -217,6 +217,16 @@ test("enforces independent analytics and replay grants before send", () => {
     properties: { $snapshot_data: [] },
   };
 
+  assert.equal(
+    filterConsentedPostHogEvent(pageview, { analytics: true, replay: true })
+      ?.event,
+    "$pageview",
+  );
+  assert.equal(
+    filterConsentedPostHogEvent(snapshot, { analytics: true, replay: true })
+      ?.event,
+    "$snapshot",
+  );
   assert.equal(
     filterConsentedPostHogEvent(pageview, { analytics: false, replay: true }),
     null,

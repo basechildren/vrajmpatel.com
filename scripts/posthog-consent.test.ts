@@ -2,18 +2,22 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  CONSENT_NOTICE_KEY,
   CONSENT_STORAGE_KEY,
   defaultConsent,
   hasBrowserPrivacySignal,
   hasTrackingGrant,
   isProductionAnalyticsHost,
+  optedOutConsent,
   parseStoredConsent,
   serializeConsent,
 } from "../src/lib/posthogConsent.ts";
 
-test("defaults both analytics and replay grants to off", () => {
-  assert.deepEqual(defaultConsent(), { analytics: false, replay: false });
-  assert.equal(hasTrackingGrant(defaultConsent()), false);
+test("defaults both analytics and replay to on", () => {
+  assert.deepEqual(defaultConsent(), { analytics: true, replay: true });
+  assert.equal(hasTrackingGrant(defaultConsent()), true);
+  assert.deepEqual(optedOutConsent(), { analytics: false, replay: false });
+  assert.equal(hasTrackingGrant(optedOutConsent()), false);
 });
 
 test("parses only complete boolean consent records", () => {
@@ -28,14 +32,19 @@ test("parses only complete boolean consent records", () => {
     analytics: true,
     replay: false,
   });
+  assert.deepEqual(parseStoredConsent('{"analytics":false,"replay":false}'), {
+    analytics: false,
+    replay: false,
+  });
   assert.equal(
     serializeConsent({ analytics: true, replay: true }),
     '{"analytics":true,"replay":true}',
   );
   assert.equal(CONSENT_STORAGE_KEY, "vrajmpatel-analytics-consent");
+  assert.equal(CONSENT_NOTICE_KEY, "vrajmpatel-analytics-notice");
 });
 
-test("treats either grant as enough to enable PostHog capturing", () => {
+test("treats either remaining grant as enough to keep PostHog capturing", () => {
   assert.equal(hasTrackingGrant({ analytics: true, replay: false }), true);
   assert.equal(hasTrackingGrant({ analytics: false, replay: true }), true);
   assert.equal(hasTrackingGrant({ analytics: true, replay: true }), true);

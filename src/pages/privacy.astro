@@ -4,7 +4,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 <BaseLayout
   title="Privacy — Vraj Patel"
-  description="How vrajmpatel.com uses optional PostHog analytics and session replay, and how to change those choices."
+  description="How vrajmpatel.com uses PostHog analytics and session replay by default, and how to opt out."
 >
   <header class="max-w-3xl pb-10 sm:pb-14">
     <p class="font-mono text-xs text-slate-500 dark:text-slate-400">Site</p>
@@ -12,8 +12,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       Privacy
     </h1>
     <p class="mt-5 text-lg leading-8 text-slate-600 dark:text-slate-400">
-      This personal portfolio is a static site. Optional measurement runs only
-      after you opt in, and never when your browser asks not to be tracked.
+      This personal portfolio is a static site. Measurement is on by default.
+      You can opt out of analytics and session replay independently, and
+      nothing is collected when your browser asks not to be tracked.
     </p>
   </header>
 
@@ -23,16 +24,16 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         Your choices
       </h2>
       <p class="mt-5">
-        Analytics and session replay are independent grants. Both default to
-        off. Nothing is sent to PostHog until you save a choice that turns a
-        grant on. You can change or withdraw those choices from
+        Analytics and masked session replay both start on. You can turn either
+        off from
         <strong class="font-medium text-slate-800 dark:text-slate-200">Privacy choices</strong>
-        in the footer, or from the banner the first time you visit.
+        in the footer, or from the notice shown on a first visit. Those choices
+        persist on this device.
       </p>
       <p class="mt-5">
         If your browser sends a Do Not Track or Global Privacy Control signal,
-        this site treats that as a full opt-out. The tracker does not load, and
-        a later opt-in on this device is ignored while that signal remains.
+        this site treats that as a full opt-out. The tracker does not load
+        while that signal remains.
       </p>
     </section>
 
@@ -41,9 +42,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         Analytics
       </h2>
       <p class="mt-5">
-        If you allow analytics, PostHog records page views, page leaves (used
-        for bounce rate and session duration), autocaptured clicks and form
-        interactions, heatmaps, and web vitals. Person profiles stay
+        Unless you opt out of analytics, PostHog records page views, page
+        leaves (used for bounce rate and session duration), autocaptured clicks
+        and form interactions, heatmaps, and web vitals. Person profiles stay
         <code class="font-mono text-sm">identified_only</code>: this site does
         not call <code class="font-mono text-sm">identify()</code> or attach a
         name or account to you.
@@ -61,9 +62,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         Session replay
       </h2>
       <p class="mt-5">
-        If you allow session replay, PostHog records a masked replay of the
-        visit. All inputs are masked, including email, password, and textarea
-        fields. Replay can be on while analytics is off, and the reverse.
+        Unless you opt out of session replay, PostHog records a masked replay
+        of the visit. All inputs are masked, including email, password, and
+        textarea fields. Replay can be on while analytics is off, and the
+        reverse.
       </p>
     </section>
 
@@ -74,9 +76,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <p class="mt-5">
         Your analytics and replay choices are saved in local storage under
         <code class="font-mono text-sm">vrajmpatel-analytics-consent</code>.
-        After a grant, PostHog may also set its own first-party cookies or
-        local storage keys so page leaves and sessions work. Theme preference
-        is stored separately and is not sent to PostHog.
+        PostHog may also set its own first-party cookies or local storage keys
+        so page leaves and sessions work. Theme preference is stored separately
+        and is not sent to PostHog.
       </p>
     </section>
 
@@ -85,10 +87,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         Who processes the data
       </h2>
       <p class="mt-5">
-        Consented events are processed by PostHog on US Cloud. The public
-        project token is a browser key, not a personal API key. The site is
-        hosted on GitHub Pages. Ingestion currently goes to PostHog’s US
-        endpoint unless a first-party proxy host is configured.
+        Events are processed by PostHog on US Cloud. The public project token
+        is a browser key, not a personal API key. The site is hosted on GitHub
+        Pages. Ingestion currently goes to PostHog’s US endpoint unless a
+        first-party proxy host is configured.
       </p>
     </section>
 

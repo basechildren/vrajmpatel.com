@@ -38,11 +38,10 @@ domain. Always keep `ui_host` at `https://us.posthog.com`.
 
 The production tracker runs only on the canonical site. It honors Do Not
 Track and Global Privacy Control as a full opt-out. Otherwise it loads
-`posthog-js` opted out by default and waits for two independent grants:
-analytics (pageviews, `$pageleave`, autocapture, heatmaps, web vitals) and
-masked session replay. Choices persist in local storage and can be changed
-from the footer. See `/privacy`, `src/components/Tracker.astro`, and
-`src/lib/posthogPrivacy.ts`.
+`posthog-js` with analytics and masked session replay on by default.
+Visitors can opt out of either independently; choices persist in local
+storage and can be changed from the footer. See `/privacy`,
+`src/components/Tracker.astro`, and `src/lib/posthogPrivacy.ts`.
 
 The slim `posthog-js` bundle cannot load session recording, so the tracker
 uses the full module.

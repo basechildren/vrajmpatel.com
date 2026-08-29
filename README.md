@@ -36,12 +36,12 @@ attached to `e.vrajmpatel.com`, set `PUBLIC_POSTHOG_HOST` to
 `https://e.vrajmpatel.com` so the tracker sends events through the site's
 domain. Always keep `ui_host` at `https://us.posthog.com`.
 
-The production tracker runs only on the canonical site. It honors Do Not
-Track and Global Privacy Control as a full opt-out. Otherwise it loads
-`posthog-js` with analytics and masked session replay on by default.
-Visitors can opt out of either independently; choices persist in local
-storage and can be changed from the footer. See `/privacy`,
-`src/components/Tracker.astro`, and `src/lib/posthogPrivacy.ts`.
+The production tracker runs only on the canonical site and loads `posthog-js`
+with analytics and masked session replay on by default. Visitors can opt out
+of either independently on `/privacy`; choices persist in this browser's local
+storage. Browser Do Not Track and Global Privacy Control signals do not change
+this default. See `src/components/Tracker.astro` and
+`src/lib/posthogPrivacy.ts`.
 
 The slim `posthog-js` bundle cannot load session recording, so the tracker
 uses the full module.

@@ -1,4 +1,5 @@
 ---
+import PrivacyControls from "../components/PrivacyControls.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
@@ -14,26 +15,21 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <p class="mt-5 text-lg leading-8 text-slate-600 dark:text-slate-400">
       This personal portfolio is a static site. Measurement is on by default.
       You can opt out of analytics and session replay independently, and
-      nothing is collected when your browser asks not to be tracked.
+      the controls below are the only way to turn either one off.
     </p>
   </header>
 
   <div class="max-w-3xl space-y-12 text-base leading-8 text-slate-600 dark:text-slate-400 sm:text-lg">
+    <PrivacyControls />
+
     <section aria-labelledby="choices-heading">
       <h2 id="choices-heading" class="text-2xl font-semibold tracking-tight text-slate-950 dark:text-white">
         Your choices
       </h2>
       <p class="mt-5">
-        Analytics and masked session replay both start on. You can turn either
-        off from
-        <strong class="font-medium text-slate-800 dark:text-slate-200">Privacy choices</strong>
-        in the footer, or from the notice shown on a first visit. Those choices
-        persist on this device.
-      </p>
-      <p class="mt-5">
-        If your browser sends a Do Not Track or Global Privacy Control signal,
-        this site treats that as a full opt-out. The tracker does not load
-        while that signal remains.
+        The controls on this page are the only way to opt out. There is no
+        banner or first-visit prompt. Your choice is stored only in this
+        browser and does not apply on other browsers or devices.
       </p>
     </section>
 
@@ -42,19 +38,20 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         Analytics
       </h2>
       <p class="mt-5">
-        Unless you opt out of analytics, PostHog records page views, page
-        leaves (used for bounce rate and session duration), autocaptured clicks
-        and form interactions, heatmaps, web vitals, and dead clicks. Person
-        profiles stay
-        <code class="font-mono text-sm">identified_only</code>: this site does
-        not call <code class="font-mono text-sm">identify()</code> or attach a
-        name or account to you.
+        Unless you opt out, PostHog collects page views and page leaves to
+        measure bounce rate and session duration, along with autocaptured
+        interactions, heatmaps, web vitals, and dead clicks. Person profiles
+        are configured as
+        <code class="font-mono text-sm">identified_only</code>; this site does
+        not call <code class="font-mono text-sm">identify()</code> or associate
+        analytics with your name, account, or another direct identifier.
       </p>
       <p class="mt-5">
-        Referrer and UTM source fields may be kept so I can see how people find
-        the site. Query strings and URL fragments are stripped from the current
-        page URL. Ad click identifiers such as <code class="font-mono text-sm">gclid</code>
-        and <code class="font-mono text-sm">fbclid</code> are dropped.
+        Referrer and UTM fields may be retained to show how visitors find the
+        site. Current-page URLs exclude query strings and fragments, and ad
+        click identifiers such as
+        <code class="font-mono text-sm">gclid</code> and
+        <code class="font-mono text-sm">fbclid</code> are discarded.
       </p>
     </section>
 
@@ -63,10 +60,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         Session replay
       </h2>
       <p class="mt-5">
-        Unless you opt out of session replay, PostHog records a masked replay
-        of the visit. All inputs are masked, including email, password, and
-        textarea fields. Replay can be on while analytics is off, and the
-        reverse.
+        Unless you opt out, PostHog may record a masked replay of your visit.
+        All form inputs—including email, password, and textarea fields—are
+        masked. You may disable replay while keeping analytics on, or disable
+        analytics while keeping replay on.
       </p>
     </section>
 
@@ -75,10 +72,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         What is stored on this device
       </h2>
       <p class="mt-5">
-        Your analytics and replay choices are saved in local storage under
+        Your analytics and replay choices are stored locally under
         <code class="font-mono text-sm">vrajmpatel-analytics-consent</code>.
-        PostHog may also set its own first-party cookies or local storage keys
-        so page leaves and sessions work. Theme preference is stored separately
+        PostHog may also use first-party cookies or local storage for sessions
+        and page-leave measurement. Your theme preference is stored separately
         and is not sent to PostHog.
       </p>
     </section>
@@ -88,10 +85,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         Who processes the data
       </h2>
       <p class="mt-5">
-        Events are processed by PostHog on US Cloud. The public project token
-        is a browser key, not a personal API key. The site is hosted on GitHub
-        Pages. Ingestion currently goes to PostHog’s US endpoint unless a
-        first-party proxy host is configured.
+        PostHog processes events in its US Cloud service. The site includes a
+        public project token, not a personal API key. GitHub Pages hosts the
+        site. Events are sent to PostHog’s US endpoint unless a first-party
+        ingestion proxy is configured.
       </p>
     </section>
 
@@ -100,22 +97,22 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         Questions
       </h2>
       <p class="mt-5">
-        For a suspected privacy or security problem with this site, use
+        To report a suspected privacy or security issue with this site, use
         <a
           href="https://github.com/basechildren/vrajmpatel.com/security/advisories/new"
           class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
         >
           GitHub private vulnerability reporting
         </a>.
-        For other questions, use the
+        For general questions, use the
         <a
           href="https://www.linkedin.com/in/vrajmp/"
           class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
         >
           LinkedIn profile
         </a>
-        linked in the footer. This page is a privacy policy for the portfolio,
-        not a terms of service.
+        linked in the footer. This page is the portfolio’s privacy notice, not
+        a terms-of-service agreement.
       </p>
     </section>
   </div>

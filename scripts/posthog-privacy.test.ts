@@ -37,6 +37,7 @@ test("allows the consented analytics, heatmap, and replay event set", () => {
     "$snapshot",
     "$snapshot_item",
     "resume_clicked",
+    "recruiter_brief_opened",
   ]) {
     assert.equal(isAllowedPostHogEvent(eventName), true);
   }
@@ -200,6 +201,20 @@ test("drops an invalid current URL rather than forwarding it", () => {
   assert.deepEqual(sanitizePostHogEvent(event)?.properties, {
     resource: "resume",
   });
+});
+
+test("keeps bounded site-controlled conversion properties", () => {
+  const event: CaptureResult = {
+    uuid: "00000000-0000-7000-8000-000000000010",
+    event: "social_profile_clicked",
+    properties: {
+      network: "github",
+      account: "academic",
+      placement: "github_activity",
+    },
+  };
+
+  assert.deepEqual(sanitizePostHogEvent(event)?.properties, event.properties);
 });
 
 test("drops automatic events outside the consented analytics contract", () => {

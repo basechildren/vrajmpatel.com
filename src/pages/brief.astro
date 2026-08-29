@@ -6,18 +6,21 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 const selectedWork = [
   {
+    id: "operational-ticket-intelligence",
     title: "Operational Ticket Intelligence",
     href: "/projects/operational-ticket-intelligence",
     description:
       "Full-stack support operations over a current 10.8K-ticket corpus, with 96.7% carrying support-group IDs, read-only reconciliation, and sealed-test model evaluation.",
   },
   {
+    id: "building-indian-parliamentary-datasets",
     title: "Indian Parliamentary Data",
     href: "/projects/building-indian-parliamentary-datasets",
     description:
       "Recoverable crawling, transcription, translation, PDF text extraction, and document normalization for multi-decade public-interest research.",
   },
   {
+    id: "full-stack-biometric-marathon",
     title: "SeeMyRace",
     href: "/projects/full-stack-biometric-marathon",
     description:
@@ -157,6 +160,9 @@ const selectedWork = [
             </span>
             <a
               href={project.href}
+              data-ph-event="project_opened"
+              data-ph-project={project.id}
+              data-ph-placement="recruiter_brief"
               class="font-semibold leading-7 text-slate-950 underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:text-white dark:decoration-slate-700 dark:hover:text-blue-400"
             >
               {project.title}

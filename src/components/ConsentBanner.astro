@@ -1,0 +1,243 @@
+<aside
+  id="consent-banner"
+  class="ph-no-capture fixed inset-x-0 bottom-0 z-[70] hidden border-t border-slate-200 bg-white/95 px-5 py-4 shadow-[0_-8px_30px_rgba(15,23,42,0.08)] backdrop-blur-sm print:hidden dark:border-slate-800 dark:bg-slate-950/95 dark:shadow-black/30"
+  role="dialog"
+  aria-labelledby="consent-heading"
+  aria-describedby="consent-copy"
+  hidden
+>
+  <div class="mx-auto flex max-w-5xl flex-col gap-4 sm:px-3">
+    <div class="max-w-3xl">
+      <h2
+        id="consent-heading"
+        class="text-sm font-semibold text-slate-950 dark:text-white"
+        tabindex="-1"
+      >
+        Analytics choices
+      </h2>
+      <p
+        id="consent-copy"
+        class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400"
+        data-consent-copy
+      >
+        This site uses PostHog only after you opt in. Analytics and session
+        replay are separate, and both stay off until you save a choice.
+        <a
+          href="/privacy"
+          class="underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-white"
+        >
+          Privacy policy
+        </a>
+      </p>
+      <p
+        class="mt-1 hidden text-sm leading-6 text-slate-600 dark:text-slate-400"
+        data-consent-privacy-signal
+      >
+        Your browser sent a Do Not Track or Global Privacy Control signal, so
+        analytics and session replay stay off on this device.
+      </p>
+    </div>
+
+    <form data-consent-form class="flex flex-col gap-4">
+      <fieldset class="flex flex-col gap-3 sm:flex-row sm:gap-8">
+        <legend class="sr-only">Optional PostHog grants</legend>
+        <label class="flex max-w-md cursor-pointer items-start gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+          <input
+            type="checkbox"
+            name="analytics"
+            data-consent-analytics
+            class="mt-1 size-4 rounded border-slate-400 text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:border-slate-500"
+          />
+          <span>
+            <span class="font-medium text-slate-950 dark:text-white">Analytics</span>
+            <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400">
+              Page views, page leaves, autocapture, heatmaps, and web vitals.
+            </span>
+          </span>
+        </label>
+        <label class="flex max-w-md cursor-pointer items-start gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+          <input
+            type="checkbox"
+            name="replay"
+            data-consent-replay
+            class="mt-1 size-4 rounded border-slate-400 text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:border-slate-500"
+          />
+          <span>
+            <span class="font-medium text-slate-950 dark:text-white">Session replay</span>
+            <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400">
+              Masked recordings of this visit. Inputs, email, password, and textarea fields are masked.
+            </span>
+          </span>
+        </label>
+      </fieldset>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <button
+          type="submit"
+          class="inline-flex min-h-10 items-center rounded-md bg-slate-950 px-3.5 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 dark:bg-white dark:text-slate-950 dark:hover:bg-blue-200 dark:focus-visible:ring-offset-slate-950"
+        >
+          Save choices
+        </button>
+        <button
+          type="button"
+          data-consent-reject
+          class="inline-flex min-h-10 items-center rounded-md border border-slate-300 px-3.5 text-sm font-medium text-slate-700 transition-colors hover:border-slate-400 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-500 dark:hover:text-white"
+        >
+          Reject all
+        </button>
+      </div>
+    </form>
+  </div>
+</aside>
+
+<script>
+  import {
+    CONSENT_CHANGE_EVENT,
+    CONSENT_STORAGE_KEY,
+    defaultConsent,
+    hasBrowserPrivacySignal,
+    parseStoredConsent,
+    serializeConsent,
+    type PostHogConsent,
+  } from "../lib/posthogConsent";
+
+  const setupConsentBanner = () => {
+    const banner = document.getElementById("consent-banner");
+    const form = banner?.querySelector<HTMLFormElement>("[data-consent-form]");
+    const analyticsInput = banner?.querySelector<HTMLInputElement>(
+      "[data-consent-analytics]",
+    );
+    const replayInput = banner?.querySelector<HTMLInputElement>(
+      "[data-consent-replay]",
+    );
+    const rejectButton = banner?.querySelector<HTMLButtonElement>(
+      "[data-consent-reject]",
+    );
+    const copy = banner?.querySelector<HTMLElement>("[data-consent-copy]");
+    const privacySignal = banner?.querySelector<HTMLElement>(
+      "[data-consent-privacy-signal]",
+    );
+    const heading = banner?.querySelector<HTMLElement>("#consent-heading");
+
+    if (
+      !banner ||
+      !form ||
+      !analyticsInput ||
+      !replayInput ||
+      !rejectButton ||
+      !copy ||
+      !privacySignal
+    ) {
+      return;
+    }
+
+    if (banner.dataset.consentReady === "true") return;
+    banner.dataset.consentReady = "true";
+
+    const privacyBlocked = hasBrowserPrivacySignal();
+    const hasTrackerConfig = Boolean(
+      document.querySelector('meta[name="posthog-config"]'),
+    );
+    const choiceButtons = document.querySelectorAll<HTMLButtonElement>(
+      "[data-consent-open]",
+    );
+
+    if (!hasTrackerConfig) {
+      choiceButtons.forEach((button) => {
+        button.hidden = true;
+      });
+      return;
+    }
+
+    const readConsent = () =>
+      parseStoredConsent(localStorage.getItem(CONSENT_STORAGE_KEY));
+
+    const syncInputs = (consent: PostHogConsent) => {
+      analyticsInput.checked = consent.analytics;
+      replayInput.checked = consent.replay;
+    };
+
+    const persistAndNotify = (consent: PostHogConsent) => {
+      localStorage.setItem(CONSENT_STORAGE_KEY, serializeConsent(consent));
+      window.dispatchEvent(
+        new CustomEvent<PostHogConsent>(CONSENT_CHANGE_EVENT, {
+          detail: consent,
+        }),
+      );
+    };
+
+    const setBannerOpen = (open: boolean) => {
+      banner.hidden = !open;
+      banner.classList.toggle("hidden", !open);
+      if (open) heading?.focus();
+    };
+
+    const showPrivacySignalState = () => {
+      copy.classList.add("hidden");
+      form.classList.add("hidden");
+      privacySignal.classList.remove("hidden");
+      analyticsInput.disabled = true;
+      replayInput.disabled = true;
+    };
+
+    const showChoiceState = () => {
+      copy.classList.remove("hidden");
+      form.classList.remove("hidden");
+      privacySignal.classList.add("hidden");
+      analyticsInput.disabled = false;
+      replayInput.disabled = false;
+    };
+
+    const openChoices = () => {
+      if (!hasTrackerConfig) return;
+
+      if (privacyBlocked) {
+        showPrivacySignalState();
+        setBannerOpen(true);
+        return;
+      }
+
+      showChoiceState();
+      syncInputs(readConsent() ?? defaultConsent());
+      setBannerOpen(true);
+    };
+
+    if (privacyBlocked) {
+      persistAndNotify(defaultConsent());
+    } else {
+      const stored = readConsent();
+      if (stored) {
+        syncInputs(stored);
+        persistAndNotify(stored);
+      } else if (hasTrackerConfig) {
+        syncInputs(defaultConsent());
+        setBannerOpen(true);
+      }
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      persistAndNotify({
+        analytics: analyticsInput.checked,
+        replay: replayInput.checked,
+      });
+      setBannerOpen(false);
+    });
+
+    rejectButton.addEventListener("click", () => {
+      const consent = defaultConsent();
+      syncInputs(consent);
+      persistAndNotify(consent);
+      setBannerOpen(false);
+    });
+
+    choiceButtons.forEach((button) => {
+      if (button.dataset.consentBound === "true") return;
+      button.dataset.consentBound = "true";
+      button.addEventListener("click", () => openChoices());
+    });
+  };
+
+  setupConsentBanner();
+  document.addEventListener("astro:page-load", setupConsentBanner);
+</script>

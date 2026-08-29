@@ -9,6 +9,7 @@ export interface Props {
 import { isPostHogProjectToken } from "../lib/posthogPrivacy";
 
 const DEFAULT_API_HOST = "https://us.i.posthog.com";
+const UI_HOST = "https://us.posthog.com";
 
 function normalizeApiHost(configuredHost?: string): string {
   if (!configuredHost?.trim()) return DEFAULT_API_HOST;
@@ -45,9 +46,20 @@ const apiHost = normalizeApiHost(
     name="posthog-config"
     data-project-key={projectKey}
     data-api-host={apiHost}
+    data-ui-host={UI_HOST}
   />
   <script>
-    import { sanitizePostHogEvent } from "../lib/posthogPrivacy";
+    import {
+      CONSENT_CHANGE_EVENT,
+      CONSENT_STORAGE_KEY,
+      defaultConsent,
+      hasBrowserPrivacySignal,
+      hasTrackingGrant,
+      isProductionAnalyticsHost,
+      parseStoredConsent,
+      type PostHogConsent,
+    } from "../lib/posthogConsent";
+    import { filterConsentedPostHogEvent } from "../lib/posthogPrivacy";
 
     void (async () => {
       const config = document.querySelector<HTMLMetaElement>(
@@ -55,30 +67,83 @@ const apiHost = normalizeApiHost(
       );
       const projectKey = config?.dataset.projectKey;
       const apiHost = config?.dataset.apiHost;
-      const productionHosts = new Set([
-        "vrajmpatel.com",
-        "www.vrajmpatel.com",
-      ]);
-      const hasPrivacySignal =
-        navigator.doNotTrack === "1" ||
-        (navigator as Navigator & { globalPrivacyControl?: boolean })
-          .globalPrivacyControl === true;
+      const uiHost = config?.dataset.uiHost;
 
       if (
         !projectKey ||
         !apiHost ||
-        hasPrivacySignal ||
-        !productionHosts.has(window.location.hostname)
+        !uiHost ||
+        hasBrowserPrivacySignal() ||
+        !isProductionAnalyticsHost(window.location.hostname)
       ) {
         return;
       }
 
-      const { default: posthog } = await import(
-        "posthog-js/dist/module.slim.no-external"
-      );
+      // Full posthog-js is required for session replay, heatmaps, web vitals,
+      // and $pageleave. The slim.no-external bundle cannot load recorder.js.
+      const { default: posthog } = await import("posthog-js");
+      let analyticsPageviewSent = false;
+
+      const readConsent = () =>
+        parseStoredConsent(localStorage.getItem(CONSENT_STORAGE_KEY)) ??
+        defaultConsent();
+
+      const maskedRecording = {
+        maskAllInputs: true,
+        maskInputOptions: {
+          email: true,
+          password: true,
+          textarea: true,
+        },
+      } as const;
+
+      const applyConsent = (consent: PostHogConsent) => {
+        posthog.set_config({
+          autocapture: consent.analytics,
+          capture_pageview: false,
+          capture_pageleave: consent.analytics,
+          capture_performance: consent.analytics,
+          capture_heatmaps: consent.analytics,
+          disable_session_recording: !consent.replay,
+        });
+
+        if (hasTrackingGrant(consent)) {
+          posthog.opt_in_capturing();
+        } else {
+          posthog.opt_out_capturing();
+          analyticsPageviewSent = false;
+        }
+
+        if (consent.analytics) {
+          (
+            posthog as {
+              webVitalsAutocapture?: { startIfEnabled?: () => void };
+            }
+          ).webVitalsAutocapture?.startIfEnabled?.();
+        }
+
+        if (consent.replay) {
+          posthog.startSessionRecording({
+            sampling: true,
+            linked_flag: true,
+          });
+        } else if (posthog.sessionRecordingStarted()) {
+          posthog.stopSessionRecording();
+        }
+
+        if (consent.analytics && !analyticsPageviewSent) {
+          posthog.capture("$pageview", {
+            $current_url: window.location.origin + window.location.pathname,
+            $pathname: window.location.pathname,
+          });
+          analyticsPageviewSent = true;
+        }
+      };
+
       posthog.init(projectKey, {
         api_host: apiHost,
-        person_profiles: "never",
+        ui_host: uiHost,
+        person_profiles: "identified_only",
         autocapture: false,
         rageclick: false,
         capture_pageview: false,
@@ -89,32 +154,38 @@ const apiHost = normalizeApiHost(
         capture_exceptions: false,
         disable_session_recording: true,
         disable_surveys: true,
-        disable_scroll_properties: true,
+        disable_scroll_properties: false,
         disableDeviceModel: true,
-        disable_external_dependency_loading: true,
+        disable_external_dependency_loading: false,
         advanced_disable_flags: true,
-        save_campaign_params: false,
-        save_referrer: false,
+        opt_out_capturing_by_default: true,
+        opt_out_persistence_by_default: true,
+        save_campaign_params: true,
+        save_referrer: true,
         disable_capture_url_hashes: true,
         respect_dnt: true,
         cross_subdomain_cookie: false,
         secure_cookie: true,
-        before_send: sanitizePostHogEvent,
+        session_recording: maskedRecording,
+        before_send: (event) => filterConsentedPostHogEvent(event, readConsent()),
+        loaded: () => applyConsent(readConsent()),
       });
 
-      let lastTrackedPathname = "";
+      let lastTrackedPathname = window.location.pathname;
       const capturePageview = () => {
+        if (!readConsent().analytics) return;
+
         const pathname = window.location.pathname;
-        if (pathname === lastTrackedPathname) return;
+        if (pathname === lastTrackedPathname && analyticsPageviewSent) return;
 
         posthog.capture("$pageview", {
           $current_url: window.location.origin + pathname,
           $pathname: pathname,
         });
         lastTrackedPathname = pathname;
+        analyticsPageviewSent = true;
       };
 
-      capturePageview();
       document.addEventListener("astro:page-load", capturePageview);
 
       const allowedEvents = new Set([
@@ -133,6 +204,7 @@ const apiHost = normalizeApiHost(
       ]);
 
       document.addEventListener("click", (event) => {
+        if (!readConsent().analytics) return;
         if (!(event.target instanceof Element)) return;
 
         const trackedElement =
@@ -145,9 +217,7 @@ const apiHost = normalizeApiHost(
         const properties: Record<string, string> = {};
         for (const propertyName of allowedPropertyNames) {
           const datasetKey =
-            "ph" +
-            propertyName[0].toUpperCase() +
-            propertyName.slice(1);
+            "ph" + propertyName[0].toUpperCase() + propertyName.slice(1);
           const value = trackedElement.dataset[datasetKey]?.trim();
           if (value && propertyValuePattern.test(value)) {
             properties[propertyName] = value;
@@ -155,6 +225,19 @@ const apiHost = normalizeApiHost(
         }
 
         posthog.capture(eventName, properties);
+      });
+
+      window.addEventListener(CONSENT_CHANGE_EVENT, (event) => {
+        const consent = (event as CustomEvent<PostHogConsent>).detail;
+        if (
+          !consent ||
+          typeof consent.analytics !== "boolean" ||
+          typeof consent.replay !== "boolean"
+        ) {
+          return;
+        }
+
+        applyConsent(consent);
       });
     })();
   </script>

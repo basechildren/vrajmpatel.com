@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import ConsentBanner from "../components/ConsentBanner.astro";
 import ThemeToggle from "../components/ThemeToggle.astro";
 import Tracker from "../components/Tracker.astro";
 import { profile } from "../data/profile";
@@ -233,7 +234,18 @@ const structuredData =
         class="mx-auto flex max-w-5xl flex-col gap-4 px-5 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-8 dark:text-slate-400"
       >
         <p>&copy; {new Date().getFullYear()} {profile.name} · {profile.location}</p>
-        <nav aria-label="Professional profiles" class="flex flex-wrap gap-x-5 gap-y-2">
+        <nav aria-label="Site and professional profiles" class="flex flex-wrap gap-x-5 gap-y-2">
+          <a
+            href="/privacy"
+            class="underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-white"
+          >Privacy</a>
+          <button
+            type="button"
+            data-consent-open
+            class="ph-no-capture underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-white"
+          >
+            Privacy choices
+          </button>
           <a
             href="https://www.linkedin.com/in/vrajmp/"
             target="_blank"
@@ -258,5 +270,7 @@ const structuredData =
         </nav>
       </div>
     </footer>
+
+    <ConsentBanner />
   </body>
 </html>

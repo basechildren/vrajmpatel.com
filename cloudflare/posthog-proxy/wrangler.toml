@@ -1,0 +1,8 @@
+# First-party PostHog ingest proxy for vrajmpatel.com.
+# Not live until a Cloudflare custom domain is attached. See README.
+name = "vrajmpatel-ingest"
+main = "worker.js"
+compatibility_date = "2026-08-29"
+# workers.dev hostnames are commonly blocked. Keep this false after
+# e.vrajmpatel.com is attached in the Cloudflare dashboard.
+workers_dev = false

@@ -92,3 +92,31 @@ test("archived projects and retired research PDFs are not published", async () =
     assert.doesNotMatch(sitemap, new RegExp(slug));
   }
 });
+
+test("privacy policy is published, linked, and consent-gated", async () => {
+  const [homepage, privacy] = await Promise.all([
+    readPage(),
+    readPage("privacy"),
+  ]);
+
+  assert.match(homepage, /href="\/privacy"/);
+  assert.match(homepage, /Privacy choices/);
+  assert.match(homepage, /data-consent-analytics/);
+  assert.match(homepage, /data-consent-replay/);
+  assert.match(homepage, /name="posthog-config"/);
+  assert.match(homepage, /data-ui-host="https:\/\/us\.posthog\.com"/);
+
+  assert.match(privacy, /<h1[^>]*>[\s\S]*Privacy/);
+  assert.match(privacy, /session replay/i);
+  assert.match(privacy, /Do Not Track/);
+  assert.match(privacy, /Global Privacy Control/);
+  assert.doesNotMatch(privacy, /Terms of Service/);
+  assert.doesNotMatch(privacy, /mailto:/i);
+
+  await assert.rejects(access(path.join(dist, "terms", "index.html")));
+
+  const sitemapFile = (await readdir(dist)).find((name) => /^sitemap-\d+\.xml$/.test(name));
+  assert.ok(sitemapFile, "generated sitemap was not found");
+  const sitemap = await readFile(path.join(dist, sitemapFile), "utf8");
+  assert.match(sitemap, /https:\/\/www\.vrajmpatel\.com\/privacy\/?/);
+});

@@ -1,13 +1,17 @@
 import assert from "node:assert/strict";
+import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
 import {
-  CONSENT_NOTICE_KEY,
   CONSENT_STORAGE_KEY,
+  OPT_OUT_CONFIRMATION_PHRASE,
+  canApplyConsentChange,
   defaultConsent,
   hasBrowserPrivacySignal,
   hasTrackingGrant,
   isProductionAnalyticsHost,
+  isTurningTrackingOff,
+  matchesOptOutConfirmation,
   optedOutConsent,
   parseStoredConsent,
   serializeConsent,
@@ -41,7 +45,7 @@ test("parses only complete boolean consent records", () => {
     '{"analytics":true,"replay":true}',
   );
   assert.equal(CONSENT_STORAGE_KEY, "vrajmpatel-analytics-consent");
-  assert.equal(CONSENT_NOTICE_KEY, "vrajmpatel-analytics-notice");
+  assert.equal(OPT_OUT_CONFIRMATION_PHRASE, "opt out");
 });
 
 test("treats either remaining grant as enough to keep PostHog capturing", () => {
@@ -68,4 +72,41 @@ test("honors DNT and Global Privacy Control as a full opt-out", () => {
     false,
   );
   assert.equal(hasBrowserPrivacySignal({ doNotTrack: null }), false);
+});
+
+test("requires the exact phrase opt out only when turning something off", () => {
+  const on = { analytics: true, replay: true };
+  const analyticsOff = { analytics: false, replay: true };
+  const bothOff = { analytics: false, replay: false };
+
+  assert.equal(isTurningTrackingOff(on, analyticsOff), true);
+  assert.equal(isTurningTrackingOff(on, on), false);
+  assert.equal(isTurningTrackingOff(bothOff, on), false);
+  assert.equal(matchesOptOutConfirmation("opt out"), true);
+  assert.equal(matchesOptOutConfirmation("OPT OUT"), true);
+  assert.equal(matchesOptOutConfirmation("  Opt Out  "), true);
+  assert.equal(matchesOptOutConfirmation("opt-out"), false);
+  assert.equal(canApplyConsentChange(on, analyticsOff, "opt out"), true);
+  assert.equal(canApplyConsentChange(on, analyticsOff, ""), false);
+  assert.equal(canApplyConsentChange(on, on, ""), true);
+  assert.equal(canApplyConsentChange(bothOff, on, ""), true);
+});
+
+test("privacy page controls notify the tracker, and the first-visit banner is gone", async () => {
+  const [controls, tracker, layout] = await Promise.all([
+    readFile("src/components/PrivacyControls.astro", "utf8"),
+    readFile("src/components/Tracker.astro", "utf8"),
+    readFile("src/layouts/BaseLayout.astro", "utf8"),
+  ]);
+
+  assert.match(controls, /CONSENT_CHANGE_EVENT/);
+  assert.match(controls, /canApplyConsentChange/);
+  assert.match(controls, /data-consent-confirm/);
+  assert.match(tracker, /CONSENT_CHANGE_EVENT/);
+  assert.match(tracker, /applyConsent/);
+  assert.match(tracker, /defaultConsent/);
+  assert.doesNotMatch(tracker, /opt_out_capturing_by_default:\s*true/);
+  assert.doesNotMatch(layout, /ConsentBanner/);
+  assert.doesNotMatch(layout, /Privacy choices/);
+  await assert.rejects(access("src/components/ConsentBanner.astro"));
 });

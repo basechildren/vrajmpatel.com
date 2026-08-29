@@ -1,4 +1,5 @@
 ---
+import PrivacyControls from "../components/PrivacyControls.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
@@ -19,21 +20,22 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   </header>
 
   <div class="max-w-3xl space-y-12 text-base leading-8 text-slate-600 dark:text-slate-400 sm:text-lg">
+    <PrivacyControls />
+
     <section aria-labelledby="choices-heading">
       <h2 id="choices-heading" class="text-2xl font-semibold tracking-tight text-slate-950 dark:text-white">
         Your choices
       </h2>
       <p class="mt-5">
-        Analytics and masked session replay both start on. You can turn either
-        off from
-        <strong class="font-medium text-slate-800 dark:text-slate-200">Privacy choices</strong>
-        in the footer, or from the notice shown on a first visit. Those choices
-        persist on this device.
+        The form on this page is the only opt-out control. There is no banner,
+        sheet, or first-visit notice. Saved choices stay in this browser. They
+        are not a site-wide suppression, and they do not follow you to another
+        device.
       </p>
       <p class="mt-5">
         If your browser sends a Do Not Track or Global Privacy Control signal,
         this site treats that as a full opt-out. The tracker does not load
-        while that signal remains.
+        while that signal remains, and the form on this page is disabled.
       </p>
     </section>
 

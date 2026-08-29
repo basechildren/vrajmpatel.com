@@ -1,6 +1,6 @@
 export const CONSENT_STORAGE_KEY = "vrajmpatel-analytics-consent";
-export const CONSENT_NOTICE_KEY = "vrajmpatel-analytics-notice";
 export const CONSENT_CHANGE_EVENT = "vraj:consent-change";
+export const OPT_OUT_CONFIRMATION_PHRASE = "opt out";
 
 export type PostHogConsent = {
   analytics: boolean;
@@ -60,3 +60,20 @@ export const serializeConsent = (consent: PostHogConsent) =>
 
 export const hasTrackingGrant = (consent: PostHogConsent) =>
   consent.analytics || consent.replay;
+
+export const matchesOptOutConfirmation = (value: string) =>
+  value.trim().toLowerCase() === OPT_OUT_CONFIRMATION_PHRASE;
+
+export const isTurningTrackingOff = (
+  previous: PostHogConsent,
+  next: PostHogConsent,
+) =>
+  (previous.analytics && !next.analytics) || (previous.replay && !next.replay);
+
+export const canApplyConsentChange = (
+  previous: PostHogConsent,
+  next: PostHogConsent,
+  confirmation: string,
+) =>
+  !isTurningTrackingOff(previous, next) ||
+  matchesOptOutConfirmation(confirmation);

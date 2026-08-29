@@ -100,13 +100,16 @@ test("privacy policy is published, linked, and opt-out capable", async () => {
   ]);
 
   assert.match(homepage, /href="\/privacy"/);
-  assert.match(homepage, /Privacy choices/);
+  assert.match(homepage, />Privacy</);
   assert.match(homepage, /name="posthog-config"/);
   assert.match(homepage, /data-api-host="https:\/\//);
   assert.match(homepage, /data-ui-host="https:\/\/us\.posthog\.com"/);
-  assert.match(homepage, /data-consent-analytics[^>]*checked/);
-  assert.match(homepage, /data-consent-replay[^>]*checked/);
-  assert.match(homepage, /turn either off/i);
+  assert.doesNotMatch(homepage, /Privacy choices/);
+  assert.doesNotMatch(homepage, /consent-banner/);
+  assert.doesNotMatch(homepage, /data-consent-analytics/);
+  assert.doesNotMatch(homepage, /data-consent-replay/);
+  assert.doesNotMatch(homepage, /data-consent-confirm/);
+  assert.doesNotMatch(homepage, /turn either off/i);
   assert.doesNotMatch(homepage, /stay off until you save/i);
 
   assert.match(privacy, /<h1[^>]*>[\s\S]*Privacy/);
@@ -115,9 +118,22 @@ test("privacy policy is published, linked, and opt-out capable", async () => {
   assert.match(privacy, /opt out/i);
   assert.match(privacy, /Do Not Track/);
   assert.match(privacy, /Global Privacy Control/);
+  assert.match(privacy, /this browser only/i);
+  assert.match(privacy, /data-consent-form/);
+  assert.match(privacy, /data-consent-analytics[^>]*checked/);
+  assert.match(privacy, /data-consent-replay[^>]*checked/);
+  assert.match(privacy, /data-consent-confirm/);
+  assert.match(privacy, /data-consent-status-analytics/);
+  assert.match(privacy, /data-consent-status-replay/);
+  assert.match(privacy, /data-consent-privacy-signal/);
+  assert.match(privacy, /data-consent-saved/);
+  assert.match(privacy, /Type[\s\S]*opt out/);
+  assert.match(privacy, /not a global suppression/i);
   assert.doesNotMatch(privacy, /both default to off/i);
+  assert.doesNotMatch(privacy, /Privacy choices/);
   assert.doesNotMatch(privacy, /Terms of Service/);
   assert.doesNotMatch(privacy, /mailto:/i);
+  assert.doesNotMatch(privacy, /type="email"/i);
 
   await assert.rejects(access(path.join(dist, "terms", "index.html")));
 

@@ -32,6 +32,8 @@ test("allows the consented analytics, heatmap, and replay event set", () => {
     "$web_vitals",
     "$heatmap",
     "$$heatmap",
+    "$dead_click",
+    "$dead_swipe",
     "$snapshot",
     "$snapshot_item",
     "resume_clicked",
@@ -147,13 +149,21 @@ test("passes through $pageleave and $web_vitals after sanitizing the current URL
   });
 });
 
-test("passes through heatmap and replay snapshot events", () => {
+test("passes through heatmap, dead-click, and replay snapshot events", () => {
   const heatmap: CaptureResult = {
     uuid: "00000000-0000-7000-8000-000000000005",
     event: "$heatmap",
     properties: {
       $current_url: "https://vrajmpatel.com/projects?fbclid=private",
       type: "click",
+    },
+  };
+  const deadClick: CaptureResult = {
+    uuid: "00000000-0000-7000-8000-000000000009",
+    event: "$dead_click",
+    properties: {
+      $current_url: "https://vrajmpatel.com/about?gclid=private",
+      $dead_click_absolute_delay_ms: 2_500,
     },
   };
   const snapshot: CaptureResult = {
@@ -170,6 +180,10 @@ test("passes through heatmap and replay snapshot events", () => {
     sanitizePostHogEvent(heatmap)?.properties?.$current_url,
     "https://vrajmpatel.com/projects",
   );
+  assert.deepEqual(sanitizePostHogEvent(deadClick)?.properties, {
+    $current_url: "https://vrajmpatel.com/about",
+    $dead_click_absolute_delay_ms: 2_500,
+  });
   assert.deepEqual(sanitizePostHogEvent(snapshot)?.properties, {
     $snapshot_data: [{ type: 2, data: { href: "/about" } }],
     $current_url: "https://vrajmpatel.com/about",

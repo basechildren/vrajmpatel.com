@@ -104,6 +104,7 @@ const apiHost = normalizeApiHost(
           capture_pageleave: consent.analytics,
           capture_performance: consent.analytics,
           capture_heatmaps: consent.analytics,
+          capture_dead_clicks: consent.analytics,
           disable_session_recording: !consent.replay,
         });
 
@@ -152,7 +153,7 @@ const apiHost = normalizeApiHost(
         capture_pageleave: initialConsent.analytics,
         capture_performance: initialConsent.analytics,
         capture_heatmaps: initialConsent.analytics,
-        capture_dead_clicks: false,
+        capture_dead_clicks: initialConsent.analytics,
         capture_exceptions: false,
         disable_session_recording: !initialConsent.replay,
         disable_surveys: true,

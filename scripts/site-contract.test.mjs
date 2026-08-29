@@ -109,7 +109,7 @@ test("privacy policy is published, linked, and opt-out capable", async () => {
   assert.doesNotMatch(homepage, /stay off until you save/i);
 
   assert.match(privacy, /<h1[^>]*>[\s\S]*Privacy/);
-  assert.match(privacy, /session replay/i);
+  assert.match(privacy, /dead clicks/);
   assert.match(privacy, /on by default/i);
   assert.match(privacy, /opt out/i);
   assert.match(privacy, /Do Not Track/);

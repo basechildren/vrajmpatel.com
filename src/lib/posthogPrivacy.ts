@@ -9,6 +9,8 @@ const allowedEventNames = new Set([
   "$web_vitals",
   "$heatmap",
   "$$heatmap",
+  "$dead_click",
+  "$dead_swipe",
   "$snapshot",
   "outbound_link_clicked",
   "project_opened",
@@ -104,11 +106,11 @@ const scrubProperties = (properties: Properties | undefined) => {
 /**
  * Final outbound privacy boundary for PostHog events.
  *
- * After analytics consent, this hook keeps pageviews, pageleaves,
- * autocapture, web vitals, heatmaps, replay snapshots, and the site's custom
- * events. Query strings and fragments are stripped from current URLs. Click
- * identifiers are dropped. Referrer and UTM properties are kept. Independent
- * opt-outs are applied at send time.
+ * After analytics is on, this hook keeps pageviews, pageleaves,
+ * autocapture, web vitals, heatmaps, dead clicks, replay snapshots, and the
+ * site's custom events. Query strings and fragments are stripped from current
+ * URLs. Click identifiers are dropped. Referrer and UTM properties are kept.
+ * Independent opt-outs are applied at send time.
  */
 export const sanitizePostHogEvent = (
   event: CaptureResult | null,

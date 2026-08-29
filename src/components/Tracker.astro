@@ -32,7 +32,9 @@ function normalizeApiHost(configuredHost?: string): string {
   }
 }
 
-const configuredProjectKey = Astro.props.projectKey?.trim();
+const configuredProjectKey = (
+  Astro.props.projectKey ?? import.meta.env.PUBLIC_POSTHOG_KEY
+)?.trim();
 const projectKey = isPostHogProjectToken(configuredProjectKey)
   ? configuredProjectKey
   : undefined;

@@ -102,6 +102,7 @@ test("privacy policy is published, linked, and opt-out capable", async () => {
   assert.match(homepage, /href="\/privacy"/);
   assert.match(homepage, /Privacy choices/);
   assert.match(homepage, /name="posthog-config"/);
+  assert.match(homepage, /data-api-host="https:\/\//);
   assert.match(homepage, /data-ui-host="https:\/\/us\.posthog\.com"/);
   assert.match(homepage, /data-consent-analytics[^>]*checked/);
   assert.match(homepage, /data-consent-replay[^>]*checked/);

@@ -50,5 +50,5 @@ test("tracker and CI stay proxy-ready without hardcoding the ingest host", async
 
   assert.match(readme, /grey-clouded to GitHub Pages/);
   assert.match(readme, /Do not proxy those\s+records through Cloudflare/);
-  assert.match(readme, /vars\.PUBLIC_POSTHOG_HOST/);
+  assert.match(readme, /GitHub Actions variable `PUBLIC_POSTHOG_HOST`/);
 });

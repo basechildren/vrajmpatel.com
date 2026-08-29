@@ -14,6 +14,7 @@ const allowedEventNames = new Set([
   "$snapshot",
   "outbound_link_clicked",
   "project_opened",
+  "recruiter_brief_opened",
   "resume_clicked",
   "social_profile_clicked",
 ]);
@@ -140,4 +141,3 @@ export const filterConsentedPostHogEvent = (
   if (!consent.analytics) return null;
   return sanitizePostHogEvent(event);
 };
-

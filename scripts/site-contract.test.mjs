@@ -116,8 +116,6 @@ test("privacy policy is published, linked, and opt-out capable", async () => {
   assert.match(privacy, /dead clicks/);
   assert.match(privacy, /on by default/i);
   assert.match(privacy, /opt out/i);
-  assert.match(privacy, /Do Not Track/);
-  assert.match(privacy, /Global Privacy Control/);
   assert.match(privacy, /this browser only/i);
   assert.match(privacy, /data-consent-form/);
   assert.match(privacy, /data-consent-analytics[^>]*checked/);
@@ -125,11 +123,13 @@ test("privacy policy is published, linked, and opt-out capable", async () => {
   assert.match(privacy, /data-consent-confirm/);
   assert.match(privacy, /data-consent-status-analytics/);
   assert.match(privacy, /data-consent-status-replay/);
-  assert.match(privacy, /data-consent-privacy-signal/);
   assert.match(privacy, /data-consent-saved/);
   assert.match(privacy, /Type[\s\S]*opt out/);
   assert.match(privacy, /not a global suppression/i);
   assert.doesNotMatch(privacy, /both default to off/i);
+  assert.doesNotMatch(privacy, /Do Not Track/);
+  assert.doesNotMatch(privacy, /Global Privacy Control/);
+  assert.doesNotMatch(privacy, /data-consent-privacy-signal/);
   assert.doesNotMatch(privacy, /Privacy choices/);
   assert.doesNotMatch(privacy, /Terms of Service/);
   assert.doesNotMatch(privacy, /mailto:/i);

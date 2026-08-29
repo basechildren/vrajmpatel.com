@@ -7,7 +7,6 @@ import {
   OPT_OUT_CONFIRMATION_PHRASE,
   canApplyConsentChange,
   defaultConsent,
-  hasBrowserPrivacySignal,
   hasTrackingGrant,
   isProductionAnalyticsHost,
   isTurningTrackingOff,
@@ -61,19 +60,6 @@ test("limits production ingest to the canonical site hosts", () => {
   assert.equal(isProductionAnalyticsHost("patvraj.github.io"), false);
 });
 
-test("honors DNT and Global Privacy Control as a full opt-out", () => {
-  assert.equal(hasBrowserPrivacySignal({ doNotTrack: "1" }), true);
-  assert.equal(
-    hasBrowserPrivacySignal({ doNotTrack: null, globalPrivacyControl: true }),
-    true,
-  );
-  assert.equal(
-    hasBrowserPrivacySignal({ doNotTrack: "0", globalPrivacyControl: false }),
-    false,
-  );
-  assert.equal(hasBrowserPrivacySignal({ doNotTrack: null }), false);
-});
-
 test("requires the exact phrase opt out only when turning something off", () => {
   const on = { analytics: true, replay: true };
   const analyticsOff = { analytics: false, replay: true };
@@ -105,6 +91,13 @@ test("privacy page controls notify the tracker, and the first-visit banner is go
   assert.match(tracker, /CONSENT_CHANGE_EVENT/);
   assert.match(tracker, /applyConsent/);
   assert.match(tracker, /defaultConsent/);
+  assert.match(tracker, /recruiter_brief_opened/);
+  assert.match(tracker, /"account"/);
+  assert.doesNotMatch(tracker, /hasBrowserPrivacySignal/);
+  assert.doesNotMatch(tracker, /respect_dnt/);
+  assert.doesNotMatch(controls, /data-consent-privacy-signal/);
+  assert.doesNotMatch(controls, /Do Not Track/);
+  assert.doesNotMatch(controls, /Global Privacy Control/);
   assert.doesNotMatch(tracker, /opt_out_capturing_by_default:\s*true/);
   assert.doesNotMatch(layout, /ConsentBanner/);
   assert.doesNotMatch(layout, /Privacy choices/);

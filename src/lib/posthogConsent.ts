@@ -20,11 +20,6 @@ export const optedOutConsent = (): PostHogConsent => ({
 export const isProductionAnalyticsHost = (hostname: string) =>
   hostname === "vrajmpatel.com" || hostname === "www.vrajmpatel.com";
 
-export const hasBrowserPrivacySignal = (
-  nav: Pick<Navigator, "doNotTrack"> & { globalPrivacyControl?: boolean } = navigator,
-) =>
-  nav.doNotTrack === "1" || nav.globalPrivacyControl === true;
-
 export const parseStoredConsent = (
   raw: string | null | undefined,
 ): PostHogConsent | null => {

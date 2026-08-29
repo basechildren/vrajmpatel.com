@@ -13,15 +13,6 @@
     below apply to this browser only.
   </p>
 
-  <p
-    class="mt-4 hidden text-base leading-8 text-slate-600 dark:text-slate-400 sm:text-lg"
-    data-consent-privacy-signal
-  >
-    Measurement is off because your browser sent a Do Not Track or Global
-    Privacy Control signal. The form below is disabled while that signal stays
-    on.
-  </p>
-
   <dl
     class="mt-6 grid gap-4 text-sm sm:grid-cols-2"
     data-consent-status
@@ -132,9 +123,7 @@
       data-consent-saved
       role="status"
     >
-      Saved for this browser only. This is not a global suppression. Do Not
-      Track and Global Privacy Control are still honored if your browser sends
-      them.
+      Saved for this browser only. This is not a global suppression.
     </p>
   </form>
 </section>
@@ -145,7 +134,6 @@
     CONSENT_STORAGE_KEY,
     canApplyConsentChange,
     defaultConsent,
-    hasBrowserPrivacySignal,
     parseStoredConsent,
     serializeConsent,
     type PostHogConsent,
@@ -166,9 +154,6 @@
     );
     const error = document.querySelector<HTMLElement>("[data-consent-error]");
     const saved = document.querySelector<HTMLElement>("[data-consent-saved]");
-    const privacySignal = document.querySelector<HTMLElement>(
-      "[data-consent-privacy-signal]",
-    );
     const analyticsStatus = document.querySelector<HTMLElement>(
       "[data-consent-status-analytics]",
     );
@@ -183,7 +168,6 @@
       !confirmationInput ||
       !error ||
       !saved ||
-      !privacySignal ||
       !analyticsStatus ||
       !replayStatus
     ) {
@@ -219,22 +203,6 @@
       error.classList.add("hidden");
       saved.classList.remove("hidden");
     };
-
-    const privacyBlocked = hasBrowserPrivacySignal();
-
-    if (privacyBlocked) {
-      privacySignal.classList.remove("hidden");
-      analyticsStatus.textContent = "Off";
-      replayStatus.textContent = "Off";
-      analyticsInput.checked = false;
-      replayInput.checked = false;
-      analyticsInput.disabled = true;
-      replayInput.disabled = true;
-      confirmationInput.disabled = true;
-      const submit = form.querySelector<HTMLButtonElement>("[data-consent-save]");
-      if (submit) submit.disabled = true;
-      return;
-    }
 
     const stored = readConsent();
     syncInputs(stored);

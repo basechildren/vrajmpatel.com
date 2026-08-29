@@ -31,9 +31,48 @@ and set `PUBLIC_POSTHOG_KEY` to the public `phc_...` project token. Never put
 a PostHog personal API key in this repository.
 
 `PUBLIC_POSTHOG_HOST` is optional and defaults to
-`https://us.i.posthog.com`. The production tracker runs only on the canonical
-site, respects browser privacy signals, and limits events and properties in
-`src/components/Tracker.astro` and `src/lib/posthogPrivacy.ts`.
+`https://us.i.posthog.com`. After a first-party Cloudflare Worker proxy is
+attached to `e.vrajmpatel.com`, set `PUBLIC_POSTHOG_HOST` to
+`https://e.vrajmpatel.com` so the tracker sends events through the site's
+domain. Always keep `ui_host` at `https://us.posthog.com`.
+
+The production tracker runs only on the canonical site. It honors Do Not
+Track and Global Privacy Control as a full opt-out. Otherwise it loads
+`posthog-js` with analytics and masked session replay on by default.
+Visitors can opt out of either independently; choices persist in local
+storage and can be changed from the footer. See `/privacy`,
+`src/components/Tracker.astro`, and `src/lib/posthogPrivacy.ts`.
+
+The slim `posthog-js` bundle cannot load session recording, so the tracker
+uses the full module.
+
+### First-party ingest proxy
+
+`vrajmpatel.com` already uses Cloudflare DNS, but apex and `www` stay
+DNS-only in front of GitHub Pages. A Worker proxy cannot be activated from
+this repository alone: it needs a Cloudflare login, a Worker deploy, and a
+custom domain.
+
+Worker source lives in `cloudflare/posthog-proxy` and matches PostHog's
+[Cloudflare reverse proxy](https://posthog.com/docs/advanced/proxy/cloudflare)
+guide for US Cloud.
+
+Remaining Cloudflare steps:
+
+1. Keep apex and `www` grey-clouded to GitHub Pages. Do not proxy those
+   records through Cloudflare; that can break GitHub Pages TLS.
+2. From `cloudflare/posthog-proxy`, run `npx wrangler login` and
+   `npx wrangler deploy` against the Cloudflare account that already holds
+   the zone.
+3. In Workers & Pages, add a custom domain `e.vrajmpatel.com` to
+   `vrajmpatel-ingest`. Avoid names such as `analytics`, `posthog`,
+   `tracking`, `telemetry`, or `ph`.
+4. Set the GitHub Actions variable `PUBLIC_POSTHOG_HOST` to
+   `https://e.vrajmpatel.com` and rebuild. Until that variable is set, CI
+   keeps the default US Cloud ingest host.
+
+The Cloudflare free Worker plan caps request bodies at 10MB. Large session
+recordings can exceed that; a paid Workers plan raises the limit.
 
 ## Checks
 

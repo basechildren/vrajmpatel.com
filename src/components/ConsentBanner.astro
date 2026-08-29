@@ -1,0 +1,302 @@
+<aside
+  id="consent-banner"
+  class="ph-no-capture fixed inset-x-0 bottom-0 z-[70] hidden border-t border-slate-200 bg-white/95 px-5 py-3 shadow-[0_-8px_30px_rgba(15,23,42,0.08)] backdrop-blur-sm print:hidden dark:border-slate-800 dark:bg-slate-950/95 dark:shadow-black/30"
+  role="region"
+  aria-labelledby="consent-heading"
+  aria-describedby="consent-copy"
+  hidden
+>
+  <div class="mx-auto flex max-w-5xl flex-col gap-3 sm:px-3">
+    <div class="max-w-3xl">
+      <h2
+        id="consent-heading"
+        class="text-sm font-semibold text-slate-950 dark:text-white"
+        tabindex="-1"
+      >
+        Analytics
+      </h2>
+      <p
+        id="consent-copy"
+        class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400"
+        data-consent-copy
+      >
+        This site uses PostHog for analytics and masked session replay. You can
+        turn either off at any time.
+        <a
+          href="/privacy"
+          class="underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-white"
+        >
+          Privacy policy
+        </a>
+      </p>
+      <p
+        class="mt-1 hidden text-sm leading-6 text-slate-600 dark:text-slate-400"
+        data-consent-privacy-signal
+      >
+        Your browser sent a Do Not Track or Global Privacy Control signal, so
+        analytics and session replay stay off on this device.
+      </p>
+    </div>
+
+    <div data-consent-notice class="flex flex-wrap items-center gap-3">
+      <button
+        type="button"
+        data-consent-dismiss
+        class="inline-flex min-h-10 items-center rounded-md bg-slate-950 px-3.5 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 dark:bg-white dark:text-slate-950 dark:hover:bg-blue-200 dark:focus-visible:ring-offset-slate-950"
+      >
+        Continue
+      </button>
+      <button
+        type="button"
+        data-consent-customize
+        class="inline-flex min-h-10 items-center rounded-md border border-slate-300 px-3.5 text-sm font-medium text-slate-700 transition-colors hover:border-slate-400 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-500 dark:hover:text-white"
+      >
+        Privacy choices
+      </button>
+    </div>
+
+    <form data-consent-form class="hidden flex-col gap-4">
+      <fieldset class="flex flex-col gap-3 sm:flex-row sm:gap-8">
+        <legend class="sr-only">PostHog controls</legend>
+        <label class="flex max-w-md cursor-pointer items-start gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+          <input
+            type="checkbox"
+            name="analytics"
+            data-consent-analytics
+            checked
+            class="mt-1 size-4 rounded border-slate-400 text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:border-slate-500"
+          />
+          <span>
+            <span class="font-medium text-slate-950 dark:text-white">Analytics</span>
+            <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400">
+              Page views, page leaves, autocapture, heatmaps, web vitals, and dead clicks.
+            </span>
+          </span>
+        </label>
+        <label class="flex max-w-md cursor-pointer items-start gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+          <input
+            type="checkbox"
+            name="replay"
+            data-consent-replay
+            checked
+            class="mt-1 size-4 rounded border-slate-400 text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:border-slate-500"
+          />
+          <span>
+            <span class="font-medium text-slate-950 dark:text-white">Session replay</span>
+            <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400">
+              Masked recordings of this visit. Inputs, email, password, and textarea fields are masked.
+            </span>
+          </span>
+        </label>
+      </fieldset>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <button
+          type="submit"
+          class="inline-flex min-h-10 items-center rounded-md bg-slate-950 px-3.5 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 dark:bg-white dark:text-slate-950 dark:hover:bg-blue-200 dark:focus-visible:ring-offset-slate-950"
+        >
+          Save choices
+        </button>
+        <button
+          type="button"
+          data-consent-reject
+          class="inline-flex min-h-10 items-center rounded-md border border-slate-300 px-3.5 text-sm font-medium text-slate-700 transition-colors hover:border-slate-400 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-500 dark:hover:text-white"
+        >
+          Turn both off
+        </button>
+      </div>
+    </form>
+  </div>
+</aside>
+
+<script>
+  import {
+    CONSENT_CHANGE_EVENT,
+    CONSENT_NOTICE_KEY,
+    CONSENT_STORAGE_KEY,
+    defaultConsent,
+    hasBrowserPrivacySignal,
+    optedOutConsent,
+    parseStoredConsent,
+    serializeConsent,
+    type PostHogConsent,
+  } from "../lib/posthogConsent";
+
+  const setupConsentBanner = () => {
+    const banner = document.getElementById("consent-banner");
+    const form = banner?.querySelector<HTMLFormElement>("[data-consent-form]");
+    const notice = banner?.querySelector<HTMLElement>("[data-consent-notice]");
+    const analyticsInput = banner?.querySelector<HTMLInputElement>(
+      "[data-consent-analytics]",
+    );
+    const replayInput = banner?.querySelector<HTMLInputElement>(
+      "[data-consent-replay]",
+    );
+    const rejectButton = banner?.querySelector<HTMLButtonElement>(
+      "[data-consent-reject]",
+    );
+    const dismissButton = banner?.querySelector<HTMLButtonElement>(
+      "[data-consent-dismiss]",
+    );
+    const customizeButton = banner?.querySelector<HTMLButtonElement>(
+      "[data-consent-customize]",
+    );
+    const copy = banner?.querySelector<HTMLElement>("[data-consent-copy]");
+    const privacySignal = banner?.querySelector<HTMLElement>(
+      "[data-consent-privacy-signal]",
+    );
+    const heading = banner?.querySelector<HTMLElement>("#consent-heading");
+
+    if (
+      !banner ||
+      !form ||
+      !notice ||
+      !analyticsInput ||
+      !replayInput ||
+      !rejectButton ||
+      !dismissButton ||
+      !customizeButton ||
+      !copy ||
+      !privacySignal
+    ) {
+      return;
+    }
+
+    if (banner.dataset.consentReady === "true") return;
+    banner.dataset.consentReady = "true";
+
+    const privacyBlocked = hasBrowserPrivacySignal();
+    const hasTrackerConfig = Boolean(
+      document.querySelector('meta[name="posthog-config"]'),
+    );
+    const choiceButtons = document.querySelectorAll<HTMLButtonElement>(
+      "[data-consent-open]",
+    );
+
+    if (!hasTrackerConfig) {
+      choiceButtons.forEach((button) => {
+        button.hidden = true;
+      });
+      return;
+    }
+
+    const readConsent = () =>
+      parseStoredConsent(localStorage.getItem(CONSENT_STORAGE_KEY)) ??
+      defaultConsent();
+
+    const noticeSeen = () =>
+      localStorage.getItem(CONSENT_NOTICE_KEY) === "1";
+
+    const markNoticeSeen = () => {
+      localStorage.setItem(CONSENT_NOTICE_KEY, "1");
+    };
+
+    const syncInputs = (consent: PostHogConsent) => {
+      analyticsInput.checked = consent.analytics;
+      replayInput.checked = consent.replay;
+    };
+
+    const persistAndNotify = (consent: PostHogConsent) => {
+      localStorage.setItem(CONSENT_STORAGE_KEY, serializeConsent(consent));
+      markNoticeSeen();
+      window.dispatchEvent(
+        new CustomEvent<PostHogConsent>(CONSENT_CHANGE_EVENT, {
+          detail: consent,
+        }),
+      );
+    };
+
+    const setBannerOpen = (open: boolean) => {
+      banner.hidden = !open;
+      banner.classList.toggle("hidden", !open);
+      if (open) heading?.focus();
+    };
+
+    const showPrivacySignalState = () => {
+      copy.classList.add("hidden");
+      notice.classList.add("hidden");
+      form.classList.add("hidden");
+      form.classList.remove("flex");
+      privacySignal.classList.remove("hidden");
+      analyticsInput.disabled = true;
+      replayInput.disabled = true;
+    };
+
+    const showNoticeState = () => {
+      copy.classList.remove("hidden");
+      notice.classList.remove("hidden");
+      form.classList.add("hidden");
+      form.classList.remove("flex");
+      privacySignal.classList.add("hidden");
+      analyticsInput.disabled = false;
+      replayInput.disabled = false;
+    };
+
+    const showChoiceState = () => {
+      copy.classList.remove("hidden");
+      notice.classList.add("hidden");
+      form.classList.remove("hidden");
+      form.classList.add("flex");
+      privacySignal.classList.add("hidden");
+      analyticsInput.disabled = false;
+      replayInput.disabled = false;
+      syncInputs(readConsent());
+    };
+
+    const openChoices = () => {
+      if (!hasTrackerConfig) return;
+
+      if (privacyBlocked) {
+        showPrivacySignalState();
+        setBannerOpen(true);
+        return;
+      }
+
+      showChoiceState();
+      setBannerOpen(true);
+    };
+
+    if (privacyBlocked) {
+      // DNT/GPC is a live hard stop. Do not rewrite stored choices.
+    } else if (hasTrackerConfig && !noticeSeen()) {
+      syncInputs(readConsent());
+      showNoticeState();
+      setBannerOpen(true);
+    }
+
+    dismissButton.addEventListener("click", () => {
+      markNoticeSeen();
+      persistAndNotify(readConsent());
+      setBannerOpen(false);
+    });
+
+    customizeButton.addEventListener("click", () => {
+      showChoiceState();
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      persistAndNotify({
+        analytics: analyticsInput.checked,
+        replay: replayInput.checked,
+      });
+      setBannerOpen(false);
+    });
+
+    rejectButton.addEventListener("click", () => {
+      const consent = optedOutConsent();
+      syncInputs(consent);
+      persistAndNotify(consent);
+      setBannerOpen(false);
+    });
+
+    choiceButtons.forEach((button) => {
+      if (button.dataset.consentBound === "true") return;
+      button.dataset.consentBound = "true";
+      button.addEventListener("click", () => openChoices());
+    });
+  };
+
+  setupConsentBanner();
+  document.addEventListener("astro:page-load", setupConsentBanner);
+</script>

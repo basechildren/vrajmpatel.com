@@ -35,7 +35,8 @@ test("about leads with the combined public GitHub activity", async () => {
   assert.match(about, /<time[^>]+datetime="[^"]+Z"[^>]+data-activity-sync-time/);
   assert.match(about, /github\.com\/basechildren/);
   assert.match(about, /github\.com\/PatVraj/);
-  assert.match(about, /data-source="both"/);
+  assert.match(about, /data-account-total="personal"/);
+  assert.match(about, /data-account-total="academic"/);
   assert.doesNotMatch(about, /github\.com\/IBS-Vraj/);
 });
 

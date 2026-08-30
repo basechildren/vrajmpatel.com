@@ -42,11 +42,11 @@ test("tracker and CI stay proxy-ready without hardcoding the ingest host", async
     ci,
     /PUBLIC_POSTHOG_HOST: \$\{\{ vars\.PUBLIC_POSTHOG_HOST \|\| 'https:\/\/us\.i\.posthog\.com' \}\}/,
   );
-  assert.equal(
-    (ci.match(/vars\.PUBLIC_POSTHOG_HOST \|\| 'https:\/\/us\.i\.posthog\.com'/g) ?? [])
-      .length,
-    2,
-  );
+  const buildCount = (ci.match(/run: pnpm build/g) ?? []).length;
+  const postHogHostBindingCount = (
+    ci.match(/vars\.PUBLIC_POSTHOG_HOST \|\| 'https:\/\/us\.i\.posthog\.com'/g) ?? []
+  ).length;
+  assert.equal(postHogHostBindingCount, buildCount);
 
   assert.match(readme, /grey-clouded to GitHub Pages/);
   assert.match(readme, /Do not proxy those\s+records through Cloudflare/);

@@ -17,6 +17,8 @@ test("homepage and recruiter brief expose evidence-led navigation", async () => 
   assert.match(homepage, /Recruiter brief/);
   assert.match(homepage, /82\.6% \/ 0\.756/);
   assert.match(homepage, /10\.8K \/ 96\.7%/);
+  assert.match(homepage, /61% \/ 66% smaller/);
+  assert.match(homepage, /~15 min → &lt;1 min/);
   assert.match(homepage, /github\.com\/basechildren/);
   assert.match(homepage, /github\.com\/PatVraj/);
   assert.doesNotMatch(homepage, /github\.com\/IBS-Vraj/);
@@ -62,6 +64,37 @@ test("flagship case study includes the complete public-safe system path", async 
   assert.match(page, /24\.2 ms p50 and 45\.8 ms p95/);
   assert.match(page, /unreleased BERT candidate/i);
   assert.match(page, /not analytics recomputation, browser or network latency, concurrent load, or a production service-level objective/i);
+});
+
+test("SeeMyRace presents recruiter-ready evidence without overstating ML ownership", async () => {
+  const [page, brief, llms] = await Promise.all([
+    readPage("projects", "full-stack-biometric-marathon"),
+    readPage("brief"),
+    readFile(path.join(dist, "llms.txt"), "utf8"),
+  ]);
+
+  for (const evidence of [
+    /32 commits(?: · | &middot; )7 merged PRs/,
+    /MongoDB(?: → | &rarr; )PostgreSQL \+ pgvector/,
+    /128(?: → | &rarr; )512 dimensions/,
+    /Body-first analysis/,
+    /Canny-backed Stroke Width Transform/,
+    /not evidence of a fourfold accuracy gain/i,
+  ]) {
+    assert.match(page, evidence);
+  }
+
+  assert.match(brief, /32 mainline commits, with work landing through seven merged PRs/);
+  assert.match(brief, /Full-stack race-photo retrieval system built primarily on open-source/);
+  assert.match(page, /Software Engineering/);
+  assert.match(page, /Match Verification · GPX Race Creation · Upload\/Search UX · OCR\/SWT Evaluation/);
+  assert.match(page, /requested a distinct Jira implementation ticket/);
+  assert.match(page, /restricted to non-commercial research/);
+  assert.match(page, /work added by other team members/);
+  assert.match(page, /lg:grid-cols-3/);
+  assert.match(llms, /user-scoped match verification/);
+  assert.match(llms, /Full-Stack Software Engineering and Applied ML/);
+  assert.match(llms, /architectural changes, not measured accuracy gains/);
 });
 
 test("archived projects and retired research PDFs are not published", async () => {

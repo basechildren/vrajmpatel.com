@@ -140,7 +140,7 @@ const { Content } = await render(entry);
       entry.data.proof && entry.data.proof.length > 0 && (
         <section class="pt-10" aria-labelledby="project-evidence-heading">
           <h2 id="project-evidence-heading" class="sr-only">Project evidence</h2>
-          <ProofGrid items={entry.data.proof} />
+          <ProofGrid items={entry.data.proof} columns={entry.id === "full-stack-biometric-marathon" ? 3 : 2} />
         </section>
       )
     }

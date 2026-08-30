@@ -48,7 +48,8 @@ test("tracker and CI stay proxy-ready without hardcoding the ingest host", async
   ).length;
   assert.equal(postHogHostBindingCount, buildCount);
 
-  assert.match(readme, /grey-clouded to GitHub Pages/);
-  assert.match(readme, /Do not proxy those\s+records through Cloudflare/);
-  assert.match(readme, /GitHub Actions variable `PUBLIC_POSTHOG_HOST`/);
+  assert.match(readme, /Production PostHog ingest is proxied through/);
+  assert.match(readme, /Apex and `www` remain DNS-only/);
+  assert.match(readme, /`PUBLIC_POSTHOG_HOST` Actions variable/);
+  assert.doesNotMatch(readme, /Remaining Cloudflare steps/);
 });

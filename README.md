@@ -24,6 +24,16 @@ tested in CI as a forward-compatibility check.
 - Vendored organization marks and their provenance are documented in
   `public/logos/SOURCES.md`.
 
+## GitHub activity snapshot
+
+The About page reads the versioned two-account snapshot in
+`src/data/githubActivitySnapshot.json`. CI refreshes public activity with its
+built-in token and preserves an account's last verified calendar if GitHub
+returns zero for only that account. A `GITHUB_ACTIVITY_TOKEN` Actions secret
+can optionally provide the owner-visible `basechildren` calendar; credentials
+must never be committed. A refresh fails if both accounts return zero or if
+daily counts do not reconcile with their totals.
+
 ## PostHog
 
 Analytics is optional in local development. Copy `.env.example` to `.env`
@@ -48,31 +58,10 @@ uses the full module.
 
 ### First-party ingest proxy
 
-`vrajmpatel.com` already uses Cloudflare DNS, but apex and `www` stay
-DNS-only in front of GitHub Pages. A Worker proxy cannot be activated from
-this repository alone: it needs a Cloudflare login, a Worker deploy, and a
-custom domain.
-
-Worker source lives in `cloudflare/posthog-proxy` and matches PostHog's
-[Cloudflare reverse proxy](https://posthog.com/docs/advanced/proxy/cloudflare)
-guide for US Cloud.
-
-Remaining Cloudflare steps:
-
-1. Keep apex and `www` grey-clouded to GitHub Pages. Do not proxy those
-   records through Cloudflare; that can break GitHub Pages TLS.
-2. From `cloudflare/posthog-proxy`, run `npx wrangler login` and
-   `npx wrangler deploy` against the Cloudflare account that already holds
-   the zone.
-3. In Workers & Pages, add a custom domain `e.vrajmpatel.com` to
-   `vrajmpatel-ingest`. Avoid names such as `analytics`, `posthog`,
-   `tracking`, `telemetry`, or `ph`.
-4. Set the GitHub Actions variable `PUBLIC_POSTHOG_HOST` to
-   `https://e.vrajmpatel.com` and rebuild. Until that variable is set, CI
-   keeps the default US Cloud ingest host.
-
-The Cloudflare free Worker plan caps request bodies at 10MB. Large session
-recordings can exceed that; a paid Workers plan raises the limit.
+Production PostHog ingest is proxied through `https://e.vrajmpatel.com` by
+the Worker in `cloudflare/posthog-proxy`. Apex and `www` remain DNS-only in
+front of GitHub Pages; only the ingest subdomain routes through Cloudflare.
+CI reads the deployed host from the `PUBLIC_POSTHOG_HOST` Actions variable.
 
 ## Checks
 

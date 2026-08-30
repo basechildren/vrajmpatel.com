@@ -76,11 +76,13 @@ Vraj Patel turns operational friction into reliable software and data systems. A
 - Multi-vendor speech and translation evaluation followed by a recoverable end-to-end pipeline for parliamentary records, campaign audio, and structured analysis data.
 - Designed the evaluation phase at Studio Lab, then built the scraping, orchestration, extraction, normalization, and recovery logic under the Princeton appointment.
 
-### SeeMyRace: Race Photo Search
-- **Domain:** Applied ML and Backend Systems
-- **Tech:** Flask, Docker, PostgreSQL, DeepFace, PaddleOCR
-- Collaborative Flask prototype exploring selfie- and bib-based race-photo discovery, moderation workflows, and asynchronous processing.
-- Vraj contributed UI implementation, moderation-workflow design, ML-pipeline connectors, and bib-detection experiments.
+### SeeMyRace: Multimodal Race Photo Search
+- **Domain:** Full-Stack Software Engineering and Applied ML
+- **Tech:** Flask, PostgreSQL, pgvector, InsightFace/ArcFace, PaddleOCR, YOLOv8, Google Drive API, Docker
+- Team-built full-stack application assembled primarily from open-source application, OCR, and data frameworks, with Google Drive as an external integration and separately licensed InsightFace `buffalo_l` research weights.
+- Combines body-aware bib OCR with race-scoped ArcFace similarity search and an athlete-facing verification workflow.
+- Vraj authored 32 commits on current main across 24 paths; the work landed through seven merged pull requests and included user-scoped match verification, GPX-backed race creation, admin and upload/search workflows, and OCR/SWT evaluation.
+- The team replaced MongoDB-embedded float arrays with self-hosted PostgreSQL and pgvector for relational and vector data; it also evolved the face pipeline from 128-dimensional FaceNet/DeepFace embeddings to 512-dimensional ArcFace/InsightFace embeddings. These are architectural changes, not measured accuracy gains.
 
 ## Links
 - Portfolio: https://www.vrajmpatel.com

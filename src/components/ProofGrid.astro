@@ -4,14 +4,16 @@ import type { ProofPoint } from "../data/recruiter";
 interface Props {
   items: readonly ProofPoint[];
   class?: string;
+  columns?: 2 | 3;
 }
 
-const { items, class: className } = Astro.props;
+const { items, class: className, columns = 2 } = Astro.props;
 ---
 
 <dl
   class:list={[
-    "grid border-y border-slate-200 sm:grid-cols-2 dark:border-slate-800",
+    "grid border-y border-slate-200 dark:border-slate-800",
+    columns === 3 ? "lg:grid-cols-3" : "sm:grid-cols-2",
     className,
   ]}
 >
@@ -19,12 +21,17 @@ const { items, class: className } = Astro.props;
     items.map((item, index) => (
       <div
         class:list={[
-          "py-5 sm:px-6",
+          "py-5",
+          columns === 2 && "sm:px-6",
+          columns === 3 && "lg:px-6",
           index > 0 && "border-t border-slate-200 dark:border-slate-800",
-          index === 1 && "sm:border-t-0",
-          index % 2 === 1 && "sm:border-l sm:border-slate-200 dark:sm:border-slate-800",
-          index > 1 && "sm:border-t",
-          index % 2 === 0 && "sm:pl-0",
+          columns === 2 && index === 1 && "sm:border-t-0",
+          columns === 2 && index % 2 === 1 && "sm:border-l sm:border-slate-200 dark:sm:border-slate-800",
+          columns === 2 && index > 1 && "sm:border-t",
+          columns === 2 && index % 2 === 0 && "sm:pl-0",
+          columns === 3 && index > 0 && "lg:border-l lg:border-t-0 lg:border-slate-200 dark:lg:border-slate-800",
+          columns === 3 && index === 0 && "lg:pl-0",
+          columns === 3 && index === items.length - 1 && "lg:pr-0",
         ]}
       >
         <dt class="text-lg font-semibold tracking-tight text-slate-950 dark:text-white sm:text-xl">

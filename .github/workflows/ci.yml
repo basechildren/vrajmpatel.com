@@ -34,7 +34,7 @@ jobs:
       - name: Refresh public GitHub activity
         if: github.event_name != 'pull_request'
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_ACTIVITY_TOKEN || github.token }}
         run: node scripts/refresh-github-activity.mjs
       - name: Install dependencies
         run: pnpm install --frozen-lockfile

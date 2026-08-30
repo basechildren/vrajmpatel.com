@@ -18,6 +18,8 @@ test("checked-in GitHub activity snapshot matches the public two-account contrac
   assert.equal(isGitHubActivityData(snapshot), true);
   assert.equal(accountFor(snapshot, "personal").login, "basechildren");
   assert.equal(accountFor(snapshot, "academic").login, "PatVraj");
+  assert.ok(accountFor(snapshot, "personal").totalContributions > 0);
+  assert.ok(accountFor(snapshot, "academic").totalContributions > 0);
   assert.doesNotMatch(JSON.stringify(snapshot), /IBS-Vraj/);
 });
 

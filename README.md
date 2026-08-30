@@ -40,11 +40,10 @@ Analytics is optional in local development. Copy `.env.example` to `.env`
 and set `PUBLIC_POSTHOG_KEY` to the public `phc_...` project token. Never put
 a PostHog personal API key in this repository.
 
-`PUBLIC_POSTHOG_HOST` is optional and defaults to
-`https://us.i.posthog.com`. After a first-party Cloudflare Worker proxy is
-attached to `e.vrajmpatel.com`, set `PUBLIC_POSTHOG_HOST` to
-`https://e.vrajmpatel.com` so the tracker sends events through the site's
-domain. Always keep `ui_host` at `https://us.posthog.com`.
+Production PostHog ingest is proxied through `https://e.vrajmpatel.com` by
+the Worker in `cloudflare/posthog-proxy`, and CI reads that host from the
+`PUBLIC_POSTHOG_HOST` Actions variable. Apex and `www` remain DNS-only in
+front of GitHub Pages. Always keep `ui_host` at `https://us.posthog.com`.
 
 The production tracker runs only on the canonical site and loads `posthog-js`
 with analytics and masked session replay on by default. Visitors can opt out
@@ -55,13 +54,6 @@ this default. See `src/components/Tracker.astro` and
 
 The slim `posthog-js` bundle cannot load session recording, so the tracker
 uses the full module.
-
-### First-party ingest proxy
-
-Production PostHog ingest is proxied through `https://e.vrajmpatel.com` by
-the Worker in `cloudflare/posthog-proxy`. Apex and `www` remain DNS-only in
-front of GitHub Pages; only the ingest subdomain routes through Cloudflare.
-CI reads the deployed host from the `PUBLIC_POSTHOG_HOST` Actions variable.
 
 ## Checks
 

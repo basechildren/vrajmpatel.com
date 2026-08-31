@@ -17,7 +17,7 @@ const featured = (await getCollection("projects", ({ data }) => data.featured))
 
 const recentExperience = (await getCollection("experience"))
   .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 3);
+  .slice(0, 4);
 ---
 
 <BaseLayout

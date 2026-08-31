@@ -1,10 +1,10 @@
 ---
 organization: 'Princeton University'
 title: 'Research Assistant — Indian Parliamentary Data'
-period: 'January 15, 2025–May 2026'
+period: 'January 15, 2025 – May 2026'
 order: 2
 organizationMark: 'princeton'
-context: 'Functional title · paid Princeton appointment · end-to-end parliamentary-data engineering'
+context: 'Functional title · Paid Princeton appointment · End-to-end parliamentary-data engineering'
 ---
 
 - Paid directly by Princeton under a separate appointment to engineer the end-to-end workflow after the Studio Lab evaluation phase

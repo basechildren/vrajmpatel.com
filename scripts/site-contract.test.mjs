@@ -19,6 +19,23 @@ test("homepage and recruiter brief expose evidence-led navigation", async () => 
   assert.match(homepage, /10\.8K \/ 96\.7%/);
   assert.match(homepage, /61% \/ 66% smaller/);
   assert.match(homepage, /~15 min → &lt;1 min/);
+  assert.match(homepage, /Sealed-test accuracy \/ macro-F1/);
+  assert.match(homepage, /Human-in-the-loop ML/);
+  assert.match(homepage, /Endpoint operations/);
+  assert.match(homepage, /Document processing/);
+  assert.doesNotMatch(
+    homepage,
+    /· (?:human-in-the-loop ML|endpoint operations|document processing)/,
+  );
+  assert.match(
+    homepage,
+    /Undergraduate Research Assistant, Satellite Telemetry Data Analysis/,
+  );
+  assert.match(
+    homepage,
+    /The Data Mine of the Rockies · Purdue University and L3Harris/,
+  );
+  assert.match(homepage, /August 2024 – May 2025/);
   assert.match(homepage, /github\.com\/basechildren/);
   assert.match(homepage, /github\.com\/PatVraj/);
   assert.doesNotMatch(homepage, /github\.com\/IBS-Vraj/);

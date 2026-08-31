@@ -18,7 +18,7 @@ Vraj Patel turns operational friction into reliable software and data systems. A
 ## Professional Experience
 
 ### University of Colorado Boulder · Institute of Behavioral Science
-**Systems Integration Engineer (May 2025–present)**
+**Systems Integration Engineer (May 2025 – Present)**
 - Building an internal FastAPI, React/TypeScript, and PostgreSQL support-operations platform around a current 10,803-ticket Freshdesk-backed corpus, with support-group IDs recorded for 96.7% of records.
 - Developed and evaluated an unreleased BERT routing candidate on 6,137 training tickets, reaching 82.63% sealed-test accuracy and 0.7563 macro-F1.
 - Built a React, Vite, and Recharts dashboard that separates source intake from reportable volume and exposes busiest weekdays and peak hours independently.
@@ -26,27 +26,27 @@ Vraj Patel turns operational friction into reliable software and data systems. A
 - Built a PowerShell offboarding tool that reduced a typical group-membership cleanup from about 15 minutes to under one minute.
 
 ### University of Colorado Boulder · Institute of Behavioral Science
-**Lead Technical Research Assistant (March 2023–May 2025)**
+**Lead Technical Research Assistant (March 2023 – May 2025)**
 - Held a separate, concurrent IBS appointment with independent visual-bias and legislative-data workstreams.
 - Built PyTorch and ResNet50 workflows for visual-bias research using New York Times COVID-19 imagery.
 - Built checkpointed Selenium, BeautifulSoup, and LegiScan pipelines for 15+ years of legislative data, reducing redundant bulk-ingestion requests by approximately 40%.
 
 ### Studio Lab · University of Colorado Boulder
-**Research Assistant, Data Engineering and ML (January 21–April 13, 2024)**
+**Research Assistant, Data Engineering and ML (January 21 – April 13, 2024)**
 - Held a paid CU Boulder appointment for the evaluation phase of the Indian parliamentary-data project.
 - Continued collaborating on the research after the Studio Lab appointment ended; that collaboration was not an extension of the Studio Lab payroll appointment.
 - Designed WER-oriented comparisons across Deepgram, Google Speech-to-Text, Amazon Transcribe, and Azure Speech.
 - Set up translation comparisons across Google Cloud Translation, Amazon Translate, and Azure Translator to determine workflow fit.
 
 ### Princeton University
-**Research Assistant — Indian Parliamentary Data, functional title (January 15, 2025–May 2026)**
+**Research Assistant — Indian Parliamentary Data, functional title (January 15, 2025 – May 2026)**
 - Paid directly by Princeton under a separate appointment to continue the Studio Lab project.
 - Built the scraping logic and orchestrated collection, speech and translation processing, PDF text extraction, normalization, and structured outputs end to end.
 - Processed 40+ GB of campaign audio and thousands of parliamentary documents with restartable state and reviewable intermediate artifacts.
 
 ### The Data Mine of the Rockies · Purdue University and L3Harris
-**Undergraduate Research Assistant, Satellite Telemetry Data Analysis (August 2024–May 2025)**
-- Worked directly with L3Harris senior engineers through Purdue's Data Mine of the Rockies.
+**Undergraduate Research Assistant, Satellite Telemetry Data Analysis (August 2024 – May 2025)**
+- Worked directly with L3Harris senior engineers through Purdue’s Data Mine of the Rockies.
 - Trained anomaly-detection models on synthetic satellite telemetry and mapped space-cyber scenarios to SPARTA and MITRE ATT&CK.
 - Co-authored and presented “L3Harris: Satellite Cyberattack Detection” at the inaugural Data Mine of the Rockies Symposium in Colorado Springs.
 - Spring 2025 research poster: https://datamine.purdue.edu/posters/1-DMR_S25_Poster_L3_48-x-36-1.pdf

@@ -5,8 +5,8 @@ featured: true
 order: 2
 tech: ['Python', 'Selenium', 'SQLite', 'AWS', 'Google Cloud', 'Azure', 'Deepgram', 'PyMuPDF']
 summary: 'Multi-vendor speech and translation evaluation followed by a recoverable end-to-end pipeline for parliamentary records, campaign audio, and structured analysis data.'
-contribution: 'Tool benchmarking at Studio Lab · end-to-end data-pipeline engineering at Princeton'
-setting: 'CU Boulder Studio Lab and Princeton University · separate paid appointments'
+contribution: 'Tool benchmarking at Studio Lab · End-to-end data-pipeline engineering at Princeton'
+setting: 'CU Boulder Studio Lab and Princeton University · Separate paid appointments'
 status: 'Princeton appointment concluded · May 2026'
 proof:
   - value: '40+ GB'

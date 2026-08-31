@@ -1,7 +1,7 @@
 ---
 organization: 'University of Colorado Boulder · Institute of Behavioral Science'
 title: 'Systems Integration Engineer'
-period: 'May 2025—present'
+period: 'May 2025 – Present'
 order: 1
 organizationMark: 'cu-boulder'
 ---

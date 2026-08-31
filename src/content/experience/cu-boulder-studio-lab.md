@@ -1,10 +1,10 @@
 ---
 organization: 'Studio Lab · University of Colorado Boulder'
 title: 'Research Assistant, Data Engineering and ML'
-period: 'January 21–April 13, 2024'
+period: 'January 21 – April 13, 2024'
 order: 5
 organizationMark: 'cu-boulder'
-context: 'Paid CU Boulder appointment · speech and translation tool evaluation'
+context: 'Paid CU Boulder appointment · Speech and translation tool evaluation'
 ---
 
 - Designed comparative speech-to-text evaluations using word error rate to study Deepgram, Google Speech-to-Text, Amazon Transcribe, and Azure Speech for the research workflow

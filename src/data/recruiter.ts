@@ -6,19 +6,19 @@ export interface ProofPoint {
 export const proofPoints = [
   {
     value: "82.6% / 0.756",
-    label: "sealed-test accuracy / macro-F1 for an unreleased BERT routing candidate",
+    label: "Sealed-test accuracy / macro-F1 for an unreleased BERT routing candidate",
   },
   {
     value: "10.8K / 96.7%",
-    label: "current ticket corpus / records carrying support-group IDs",
+    label: "Current ticket corpus / records carrying support-group IDs",
   },
   {
     value: "61% / 66% smaller",
-    label: "raw / gzip analytics payload after replacing Plotly with Recharts",
+    label: "Raw / gzip analytics payload after replacing Plotly with Recharts",
   },
   {
     value: "~15 min → <1 min",
-    label: "typical Active Directory group cleanup after PowerShell automation",
+    label: "Typical Active Directory group cleanup after PowerShell automation",
   },
 ] satisfies readonly ProofPoint[];
 
@@ -27,7 +27,7 @@ export const capabilities = [
     title: "Backend systems and controlled integrations",
     summary:
       "My ticket-intelligence work connects source reconciliation, application state, staff review, and approved outbound updates. Model predictions remain separate from authorization.",
-    evidence: "FastAPI · PostgreSQL · React · human-in-the-loop ML",
+    evidence: "FastAPI · PostgreSQL · React · Human-in-the-loop ML",
     href: "/projects/operational-ticket-intelligence",
     linkLabel: "See the ticket-intelligence case study",
   },
@@ -35,7 +35,7 @@ export const capabilities = [
     title: "Automation with measured results",
     summary:
       "I turn repetitive administrative work into bounded tools with clear outcomes, including an Active Directory offboarding workflow that reduced a typical 15-minute cleanup to under one minute.",
-    evidence: "PowerShell · Active Directory · endpoint operations",
+    evidence: "PowerShell · Active Directory · Endpoint operations",
     href: "/experience",
     linkLabel: "See the experience behind the result",
   },
@@ -43,7 +43,7 @@ export const capabilities = [
     title: "Recoverable data and ML pipelines",
     summary:
       "I design long-running collection and processing jobs around checkpoints, resumability, and reviewable outputs—from public records to audio and satellite telemetry.",
-    evidence: "Python · AWS · Selenium · document processing",
+    evidence: "Python · AWS · Selenium · Document processing",
     href: "/projects/building-indian-parliamentary-datasets",
     linkLabel: "See the parliamentary-data case study",
   },

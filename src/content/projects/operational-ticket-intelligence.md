@@ -6,7 +6,7 @@ order: 1
 privateRepo: true
 tech: ['FastAPI', 'PostgreSQL', 'React', 'TypeScript', 'SQLAlchemy', 'Recharts', 'scikit-learn', 'Docker']
 summary: 'Full-stack support operations combining dependable backend workflows, lifecycle-aware analytics, and advisory routing suggestions.'
-contribution: 'Backend workflows · integration safety · operational analytics · model-release tooling'
+contribution: 'Backend workflows · Integration safety · Operational analytics · Model-release tooling'
 setting: 'Internal support operations · CU Boulder IBS'
 status: 'Active development'
 proof:

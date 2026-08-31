@@ -19,6 +19,18 @@ const personal = accountFor(data, "personal");
 const academic = accountFor(data, "academic");
 const markers = monthMarkers(data.days);
 const weekCount = Math.ceil(data.days.length / 7);
+const calendarDateFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+  timeZone: "UTC",
+});
+const calendarStart = calendarDateFormatter.format(
+  new Date(`${data.range.from}T00:00:00Z`),
+);
+const calendarEnd = calendarDateFormatter.format(
+  new Date(`${data.range.to}T00:00:00Z`),
+);
 
 const cellStyle = (day: (typeof data.days)[number]) => {
   const colors = activityColors(day);
@@ -47,7 +59,7 @@ const cellStyle = (day: (typeof data.days)[number]) => {
         Personal
       </dt>
       <dd class="mt-2 flex items-baseline justify-between gap-4">
-        <a class="text-sm underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400" href={personal.url} target="_blank" rel="noopener noreferrer" data-ph-event="social_profile_clicked" data-ph-network="github" data-ph-account="personal" data-ph-placement="github_activity">
+        <a class="inline-flex min-h-11 items-center text-sm underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400" href={personal.url} target="_blank" rel="noopener noreferrer" data-ph-event="social_profile_clicked" data-ph-network="github" data-ph-account="personal" data-ph-placement="github_activity">
           @{personal.login}
         </a>
         <span class="font-mono text-xs text-slate-500 dark:text-slate-400"><span data-account-total="personal">{personal.totalContributions}</span> contributions</span>
@@ -59,7 +71,7 @@ const cellStyle = (day: (typeof data.days)[number]) => {
         Academic
       </dt>
       <dd class="mt-2 flex items-baseline justify-between gap-4">
-        <a class="text-sm underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400" href={academic.url} target="_blank" rel="noopener noreferrer" data-ph-event="social_profile_clicked" data-ph-network="github" data-ph-account="academic" data-ph-placement="github_activity">
+        <a class="inline-flex min-h-11 items-center text-sm underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400" href={academic.url} target="_blank" rel="noopener noreferrer" data-ph-event="social_profile_clicked" data-ph-network="github" data-ph-account="academic" data-ph-placement="github_activity">
           @{academic.login}
         </a>
         <span class="font-mono text-xs text-slate-500 dark:text-slate-400"><span data-account-total="academic">{academic.totalContributions}</span> contributions</span>
@@ -68,8 +80,28 @@ const cellStyle = (day: (typeof data.days)[number]) => {
   </dl>
 
   <div class="mt-7" data-activity-calendar>
-    <div class="overflow-x-auto pb-3" tabindex="0" aria-label="Scrollable GitHub contribution calendar">
-      <div class="min-w-[50rem]">
+    <p id="activity-calendar-summary" class="sr-only">
+      Public contribution calendar from {calendarStart} through {calendarEnd}.
+      {data.totalContributions} contributions across both accounts:
+      {personal.totalContributions} personal and {academic.totalContributions}
+      academic. The visual grid distinguishes personal, academic, and overlapping
+      activity by color.
+    </p>
+    <p
+      id="activity-scroll-hint"
+      class="mb-3 text-xs leading-5 text-slate-500 sm:hidden dark:text-slate-400"
+    >
+      Latest weeks shown. Swipe horizontally for earlier activity.
+    </p>
+    <div
+      class="overflow-x-auto rounded-md pb-3 outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50 dark:focus-visible:ring-offset-slate-950"
+      tabindex="0"
+      role="region"
+      aria-label="Scrollable GitHub contribution calendar"
+      aria-describedby="activity-calendar-summary activity-scroll-hint"
+      data-activity-scroll
+    >
+      <div class="min-w-[50rem]" aria-hidden="true">
         <div
           class="github-activity-months ml-[2.35rem] grid h-5 text-[0.65rem] text-slate-500 dark:text-slate-400"
           style={`grid-template-columns:repeat(${weekCount},0.75rem);column-gap:3px`}
@@ -95,7 +127,6 @@ const cellStyle = (day: (typeof data.days)[number]) => {
             class="github-activity-grid grid list-none"
             style={`grid-template-rows:repeat(7,0.75rem);grid-auto-flow:column;grid-auto-columns:0.75rem;gap:3px`}
             data-day-grid
-            aria-label="Daily contributions for the past year"
           >
             {data.days.map((day) => (
               <li
@@ -104,9 +135,7 @@ const cellStyle = (day: (typeof data.days)[number]) => {
                 data-date={day.date}
                 style={cellStyle(day)}
                 title={activityLabel(day)}
-              >
-                <span class="sr-only">{activityLabel(day)}</span>
-              </li>
+              ></li>
             ))}
           </ol>
         </div>
@@ -132,13 +161,32 @@ const cellStyle = (day: (typeof data.days)[number]) => {
   });
   const localTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-  for (const time of document.querySelectorAll<HTMLTimeElement>("[data-activity-sync-time]")) {
-    const generatedAt = new Date(time.dateTime);
-    if (Number.isNaN(generatedAt.valueOf())) continue;
+  const setupActivityCalendar = () => {
+    for (const time of document.querySelectorAll<HTMLTimeElement>("[data-activity-sync-time]")) {
+      const generatedAt = new Date(time.dateTime);
+      if (Number.isNaN(generatedAt.valueOf())) continue;
 
-    time.textContent = localTimeFormatter.format(generatedAt);
-    time.title = localTimeZone
-      ? `Shown in your local time (${localTimeZone})`
-      : "Shown in your local time";
-  }
+      time.textContent = localTimeFormatter.format(generatedAt);
+      time.title = localTimeZone
+        ? `Shown in your local time (${localTimeZone})`
+        : "Shown in your local time";
+    }
+
+    if (!window.matchMedia("(max-width: 639px)").matches) return;
+
+    for (const scroller of document.querySelectorAll<HTMLElement>("[data-activity-scroll]")) {
+      if (scroller.dataset.activityScrollInitialized === "true") continue;
+
+      scroller.dataset.activityScrollInitialized = "true";
+      requestAnimationFrame(() => {
+        scroller.scrollLeft = Math.max(
+          0,
+          scroller.scrollWidth - scroller.clientWidth,
+        );
+      });
+    }
+  };
+
+  setupActivityCalendar();
+  document.addEventListener("astro:page-load", setupActivityCalendar);
 </script>

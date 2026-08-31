@@ -24,7 +24,8 @@
   a,
   button,
   summary {
-    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: rgb(37 99 235 / 0.18);
+    touch-action: manipulation;
   }
 }
 

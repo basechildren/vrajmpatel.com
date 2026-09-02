@@ -21,8 +21,10 @@ const railHeight = size === "compact" ? 64 : 72;
   marks.length > 0 && (
     <span
       class:list={[
-        "flex shrink-0 gap-2",
-        marks.length > 1 ? "flex-col items-start" : "items-center",
+        "flex max-w-full shrink-0 gap-2",
+        marks.length > 1
+          ? "flex-row flex-wrap items-start sm:flex-col sm:flex-nowrap"
+          : "items-center",
       ]}
       aria-hidden="true"
     >
@@ -34,7 +36,9 @@ const railHeight = size === "compact" ? 64 : 72;
               surface === "princeton"
                 ? "border-[#e77500] bg-[#e77500] dark:border-[#e77500] dark:bg-[#e77500]"
                 : "border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900",
-              size === "compact" ? "h-16 w-40" : "h-[4.5rem] w-44",
+              size === "compact"
+                ? "h-12 w-28 sm:h-16 sm:w-40"
+                : "h-14 w-32 sm:h-[4.5rem] sm:w-44",
             ]}
           >
             <img
@@ -44,10 +48,11 @@ const railHeight = size === "compact" ? 64 : 72;
               height={railHeight}
               title={label}
               decoding="async"
+              loading="lazy"
               class:list={[
-                "max-h-[calc(100%-1rem)] max-w-[calc(100%-1rem)] object-contain",
+                "max-h-[calc(100%-0.75rem)] max-w-[calc(100%-0.75rem)] object-contain sm:max-h-[calc(100%-1rem)] sm:max-w-[calc(100%-1rem)]",
                 logoDark && "dark:hidden",
-                opticalScale === "crop-padding" && "scale-[1.75]",
+                opticalScale === "crop-padding" && "scale-[1.6] sm:scale-[1.75]",
               ]}
             />
             {
@@ -59,9 +64,10 @@ const railHeight = size === "compact" ? 64 : 72;
                   height={railHeight}
                   title={label}
                   decoding="async"
+                  loading="lazy"
                   class:list={[
-                    "hidden max-h-[calc(100%-1rem)] max-w-[calc(100%-1rem)] object-contain dark:block",
-                    opticalScale === "crop-padding" && "scale-[1.75]",
+                    "hidden max-h-[calc(100%-0.75rem)] max-w-[calc(100%-0.75rem)] object-contain sm:max-h-[calc(100%-1rem)] sm:max-w-[calc(100%-1rem)] dark:block",
+                    opticalScale === "crop-padding" && "scale-[1.6] sm:scale-[1.75]",
                   ]}
                 />
               )

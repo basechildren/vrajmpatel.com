@@ -75,9 +75,9 @@ const selectedWork = [
     </nav>
   </header>
 
-  <section class="pt-10" aria-labelledby="at-a-glance-heading">
+  <section class="pt-8 sm:pt-10" aria-labelledby="at-a-glance-heading">
     <h2 id="at-a-glance-heading" class="sr-only">At a glance</h2>
-    <dl class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <dl class="grid grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-2 lg:grid-cols-4">
       <div>
         <dt class="font-mono text-xs text-slate-500 dark:text-slate-400">Current role</dt>
         <dd class="mt-2 text-sm leading-6 text-slate-800 dark:text-slate-200">{profile.role}</dd>
@@ -86,11 +86,11 @@ const selectedWork = [
         <dt class="font-mono text-xs text-slate-500 dark:text-slate-400">Location</dt>
         <dd class="mt-2 text-sm leading-6 text-slate-800 dark:text-slate-200">{profile.location}</dd>
       </div>
-      <div>
+      <div class="col-span-2 sm:col-span-1">
         <dt class="font-mono text-xs text-slate-500 dark:text-slate-400">Education</dt>
         <dd class="mt-2 text-sm leading-6 text-slate-800 dark:text-slate-200">{profile.education}</dd>
       </div>
-      <div>
+      <div class="col-span-2 sm:col-span-1">
         <dt class="font-mono text-xs text-slate-500 dark:text-slate-400">Strongest fit</dt>
         <dd class="mt-2 text-sm leading-6 text-slate-800 dark:text-slate-200">
           Systems Integration · Backend/Platform · Data Engineering · Applied ML Infrastructure
@@ -99,7 +99,7 @@ const selectedWork = [
     </dl>
   </section>
 
-  <section class="pt-14 sm:pt-16" aria-labelledby="evidence-heading">
+  <section class="pt-12 sm:pt-16" aria-labelledby="evidence-heading">
     <p class="font-mono text-xs text-slate-500 dark:text-slate-400">Selected evidence</p>
     <h2 id="evidence-heading" class="mt-2 text-2xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
       Results and scale
@@ -107,7 +107,7 @@ const selectedWork = [
     <ProofGrid items={proofPoints} class="mt-7" />
   </section>
 
-  <section class="pt-14 sm:pt-16" aria-labelledby="profile-heading">
+  <section class="pt-12 sm:pt-16" aria-labelledby="profile-heading">
     <div class="grid gap-8 md:grid-cols-[15rem_1fr] md:gap-12">
       <div>
         <p class="font-mono text-xs text-slate-500 dark:text-slate-400">Engineering profile</p>
@@ -115,7 +115,7 @@ const selectedWork = [
           Backend, data, and applied ML systems
         </h2>
       </div>
-      <div class="space-y-5 text-base leading-8 text-slate-600 dark:text-slate-400 sm:text-lg">
+      <div class="space-y-5 text-base leading-7 text-slate-600 dark:text-slate-400 sm:text-lg sm:leading-8">
         <p>
           I work on internal tools where source data is imperfect, jobs can run for
           hours, and a person still needs to review the result. I build the state,
@@ -135,7 +135,7 @@ const selectedWork = [
     </div>
   </section>
 
-  <section class="pt-14 sm:pt-16" aria-labelledby="selected-proof-heading">
+  <section class="pt-12 sm:pt-16" aria-labelledby="selected-proof-heading">
     <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
         <p class="font-mono text-xs text-slate-500 dark:text-slate-400">Selected proof</p>
@@ -145,7 +145,7 @@ const selectedWork = [
       </div>
       <a
         href="/projects"
-        class="text-sm font-medium underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+        class="inline-flex min-h-11 items-center text-sm font-medium underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
       >
         All projects
       </a>
@@ -154,7 +154,7 @@ const selectedWork = [
     <ol class="mt-7 border-y border-slate-200 dark:border-slate-800">
       {
         selectedWork.map((project, index) => (
-          <li class:list={["grid gap-3 py-6 sm:grid-cols-[2rem_13rem_1fr] sm:gap-6", index > 0 && "border-t border-slate-200 dark:border-slate-800"]}>
+          <li class:list={["grid grid-cols-[2rem_1fr] gap-x-3 gap-y-1 py-5 sm:grid-cols-[2rem_13rem_1fr] sm:gap-6 sm:py-6", index > 0 && "border-t border-slate-200 dark:border-slate-800"]}>
             <span class="font-mono text-xs leading-7 text-slate-500 dark:text-slate-400">
               {String(index + 1).padStart(2, "0")}
             </span>
@@ -163,11 +163,11 @@ const selectedWork = [
               data-ph-event="project_opened"
               data-ph-project={project.id}
               data-ph-placement="recruiter_brief"
-              class="font-semibold leading-7 text-slate-950 underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:text-white dark:decoration-slate-700 dark:hover:text-blue-400"
+              class="col-start-2 inline-flex min-h-11 items-center font-semibold leading-7 text-slate-950 underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:text-white dark:decoration-slate-700 dark:hover:text-blue-400 sm:col-auto"
             >
               {project.title}
             </a>
-            <p class="text-sm leading-7 text-slate-600 dark:text-slate-400">
+            <p class="col-start-2 text-sm leading-7 text-slate-600 dark:text-slate-400 sm:col-auto">
               {project.description}
             </p>
           </li>

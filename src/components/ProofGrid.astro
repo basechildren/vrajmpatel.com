@@ -13,7 +13,7 @@ const { items, class: className, columns = 2 } = Astro.props;
 <dl
   class:list={[
     "grid border-y border-slate-200 dark:border-slate-800",
-    columns === 3 ? "lg:grid-cols-3" : "sm:grid-cols-2",
+    columns === 3 ? "md:grid-cols-3" : "grid-cols-2",
     className,
   ]}
 >
@@ -21,23 +21,21 @@ const { items, class: className, columns = 2 } = Astro.props;
     items.map((item, index) => (
       <div
         class:list={[
-          "py-5",
-          columns === 2 && "sm:px-6",
-          columns === 3 && "lg:px-6",
-          index > 0 && "border-t border-slate-200 dark:border-slate-800",
-          columns === 2 && index === 1 && "sm:border-t-0",
-          columns === 2 && index % 2 === 1 && "sm:border-l sm:border-slate-200 dark:sm:border-slate-800",
-          columns === 2 && index > 1 && "sm:border-t",
-          columns === 2 && index % 2 === 0 && "sm:pl-0",
-          columns === 3 && index > 0 && "lg:border-l lg:border-t-0 lg:border-slate-200 dark:lg:border-slate-800",
-          columns === 3 && index === 0 && "lg:pl-0",
-          columns === 3 && index === items.length - 1 && "lg:pr-0",
+          "min-w-0 py-4 sm:py-5",
+          columns === 2 && "px-3 sm:px-6",
+          columns === 2 && index > 1 && "border-t border-slate-200 dark:border-slate-800",
+          columns === 2 && index % 2 === 1 && "border-l border-slate-200 pr-0 dark:border-slate-800 sm:pl-6",
+          columns === 2 && index % 2 === 0 && "pl-0 sm:pl-0",
+          columns === 3 && index > 0 && "border-t border-slate-200 dark:border-slate-800 md:border-l md:border-t-0 md:border-slate-200 dark:md:border-slate-800",
+          columns === 3 && "md:px-6",
+          columns === 3 && index === 0 && "md:pl-0",
+          columns === 3 && index === items.length - 1 && "md:pr-0",
         ]}
       >
-        <dt class="text-lg font-semibold tracking-tight text-slate-950 dark:text-white sm:text-xl">
+        <dt class="text-base font-semibold tracking-tight text-slate-950 dark:text-white sm:text-xl">
           {item.value}
         </dt>
-        <dd class="mt-1 max-w-sm text-sm leading-6 text-slate-600 dark:text-slate-400">
+        <dd class="mt-1 max-w-sm text-[0.8125rem] leading-5 text-slate-600 dark:text-slate-400 sm:text-sm sm:leading-6">
           {item.label}
         </dd>
       </div>

@@ -130,7 +130,7 @@ const structuredData =
     />
   </head>
   <body
-    class="flex min-h-screen flex-col overflow-x-hidden bg-slate-50 font-sans text-slate-950 selection:bg-blue-200 dark:bg-slate-950 dark:text-slate-100 dark:selection:bg-blue-900"
+    class="flex min-h-screen flex-col bg-slate-50 font-sans text-slate-950 selection:bg-blue-200 dark:bg-slate-950 dark:text-slate-100 dark:selection:bg-blue-900"
   >
     <a
       href="#main"
@@ -139,13 +139,15 @@ const structuredData =
       Skip to content
     </a>
 
-    <header class="border-b border-slate-200 print:hidden dark:border-slate-800">
+    <header
+      class="sticky top-0 z-40 border-b border-slate-200/80 bg-slate-50/90 backdrop-blur-md supports-[backdrop-filter]:bg-slate-50/75 print:hidden dark:border-slate-800/80 dark:bg-slate-950/90 dark:supports-[backdrop-filter]:bg-slate-950/75"
+    >
       <div
         class="mx-auto flex min-h-16 max-w-5xl items-center justify-between gap-4 px-5 sm:px-8"
       >
         <a
           href="/"
-          class="text-sm font-semibold tracking-tight text-slate-950 underline-offset-4 hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:text-white"
+          class="inline-flex min-h-11 items-center text-sm font-semibold tracking-tight text-slate-950 underline-offset-4 hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:text-white"
         >
           Vraj Patel
         </a>
@@ -158,7 +160,7 @@ const structuredData =
                   href={href}
                   aria-current={isCurrent(href) ? "page" : undefined}
                   class:list={[
-                    "inline-flex min-h-10 items-center border-b px-0.5 text-sm transition-colors focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600",
+                    "inline-flex min-h-11 items-center border-b px-0.5 text-sm transition-colors focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600",
                     isCurrent(href)
                       ? "border-blue-600 font-medium text-slate-950 dark:text-white"
                       : "border-transparent text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white",
@@ -174,7 +176,7 @@ const structuredData =
               rel="noopener noreferrer"
               data-ph-event="resume_clicked"
               data-ph-placement="header"
-              class="inline-flex min-h-10 items-center text-sm text-slate-600 underline decoration-slate-300 underline-offset-4 transition-colors hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:text-slate-400 dark:decoration-slate-700 dark:hover:text-white"
+              class="inline-flex min-h-11 items-center text-sm text-slate-600 underline decoration-slate-300 underline-offset-4 transition-colors hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:text-slate-400 dark:decoration-slate-700 dark:hover:text-white"
             >
               Resume
             </a>
@@ -182,49 +184,51 @@ const structuredData =
 
           <ThemeToggle />
 
-          <details class="group relative sm:hidden">
+          <details data-mobile-menu class="group sm:hidden">
             <summary
-              class="inline-flex min-h-10 cursor-pointer list-none items-center rounded-md border border-slate-300 px-3 text-xs font-medium text-slate-700 transition-colors hover:border-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 [&::-webkit-details-marker]:hidden dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-500"
+              class="inline-flex min-h-11 min-w-16 touch-manipulation cursor-pointer list-none items-center justify-center rounded-md border border-slate-300 px-3 text-sm font-medium text-slate-700 transition-[background-color,border-color,color,transform] hover:border-slate-400 hover:bg-slate-100 active:scale-[0.97] active:bg-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 group-open:border-slate-400 group-open:bg-slate-100 [&::-webkit-details-marker]:hidden dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-500 dark:hover:bg-slate-900 dark:active:bg-slate-800 dark:group-open:border-slate-600 dark:group-open:bg-slate-900"
             >
               Menu
             </summary>
             <nav
               aria-label="Mobile"
-              class="absolute right-0 top-12 z-50 w-48 rounded-lg border border-slate-200 bg-white p-2 shadow-lg shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-900 dark:shadow-black/20"
+              class="fixed inset-x-0 top-16 z-50 border-b border-slate-200 bg-slate-50 py-3 shadow-lg shadow-slate-900/10 dark:border-slate-800 dark:bg-slate-950 dark:shadow-black/30"
             >
-              {
-                nav.map(({ href, label }) => (
-                  <a
-                    href={href}
-                    aria-current={isCurrent(href) ? "page" : undefined}
-                    class:list={[
-                      "flex min-h-11 items-center rounded-md px-3 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600",
-                      isCurrent(href)
-                        ? "bg-slate-100 font-medium text-slate-950 dark:bg-slate-800 dark:text-white"
-                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-950 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white",
-                    ]}
-                  >
-                    {label}
-                  </a>
-                ))
-              }
-              <a
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-ph-event="resume_clicked"
-                data-ph-placement="mobile_menu"
-                class="flex min-h-11 items-center rounded-md px-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
-              >
-                Resume
-              </a>
+              <div class="mx-auto flex max-w-5xl flex-col gap-1 px-3">
+                {
+                  nav.map(({ href, label }) => (
+                    <a
+                      href={href}
+                      aria-current={isCurrent(href) ? "page" : undefined}
+                      class:list={[
+                        "flex min-h-11 touch-manipulation items-center rounded-lg px-4 text-base transition-[background-color,color,transform] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600",
+                        isCurrent(href)
+                          ? "bg-slate-200 font-semibold text-slate-950 active:bg-slate-300 dark:bg-slate-800 dark:text-white dark:active:bg-slate-700"
+                          : "text-slate-700 hover:bg-slate-100 hover:text-slate-950 active:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-900 dark:hover:text-white dark:active:bg-slate-800",
+                      ]}
+                    >
+                      {label}
+                    </a>
+                  ))
+                }
+                <a
+                  href="/resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-ph-event="resume_clicked"
+                  data-ph-placement="mobile_menu"
+                  class="flex min-h-11 touch-manipulation items-center rounded-lg px-4 text-base text-slate-700 transition-[background-color,color,transform] hover:bg-slate-100 hover:text-slate-950 active:scale-[0.99] active:bg-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:text-slate-300 dark:hover:bg-slate-900 dark:hover:text-white dark:active:bg-slate-800"
+                >
+                  Resume
+                </a>
+              </div>
             </nav>
           </details>
         </div>
       </div>
     </header>
 
-    <main id="main" class="mx-auto w-full max-w-5xl flex-1 px-5 py-14 print:max-w-none print:px-0 print:py-0 sm:px-8 sm:py-20">
+    <main id="main" class="mx-auto w-full max-w-5xl flex-1 px-5 py-12 print:max-w-none print:px-0 print:py-0 sm:px-8 sm:py-20">
       <slot />
     </main>
 
@@ -236,7 +240,7 @@ const structuredData =
           <p>&copy; {new Date().getFullYear()} {profile.name} · {profile.location}</p>
           <a
             href="/privacy"
-            class="text-xs text-slate-400 hover:text-slate-500 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:text-slate-500 dark:hover:text-slate-400"
+            class="inline-flex min-h-11 touch-manipulation items-center text-sm font-medium text-slate-600 underline decoration-slate-300 underline-offset-4 transition-colors hover:text-slate-950 active:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:text-slate-300 dark:decoration-slate-700 dark:hover:text-white dark:active:text-blue-300"
           >Privacy</a>
         </div>
         <nav aria-label="Professional profiles" class="flex flex-wrap gap-x-5 gap-y-2">
@@ -246,7 +250,7 @@ const structuredData =
             rel="noopener noreferrer"
             data-ph-event="social_profile_clicked"
             data-ph-network="linkedin"
-            class="underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-white"
+            class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-white"
           >LinkedIn</a>
           {
             profile.githubProfiles.map(({ href, label, username }) => (
@@ -257,12 +261,50 @@ const structuredData =
                 data-ph-event="social_profile_clicked"
                 data-ph-network="github"
                 data-ph-account={username}
-                class="underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-white"
+                class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-white"
               >{label}</a>
             ))
           }
         </nav>
       </div>
     </footer>
+    <script>
+      const setupMobileNavigation = () => {
+        const root = document.documentElement;
+        if (root.dataset.mobileNavigationReady === "true") return;
+
+        root.dataset.mobileNavigationReady = "true";
+
+        const openMenu = () =>
+          document.querySelector<HTMLDetailsElement>(
+            "details[data-mobile-menu][open]",
+          );
+
+        document.addEventListener("click", (event) => {
+          const menu = openMenu();
+          if (!menu || !(event.target instanceof Element)) return;
+
+          if (
+            event.target.closest("details[data-mobile-menu] a") ||
+            !event.target.closest("details[data-mobile-menu]")
+          ) {
+            menu.removeAttribute("open");
+          }
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key !== "Escape") return;
+
+          const menu = openMenu();
+          if (!menu) return;
+
+          menu.removeAttribute("open");
+          menu.querySelector<HTMLElement>("summary")?.focus();
+        });
+      };
+
+      setupMobileNavigation();
+      document.addEventListener("astro:page-load", setupMobileNavigation);
+    </script>
   </body>
 </html>

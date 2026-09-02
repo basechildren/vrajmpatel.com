@@ -13,7 +13,7 @@ const featured = (await getCollection("projects", ({ data }) => data.featured))
   .filter(isPublicProject)
   .filter(isCaseStudy)
   .sort(sortProjects)
-  .slice(0, 3);
+  .slice(0, 2);
 
 const recentExperience = (await getCollection("experience"))
   .sort((a, b) => a.data.order - b.data.order)
@@ -26,10 +26,10 @@ const recentExperience = (await getCollection("experience"))
   schemaType="Person"
 >
   <section
-    class="grid items-start gap-10 sm:grid-cols-[1fr_11rem] sm:gap-14"
+    class="grid grid-cols-[1fr_6rem] items-start gap-x-5 gap-y-6 sm:grid-cols-[1fr_11rem] sm:gap-x-14 sm:gap-y-0"
     aria-labelledby="intro-heading"
   >
-    <div>
+    <div class="min-w-0">
       <p class="font-mono text-xs text-slate-500 dark:text-slate-400">
         {profile.role} · {profile.location}
       </p>
@@ -39,8 +39,21 @@ const recentExperience = (await getCollection("experience"))
       >
         {profile.name}
       </h1>
+    </div>
+
+    <Image
+      src="/profile.jpg"
+      alt="Portrait of Vraj Patel"
+      width={176}
+      height={208}
+      class="col-start-2 row-start-1 h-28 w-24 rounded-lg object-cover object-center sm:row-span-2 sm:h-52 sm:w-44"
+      fetchpriority="high"
+      loading="eager"
+    />
+
+    <div class="col-span-2 sm:col-span-1 sm:col-start-1 sm:row-start-2">
       <p
-        class="mt-5 max-w-2xl text-2xl font-medium leading-tight tracking-[-0.025em] text-slate-800 dark:text-slate-200 sm:text-3xl"
+        class="max-w-2xl text-2xl font-medium leading-tight tracking-[-0.025em] text-slate-800 dark:text-slate-200 sm:mt-5 sm:text-3xl"
       >
         I turn operational bottlenecks into reliable software and data systems.
       </p>
@@ -50,18 +63,18 @@ const recentExperience = (await getCollection("experience"))
         day-to-day use. My research background spans public-interest data and
         satellite cybersecurity.
       </p>
-      <div class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-medium">
+      <div class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-medium max-[359px]:grid max-[359px]:grid-cols-2 max-[359px]:gap-x-4 max-[359px]:gap-y-1">
         <a
           href="/brief"
           data-ph-event="recruiter_brief_opened"
           data-ph-placement="hero"
-          class="inline-flex min-h-11 items-center rounded-md bg-slate-950 px-4 text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 dark:bg-white dark:text-slate-950 dark:hover:bg-blue-200 dark:focus-visible:ring-offset-slate-950"
+          class="inline-flex min-h-11 items-center rounded-md bg-slate-950 px-4 text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 max-[359px]:col-span-2 max-[359px]:justify-center dark:bg-white dark:text-slate-950 dark:hover:bg-blue-200 dark:focus-visible:ring-offset-slate-950"
         >
           Recruiter brief
         </a>
         <a
           href="#selected-work"
-          class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+          class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
         >
           Selected work
         </a>
@@ -71,32 +84,22 @@ const recentExperience = (await getCollection("experience"))
           rel="noopener noreferrer"
           data-ph-event="resume_clicked"
           data-ph-placement="hero"
-          class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+          class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
         >
           Resume
         </a>
       </div>
     </div>
-
-    <Image
-      src="/profile.jpg"
-      alt="Portrait of Vraj Patel"
-      width={176}
-      height={208}
-      class="h-40 w-32 rounded-lg object-cover object-center sm:h-52 sm:w-44"
-      fetchpriority="high"
-      loading="eager"
-    />
   </section>
 
-  <section class="border-b border-slate-200 pb-16 pt-10 sm:pb-20 sm:pt-14 dark:border-slate-800" aria-labelledby="proof-heading">
-    <p id="proof-heading" class="mb-5 font-mono text-xs text-slate-500 dark:text-slate-400">
+  <section class="border-b border-slate-200 pb-12 pt-10 sm:pb-20 sm:pt-14 dark:border-slate-800" aria-labelledby="proof-heading">
+    <p id="proof-heading" class="mb-4 font-mono text-xs text-slate-500 dark:text-slate-400 sm:mb-5">
       Evidence at a glance
     </p>
     <ProofGrid items={proofPoints} />
   </section>
 
-  <section class="pt-16 sm:pt-20" aria-labelledby="capabilities-heading">
+  <section class="pt-12 sm:pt-20" aria-labelledby="capabilities-heading">
     <div class="max-w-3xl">
       <p class="font-mono text-xs text-slate-500 dark:text-slate-400">How I contribute</p>
       <h2 id="capabilities-heading" class="mt-2 text-2xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
@@ -109,10 +112,10 @@ const recentExperience = (await getCollection("experience"))
       </p>
     </div>
 
-    <div class="mt-8 border-y border-slate-200 dark:border-slate-800">
+    <div class="mt-7 border-y border-slate-200 dark:border-slate-800 sm:mt-8">
       {
         capabilities.map((capability, index) => (
-          <article class:list={["grid gap-4 py-7 md:grid-cols-[15rem_1fr] md:gap-10", index > 0 && "border-t border-slate-200 dark:border-slate-800"]}>
+          <article class:list={["grid gap-3 py-6 md:grid-cols-[15rem_1fr] md:gap-10 md:py-7", index > 0 && "border-t border-slate-200 dark:border-slate-800"]}>
             <h3 class="text-lg font-semibold leading-7 text-slate-950 dark:text-white">
               {capability.title}
             </h3>
@@ -125,7 +128,7 @@ const recentExperience = (await getCollection("experience"))
               </p>
               <a
                 href={capability.href}
-                class="mt-4 inline-block text-sm font-medium underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+                class="mt-2 inline-flex min-h-11 items-center text-sm font-medium underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400 sm:mt-4"
               >
                 {capability.linkLabel}
               </a>
@@ -136,7 +139,7 @@ const recentExperience = (await getCollection("experience"))
     </div>
   </section>
 
-  <section id="selected-work" class="scroll-mt-6 pt-16 sm:pt-20" aria-labelledby="work-heading">
+  <section id="selected-work" class="scroll-mt-24 pt-12 sm:pt-20" aria-labelledby="work-heading">
     <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
         <p class="font-mono text-xs text-slate-500 dark:text-slate-400">Projects</p>
@@ -149,7 +152,7 @@ const recentExperience = (await getCollection("experience"))
       </div>
       <a
         href="/projects"
-        class="text-sm font-medium underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+        class="inline-flex min-h-11 items-center text-sm font-medium underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
       >
         All projects
       </a>
@@ -158,13 +161,13 @@ const recentExperience = (await getCollection("experience"))
     <div class="mt-8">
       {
         featured.map((entry) => (
-          <ProjectCard entry={entry} headingLevel="h3" showDomain={true} />
+          <ProjectCard entry={entry} headingLevel="h3" showDomain={true} variant="compact" />
         ))
       }
     </div>
   </section>
 
-  <section class="pt-16 sm:pt-20" aria-labelledby="experience-heading">
+  <section class="pt-12 sm:pt-20" aria-labelledby="experience-heading">
     <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
         <p class="font-mono text-xs text-slate-500 dark:text-slate-400">Career</p>
@@ -174,7 +177,7 @@ const recentExperience = (await getCollection("experience"))
       </div>
       <a
         href="/experience"
-        class="text-sm font-medium underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+        class="inline-flex min-h-11 items-center text-sm font-medium underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
       >
         Full experience
       </a>

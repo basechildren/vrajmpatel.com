@@ -39,23 +39,33 @@ test("homepage and recruiter brief expose evidence-led navigation", async () => 
   assert.match(homepage, /github\.com\/basechildren/);
   assert.match(homepage, /github\.com\/PatVraj/);
   assert.doesNotMatch(homepage, /github\.com\/IBS-Vraj/);
+  assert.equal(
+    (homepage.match(/data-ph-placement="project_list_action"/g) ?? []).length,
+    2,
+    "the homepage should keep selected work to two compact case-study actions",
+  );
   assert.match(brief, /Backend, data, and applied ML systems/);
   assert.match(brief, /~15 min → &lt;1 min/);
 });
 
-test("about leads with the combined public GitHub activity", async () => {
+test("about establishes the current profile before public GitHub activity", async () => {
   const about = await readPage("about");
   const headingIndex = about.indexOf("GitHub activity across personal and academic work");
   const backgroundIndex = about.indexOf("Background");
 
   assert.ok(headingIndex > -1, "GitHub activity heading was not generated");
-  assert.ok(backgroundIndex > headingIndex, "GitHub activity should precede the biography");
+  assert.ok(backgroundIndex > -1, "Background heading was not generated");
+  assert.ok(backgroundIndex < headingIndex, "Background should precede GitHub activity");
   assert.match(about, /contributions across two accounts/);
   assert.match(about, /<time[^>]+datetime="[^"]+Z"[^>]+data-activity-sync-time/);
   assert.match(about, /github\.com\/basechildren/);
   assert.match(about, /github\.com\/PatVraj/);
   assert.match(about, /data-account-total="personal">[1-9][0-9]*/);
   assert.match(about, /data-account-total="academic">[1-9][0-9]*/);
+  assert.match(about, /Latest weeks shown\. Swipe horizontally for earlier activity\./);
+  assert.match(about, /role="region"[^>]+aria-label="Scrollable GitHub contribution calendar"/);
+  assert.match(about, /aria-describedby="activity-calendar-summary activity-scroll-hint"/);
+  assert.match(about, /class="min-w-\[50rem\]" aria-hidden="true"/);
   assert.doesNotMatch(about, /github\.com\/IBS-Vraj/);
 });
 
@@ -108,7 +118,7 @@ test("SeeMyRace presents recruiter-ready evidence without overstating ML ownersh
   assert.match(page, /requested a distinct Jira implementation ticket/);
   assert.match(page, /restricted to non-commercial research/);
   assert.match(page, /work added by other team members/);
-  assert.match(page, /lg:grid-cols-3/);
+  assert.match(page, /md:grid-cols-3/);
   assert.match(llms, /user-scoped match verification/);
   assert.match(llms, /Full-Stack Software Engineering and Applied ML/);
   assert.match(llms, /architectural changes, not measured accuracy gains/);

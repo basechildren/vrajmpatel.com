@@ -5,154 +5,198 @@ interface Props {
   entry: CollectionEntry<"projects">;
   headingLevel?: "h2" | "h3";
   showDomain?: boolean;
+  variant?: "compact" | "rich";
 }
 
 const {
   entry,
   headingLevel = "h3",
   showDomain = true,
+  variant = "rich",
 } = Astro.props;
 const Heading = headingLevel;
 const technologies = entry.data.tech?.slice(0, 4) ?? [];
+const showPrivateLabel =
+  entry.data.privateRepo &&
+  !entry.data.status?.toLocaleLowerCase().includes("private");
+const hasRichActions = Boolean(
+  showPrivateLabel ||
+    (!entry.data.privateRepo && entry.data.github) ||
+    entry.data.paper ||
+    entry.data.notebook ||
+    entry.data.link,
+);
 ---
 
-<article
-  class="grid gap-3 border-t border-slate-200 py-7 sm:grid-cols-[9rem_1fr] sm:gap-7 dark:border-slate-800"
->
-  <div>
-    {
-      showDomain && (
-        <>
+{
+  variant === "compact" ? (
+    <article class="grid gap-3 border-t border-slate-200 py-6 sm:grid-cols-[8rem_1fr] sm:gap-7 dark:border-slate-800">
+      <div>
+        {showDomain && (
           <p class="font-mono text-xs leading-5 text-slate-500 dark:text-slate-400">
             {entry.data.domain}
           </p>
-          {entry.data.status && (
-            <p class="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400">
-              {entry.data.status}
+        )}
+      </div>
+      <div class="min-w-0">
+        <a
+          href={`/projects/${entry.id}`}
+          data-ph-event="project_opened"
+          data-ph-project={entry.id}
+          data-ph-placement="project_list"
+          class="group inline-flex min-h-11 items-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950"
+        >
+          <Heading class="text-lg font-semibold tracking-tight text-slate-950 underline decoration-slate-300 underline-offset-4 group-hover:text-blue-700 dark:text-white dark:decoration-slate-700 dark:group-hover:text-blue-400 sm:text-xl">
+            {entry.data.title}
+          </Heading>
+        </a>
+        {entry.data.summary && (
+          <p class="mt-1 max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-400">
+            {entry.data.summary}
+          </p>
+        )}
+        {entry.data.proof?.[0] && (
+          <p class="mt-3 border-l-2 border-blue-600 pl-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
+            <strong class="font-semibold text-slate-950 dark:text-white">
+              {entry.data.proof[0].value}
+            </strong>{" "}
+            {entry.data.proof[0].label}
+          </p>
+        )}
+        <a
+          href={`/projects/${entry.id}`}
+          data-ph-event="project_opened"
+          data-ph-project={entry.id}
+          data-ph-placement="project_list_action"
+          class="mt-2 inline-flex min-h-11 items-center text-sm font-medium underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+        >
+          View case study
+        </a>
+      </div>
+    </article>
+  ) : (
+    <article class="grid gap-3 border-t border-slate-200 py-7 sm:grid-cols-[9rem_1fr] sm:gap-7 dark:border-slate-800">
+      <div>
+        {showDomain && (
+          <>
+            <p class="font-mono text-xs leading-5 text-slate-500 dark:text-slate-400">
+              {entry.data.domain}
             </p>
-          )}
-        </>
-      )
-    }
-  </div>
+            {entry.data.status && (
+              <p class="mt-1 text-[0.8125rem] leading-5 text-slate-500 dark:text-slate-400">
+                {entry.data.status}
+              </p>
+            )}
+          </>
+        )}
+      </div>
 
-  <div class="min-w-0">
-    <a
-      href={`/projects/${entry.id}`}
-      data-ph-event="project_opened"
-      data-ph-project={entry.id}
-      data-ph-placement="project_list"
-      class="group inline-block rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950"
-    >
-      <Heading
-        class="text-xl font-semibold tracking-tight text-slate-950 decoration-slate-300 underline-offset-4 group-hover:underline dark:text-white dark:decoration-slate-700 sm:text-2xl"
-      >
-        {entry.data.title}
-      </Heading>
-    </a>
+      <div class="min-w-0">
+        <a
+          href={`/projects/${entry.id}`}
+          data-ph-event="project_opened"
+          data-ph-project={entry.id}
+          data-ph-placement="project_list"
+          class="group inline-flex min-h-11 items-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950"
+        >
+          <Heading class="text-xl font-semibold tracking-tight text-slate-950 underline decoration-slate-300 underline-offset-4 group-hover:text-blue-700 dark:text-white dark:decoration-slate-700 dark:group-hover:text-blue-400 sm:text-2xl">
+            {entry.data.title}
+          </Heading>
+        </a>
 
-    {
-      entry.data.summary && (
-        <p class="mt-3 max-w-2xl text-[0.95rem] leading-7 text-slate-600 dark:text-slate-400">
-          {entry.data.summary}
-        </p>
-      )
-    }
+        {entry.data.summary && (
+          <p class="mt-3 max-w-2xl text-[0.95rem] leading-7 text-slate-600 dark:text-slate-400">
+            {entry.data.summary}
+          </p>
+        )}
 
-    {
-      entry.data.contribution && (
-        <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-700 dark:text-slate-300">
-          <span class="font-mono text-xs text-slate-500 dark:text-slate-400">
-            Contribution
-          </span>
-          <span class="mx-2 text-slate-300 dark:text-slate-700" aria-hidden="true">/</span>
-          {entry.data.contribution}
-        </p>
-      )
-    }
+        {entry.data.contribution && (
+          <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-700 dark:text-slate-300">
+            <span class="font-mono text-xs text-slate-500 dark:text-slate-400">
+              Contribution
+            </span>
+            <span class="mx-2 text-slate-300 dark:text-slate-700" aria-hidden="true">/</span>
+            {entry.data.contribution}
+          </p>
+        )}
 
-    {
-      entry.data.proof?.[0] && (
-        <p class="mt-4 border-l-2 border-blue-600 pl-4 text-sm leading-6 text-slate-600 dark:text-slate-400">
-          <strong class="font-semibold text-slate-950 dark:text-white">
-            {entry.data.proof[0].value}
-          </strong>{" "}
-          {entry.data.proof[0].label}
-        </p>
-      )
-    }
+        {entry.data.proof?.[0] && (
+          <p class="mt-4 border-l-2 border-blue-600 pl-4 text-sm leading-6 text-slate-600 dark:text-slate-400">
+            <strong class="font-semibold text-slate-950 dark:text-white">
+              {entry.data.proof[0].value}
+            </strong>{" "}
+            {entry.data.proof[0].label}
+          </p>
+        )}
 
-    <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-      {
-        entry.data.privateRepo ? (
-          <span class="text-slate-500 dark:text-slate-400">Private project</span>
-        ) : entry.data.github && (
-          <a
-            href={entry.data.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-ph-event="outbound_link_clicked"
-            data-ph-resource="github"
-            data-ph-project={entry.id}
-            class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
-          >
-            Source
-          </a>
-        )
-      }
-      {
-        entry.data.paper && (
-          <a
-            href={entry.data.paper}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-ph-event="outbound_link_clicked"
-            data-ph-resource={entry.data.paperResource ?? "paper"}
-            data-ph-project={entry.id}
-            class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
-          >
-            {entry.data.paperLabel ?? "Paper"}
-          </a>
-        )
-      }
-      {
-        entry.data.notebook && (
-          <a
-            href={entry.data.notebook}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-ph-event="outbound_link_clicked"
-            data-ph-resource="notebook"
-            data-ph-project={entry.id}
-            class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
-          >
-            Notebook
-          </a>
-        )
-      }
-      {
-        entry.data.link && (
-          <a
-            href={entry.data.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-ph-event="outbound_link_clicked"
-            data-ph-resource="project_site"
-            data-ph-project={entry.id}
-            class="underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
-          >
-            Live site
-          </a>
-        )
-      }
-    </div>
+        {hasRichActions && (
+          <div class="mt-3 flex min-h-11 flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+            {showPrivateLabel ? (
+              <span class="text-slate-500 dark:text-slate-400">Private project</span>
+            ) : (
+              !entry.data.privateRepo &&
+              entry.data.github && (
+                <a
+                  href={entry.data.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-ph-event="outbound_link_clicked"
+                  data-ph-resource="github"
+                  data-ph-project={entry.id}
+                  class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+                >
+                  Source
+                </a>
+              )
+            )}
+            {entry.data.paper && (
+              <a
+                href={entry.data.paper}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-ph-event="outbound_link_clicked"
+                data-ph-resource={entry.data.paperResource ?? "paper"}
+                data-ph-project={entry.id}
+                class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+              >
+                {entry.data.paperLabel ?? "Paper"}
+              </a>
+            )}
+            {entry.data.notebook && (
+              <a
+                href={entry.data.notebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-ph-event="outbound_link_clicked"
+                data-ph-resource="notebook"
+                data-ph-project={entry.id}
+                class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+              >
+                Notebook
+              </a>
+            )}
+            {entry.data.link && (
+              <a
+                href={entry.data.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-ph-event="outbound_link_clicked"
+                data-ph-resource="project_site"
+                data-ph-project={entry.id}
+                class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+              >
+                Live site
+              </a>
+            )}
+          </div>
+        )}
 
-    {
-      technologies.length > 0 && (
-        <p class="mt-4 font-mono text-xs leading-5 text-slate-500 dark:text-slate-400">
-          {technologies.join(" · ")}
-        </p>
-      )
-    }
-  </div>
-</article>
+        {technologies.length > 0 && (
+          <p class="mt-3 font-mono text-[0.8125rem] leading-5 text-slate-500 dark:text-slate-400">
+            {technologies.join(" · ")}
+          </p>
+        )}
+      </div>
+    </article>
+  )
+}

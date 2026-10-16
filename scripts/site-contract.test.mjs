@@ -225,6 +225,7 @@ test("engineering instrument includes accessible synthetic films and shortcuts",
     if (caption[1].includes("Recreation")) assert.match(caption[1], /synthetic data/);
   }
   assert.equal((homepage.match(/Recreation · synthetic data/g) ?? []).length, 3);
+  assert.doesNotMatch(homepage, /12 sec \/ loop/);
   await assert.rejects(access(path.join(dist, "dev", "films")));
   for (const slug of ["operational-ticket-intelligence", "building-indian-parliamentary-datasets", "full-stack-biometric-marathon"]) {
     const page = await readPage("projects", slug);

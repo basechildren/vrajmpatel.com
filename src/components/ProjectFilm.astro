@@ -21,7 +21,7 @@ const film = projectFilms[slug];
         <span data-film-icon aria-hidden="true">▶</span><span data-film-action>Play</span>
       </button>
     </div>
-    <figcaption><span>{film.caption}</span><span class="film-duration">12 sec / loop</span></figcaption>
+    <figcaption><span>{film.caption}</span></figcaption>
   </figure>
 )}
 
@@ -114,11 +114,9 @@ const film = projectFilms[slug];
   .project-film-screen { position: relative; aspect-ratio: 8 / 5; overflow: hidden; background: #f2f1ed; }
   video { display: block; width: 100%; height: 100%; object-fit: cover; }
   figcaption { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .65rem .85rem; border-top: 1px solid var(--line, #ddd); color: var(--muted, #57545f); font: 10px/1.5 var(--font-mono, monospace); letter-spacing: .01em; }
-  .film-duration { white-space: nowrap; opacity: .8; }
   .film-toggle { position: absolute; bottom: .75rem; right: .75rem; display: inline-flex; align-items: center; gap: .45rem; min-width: 5rem; min-height: 2.75rem; padding: .45rem .8rem; border: 1px solid #ffffff70; border-radius: 99px; background: #242330ed; color: white; box-shadow: 0 2px 10px #0002; cursor: pointer; font: 11px/1 var(--font-mono, monospace); }
   .film-toggle:hover { background: #424052; }
   .film-toggle[hidden] { display: none; }
   .film-toggle:focus-visible { outline: 3px solid var(--accent, #5d55d8); outline-offset: 3px; }
-  @media (max-width: 380px) { .film-duration { display: none; } }
   @media print { .film-toggle { display: none; } }
 </style>

@@ -70,7 +70,7 @@ const cellStyle = (day: (typeof data.days)[number]) => {
         Personal
       </dt>
       <dd class="mt-2 flex items-baseline justify-between gap-4">
-        <a class="inline-flex min-h-11 items-center text-sm underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400" href={personal.url} target="_blank" rel="noopener noreferrer" data-ph-event="social_profile_clicked" data-ph-network="github" data-ph-account="personal" data-ph-placement="github_activity">
+        <a class="inline-flex min-h-11 items-center text-sm underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm dark:decoration-slate-700 dark:hover:text-blue-400" href={personal.url} target="_blank" rel="noopener noreferrer" data-ph-event="social_profile_clicked" data-ph-network="github" data-ph-account="personal" data-ph-placement="github_activity">
           @{personal.login}
         </a>
         <span class="font-mono text-xs text-slate-500 dark:text-slate-400"><span data-account-total="personal">{personal.totalContributions}</span> contributions</span>
@@ -82,7 +82,7 @@ const cellStyle = (day: (typeof data.days)[number]) => {
         Academic
       </dt>
       <dd class="mt-2 flex items-baseline justify-between gap-4">
-        <a class="inline-flex min-h-11 items-center text-sm underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400" href={academic.url} target="_blank" rel="noopener noreferrer" data-ph-event="social_profile_clicked" data-ph-network="github" data-ph-account="academic" data-ph-placement="github_activity">
+        <a class="inline-flex min-h-11 items-center text-sm underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm dark:decoration-slate-700 dark:hover:text-blue-400" href={academic.url} target="_blank" rel="noopener noreferrer" data-ph-event="social_profile_clicked" data-ph-network="github" data-ph-account="academic" data-ph-placement="github_activity">
           @{academic.login}
         </a>
         <span class="font-mono text-xs text-slate-500 dark:text-slate-400"><span data-account-total="academic">{academic.totalContributions}</span> contributions</span>
@@ -106,7 +106,7 @@ const cellStyle = (day: (typeof data.days)[number]) => {
       Latest weeks shown. Swipe horizontally for earlier activity.
     </p>
     <div
-      class="overflow-x-auto rounded-md pb-3 outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50 dark:focus-visible:ring-offset-slate-950"
+      class="overflow-x-auto rounded-md pb-3"
       tabindex="0"
       role="region"
       aria-label="Scrollable GitHub contribution calendar"

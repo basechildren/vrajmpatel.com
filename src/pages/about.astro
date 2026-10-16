@@ -60,7 +60,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           rel="noopener noreferrer"
           data-ph-event="social_profile_clicked"
           data-ph-network="linkedin"
-          class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+          class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm dark:decoration-slate-700 dark:hover:text-blue-400"
         >LinkedIn</a>
         {
           profile.githubProfiles.map(({ href, label, username }) => (
@@ -71,7 +71,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
               data-ph-event="social_profile_clicked"
               data-ph-network="github"
               data-ph-account={username}
-              class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+              class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm dark:decoration-slate-700 dark:hover:text-blue-400"
             >{label}</a>
           ))
         }
@@ -81,7 +81,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           rel="noopener noreferrer"
           data-ph-event="resume_clicked"
           data-ph-placement="about"
-          class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
+          class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm dark:decoration-slate-700 dark:hover:text-blue-400"
         >Resume (PDF)</a>
       </nav>
     </aside>

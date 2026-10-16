@@ -186,7 +186,8 @@ test("privacy policy is published, linked, and opt-out capable", async () => {
   assert.match(privacy, /data-consent-status-replay/);
   assert.match(privacy, /data-consent-saved/);
   assert.match(privacy, /Save preferences/);
-  assert.match(privacy, /Other browsers and devices keep their own preferences/i);
+  assert.match(privacy, /Saved for this browser\./);
+  assert.match(privacy, /theme and shortcut preferences are saved separately/);
   assert.doesNotMatch(privacy, /both default to off/i);
   assert.doesNotMatch(privacy, /Do Not Track/);
   assert.doesNotMatch(privacy, /Global Privacy Control/);

@@ -13,11 +13,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   <div class="privacy-content">
     <PrivacyControls />
 
-    <section aria-labelledby="choices-heading">
-      <h2 id="choices-heading">Your choices</h2>
-      <p>You can change these settings at any time. Your choice is saved in this browser, so you’ll need to set it separately on other browsers or devices.</p>
-    </section>
-
     <section aria-labelledby="analytics-heading">
       <h2 id="analytics-heading">Analytics</h2>
       <p>PostHog records which pages people visit, how long they stay, and how they interact with the site. This includes clicks, heatmaps, page-loading measurements, and dead clicks—clicks that produce no visible response.</p>
@@ -28,13 +23,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <section aria-labelledby="replay-heading">
       <h2 id="replay-heading">Session replay</h2>
       <p>Session replay shows how a visit unfolds, which helps me find confusing interactions or broken controls. Text entered in form fields is masked in the replay.</p>
-      <p>You can turn replay off while keeping analytics on, or turn analytics off while keeping replay on.</p>
     </section>
 
     <section aria-labelledby="storage-heading">
       <h2 id="storage-heading">What this browser stores</h2>
       <p>Your privacy settings are saved in local storage. PostHog may also use first-party cookies or local storage to keep track of visits and when you leave a page.</p>
-      <p>Your theme preference is saved separately and is not sent to PostHog.</p>
+      <p>Your theme and shortcut preferences are saved separately and aren’t sent to PostHog.</p>
     </section>
 
     <section aria-labelledby="processor-heading">

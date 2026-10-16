@@ -231,6 +231,9 @@ test("engineering instrument includes accessible synthetic films and shortcuts",
   for (const slug of ["operational-ticket-intelligence", "building-indian-parliamentary-datasets", "full-stack-biometric-marathon"]) {
     const page = await readPage("projects", slug);
     assert.match(page, /data-film-context="case"/);
+    assert.equal((page.match(/\bdata-film(?:\s|>)/g) ?? []).length, 1, "case studies show one film");
+    assert.ok(page.indexOf('id="overview"') < page.indexOf('data-film-context="case"'), "the case film follows the overview");
+    assert.doesNotMatch(page, />\s*Contribution\s*</, "the header Contribution cell duplicates My contribution");
     assert.match(page, /Recreation · synthetic data/);
     const names = [...page.matchAll(/view-transition-name:\s*([\w-]+)/g)].map(match => match[1]);
     assert.equal(new Set(names).size, names.length, "view transition names must be unique per page");

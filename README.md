@@ -92,12 +92,10 @@ Then, with Chrome installed, run in another terminal:
 node scripts/privacy-browser-smoke.mjs
 ```
 
-The browser check defaults to `http://127.0.0.1:4323`. Set `SITE_URL` to use
-another production preview, and `QA_OUTPUT` to change the screenshot and report
-directory. A production preview is required because the check deliberately
-blocks local storage; Astro's development toolbar also accesses that storage
-and would cause an unrelated runtime error. The check includes storage errors,
-independent preference persistence, both themes, and mobile and desktop layouts.
+The check blocks local storage, so it needs a production preview rather than
+`pnpm dev` (Astro's development toolbar would throw an unrelated error); it
+defaults to `http://127.0.0.1:4323`, and `SITE_URL` and `QA_OUTPUT` override
+the target and the report directory.
 
 ## Dependencies and deployment
 

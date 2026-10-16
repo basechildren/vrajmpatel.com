@@ -25,7 +25,7 @@ Implemented October 15, 2026. This policy supersedes the animation-library and v
 
 ### Playback policy
 
-Video sources use `data-src` until interaction, alongside `preload="none"` and a fixed-size poster. This resolves the plan's conflicting requests for viewport autoplay and zero initial video bytes in favor of **zero video requests before interaction**. Mouse hover or keyboard focus starts a visible film; touch users have a Play button. Films pause offscreen, when the document is hidden, and for print. Cards also pause when hover/focus leaves. An explicit Pause persists until Play is pressed again.
+Video sources use `data-src` until interaction, alongside `preload="none"` and a fixed-size poster, so no video is requested before interaction. Mouse hover or keyboard focus starts a visible film; touch users have a Play button. Films pause offscreen, when the document is hidden, and for print. Cards also pause when hover/focus leaves. An explicit Pause persists until Play is pressed again.
 
 Reduced motion, Save-Data, and slow/2G connections prevent automatic playback. Explicit Play opts in. Video surfaces use `ph-no-capture`. Fixed width, height, and aspect ratios reserve media space. A native poster remains useful with JavaScript disabled.
 
@@ -37,12 +37,17 @@ pnpm films:record
 pnpm test:media
 ```
 
-The recorder uses installed Google Chrome through `playwright-core` and system `ffmpeg`. Set `FILM_BASE_URL` to override the dev server URL and `FILM_DPR` to choose capture density (default 2; committed assets captured at 1). Use `--slug=operational-ticket-intelligence` to record a single film. Output is 1280 × 800 at 30 fps, with deterministic seeking. Encoded files are committed; production CI never records them.
+The recorder uses installed Google Chrome through `playwright-core` and system `ffmpeg`. Set `FILM_BASE_URL` to override the dev server URL and `FILM_DPR` to choose capture density (default 2). Use `--slug=operational-ticket-intelligence` to record a single film. Output is 1280 × 800 at 30 fps, with deterministic seeking. Encoded files are committed; production CI never records them.
 
 Budgets per film: WebM at most 900,000 bytes; MP4 at most 1,400,000 bytes; poster at most 120,000 bytes. `test:media` verifies actual file presence and size; generated-site contracts verify lazy sources, synthetic captions, unique transitions, and that no dev film route or stylesheet ships.
 
 ## Verification
 
-Run `pnpm test`, `pnpm check`, `pnpm build`, `pnpm test:site`, `pnpm test:media`, and `pnpm audit --prod --audit-level=moderate`. Browser review covers light/dark at 1440, 1024, 768, 390, and 320 px; shortcuts; mobile menu; interactive examples; architecture links; reduced motion; and no initial video requests. Performance targets are Lighthouse Performance ≥95, Accessibility 100, LCP ≤2 s desktop throttled, and CLS ≤0.05. Targets are not claims of achieved scores; record measured outcomes separately.
+Run `pnpm test`, `pnpm check`, `pnpm build`, `pnpm test:site`, `pnpm test:media`, and `pnpm audit --prod --audit-level=moderate`. Browser review covers light/dark at 1440, 1024, 768, 390, and 320 px; shortcuts; mobile menu; interactive examples; architecture links; reduced motion; and no initial video requests.
+
+| Target (not a measured result) | Threshold |
+| --- | --- |
+| Lighthouse | Performance ≥95, Accessibility 100 |
+| Core Web Vitals | LCP ≤2 s (desktop, throttled), CLS ≤0.05 |
 
 The recruiter brief has no film. Its existing print blocks are unchanged. Final human review should still cover VoiceOver, Safari on a physical phone, and the editorial accuracy of each synthetic film.

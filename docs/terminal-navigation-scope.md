@@ -1,6 +1,6 @@
 # Header command navigation
 
-The header now animates navigation commands in the existing `~/vraj-patel` breadcrumb area. Selecting the home link or a numbered link types its destination command, then loads the page through ordinary document navigation. The separate terminal dialog and manual command input have been removed following the visual review.
+The header now animates navigation commands in the existing `~/vraj-patel` breadcrumb area. Selecting the home link or a numbered link types its destination command, then loads the page through ordinary document navigation. The separate terminal dialog and manual command input have been removed.
 
 ## Behavior
 
@@ -21,8 +21,6 @@ Typing takes at most 360 ms, followed by a 90 ms pause before navigation. Reduce
 ## Reliability and accessibility
 
 The primary navigation and command targets share `src/lib/siteNavigation.ts`. The enhancement only accepts Home and the four fixed primary destinations. It does not execute commands or accept visitor input.
-
-A later navigation choice replaces the pending one. Escape cancels a pending animation. Other links, the home keyboard shortcut, an open dialog, and page lifecycle events prevent a stale command from redirecting the visitor. Returning with Back restores the correct breadcrumb. A change to reduced motion also ends an active animation.
 
 The per-character preview is hidden from assistive technology. A separate status message announces the destination once. The animated layer does not change the header's dimensions or remove the regular navigation.
 

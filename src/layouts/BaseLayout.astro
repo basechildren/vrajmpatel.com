@@ -1,7 +1,10 @@
 ---
 import "../styles/global.css";
+import "../styles/shell.css";
 import Motion from "../components/Motion.astro";
-import ThemeToggle from "../components/ThemeToggle.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import StatusBar from "../components/StatusBar.astro";
+import ShortcutsDialog from "../components/ShortcutsDialog.astro";
 import Tracker from "../components/Tracker.astro";
 import { profile } from "../data/profile";
 
@@ -23,15 +26,8 @@ const {
   robots = "index, follow",
 } = Astro.props;
 
-const nav = [
-  { href: "/brief", label: "Brief" },
-  { href: "/projects", label: "Work" },
-  { href: "/experience", label: "Experience" },
-  { href: "/about", label: "About" },
-  { href: "/about#contact", label: "Contact" },
-] as const;
-
-const isCurrent = (href: string) => !href.includes("#") && Astro.url.pathname.startsWith(href);
+const wideLayout = Astro.url.pathname === "/" || Astro.url.pathname.startsWith("/projects");
+const homeLayout = Astro.url.pathname === "/";
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const imageUrl = new URL(ogImage, Astro.site);
 const person = {
@@ -81,12 +77,12 @@ const structuredData =
     <meta name="robots" content={robots} />
     <meta
       name="theme-color"
-      content="#f8fafc"
+      content="#faf9f6"
       media="(prefers-color-scheme: light)"
     />
     <meta
       name="theme-color"
-      content="#020617"
+      content="#0b0a11"
       media="(prefers-color-scheme: dark)"
     />
 
@@ -138,128 +134,39 @@ const structuredData =
     />
   </head>
   <body
-    class="flex min-h-screen flex-col bg-slate-50 font-sans text-slate-950 selection:bg-blue-200 dark:bg-slate-950 dark:text-slate-100 dark:selection:bg-blue-900"
+    class="site-body grid-paper"
   >
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-slate-950 focus:px-4 focus:py-2 focus:text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-slate-950 focus:px-4 focus:py-2 focus:text-white"
     >
       Skip to content
     </a>
 
-    <header
-      class="sticky top-0 z-40 border-b border-slate-200/80 bg-slate-50/90 backdrop-blur-md supports-[backdrop-filter]:bg-slate-50/75 print:hidden dark:border-slate-800/80 dark:bg-slate-950/90 dark:supports-[backdrop-filter]:bg-slate-950/75"
-    >
-      <div
-        class="mx-auto flex min-h-16 max-w-5xl items-center justify-between gap-4 px-5 sm:px-8"
-      >
-        <a
-          href="/"
-          class="inline-flex min-h-11 items-center text-sm font-semibold tracking-tight text-slate-950 underline-offset-4 hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:text-white"
-        >
-          Vraj Patel
-        </a>
+    <SiteHeader />
 
-        <div class="flex items-center gap-2 sm:gap-5">
-          <nav aria-label="Primary" class="hidden items-center gap-5 md:flex">
-            {
-              nav.map(({ href, label }) => (
-                <a
-                  href={href}
-                  aria-current={isCurrent(href) ? "page" : undefined}
-                  class:list={[
-                    "inline-flex min-h-11 items-center border-b px-0.5 text-sm transition-colors focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600",
-                    isCurrent(href)
-                      ? "border-blue-600 font-medium text-slate-950 dark:text-white"
-                      : "border-transparent text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white",
-                  ]}
-                >
-                  {label}
-                </a>
-              ))
-            }
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-ph-event="resume_clicked"
-              data-ph-placement="header"
-              class="inline-flex min-h-11 items-center text-sm text-slate-600 underline decoration-slate-300 underline-offset-4 transition-colors hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:text-slate-400 dark:decoration-slate-700 dark:hover:text-white"
-            >
-              Resume (PDF)
-            </a>
-          </nav>
-
-          <ThemeToggle />
-
-          <details data-mobile-menu class="group md:hidden">
-            <summary
-              class="inline-flex min-h-11 min-w-16 touch-manipulation cursor-pointer list-none items-center justify-center rounded-md border border-slate-300 px-3 text-sm font-medium text-slate-700 transition-[background-color,border-color,color,transform] hover:border-slate-400 hover:bg-slate-100 active:scale-[0.97] active:bg-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 group-open:border-slate-400 group-open:bg-slate-100 [&::-webkit-details-marker]:hidden dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-500 dark:hover:bg-slate-900 dark:active:bg-slate-800 dark:group-open:border-slate-600 dark:group-open:bg-slate-900"
-            >
-              Menu
-            </summary>
-            <nav
-              aria-label="Mobile"
-              class="fixed inset-x-0 top-16 z-50 border-b border-slate-200 bg-slate-50 py-3 shadow-lg shadow-slate-900/10 dark:border-slate-800 dark:bg-slate-950 dark:shadow-black/30"
-            >
-              <div class="mx-auto flex max-w-5xl flex-col gap-1 px-3">
-                {
-                  nav.map(({ href, label }) => (
-                    <a
-                      href={href}
-                      aria-current={isCurrent(href) ? "page" : undefined}
-                      class:list={[
-                        "flex min-h-11 touch-manipulation items-center rounded-lg px-4 text-base transition-[background-color,color,transform] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600",
-                        isCurrent(href)
-                          ? "bg-slate-200 font-semibold text-slate-950 active:bg-slate-300 dark:bg-slate-800 dark:text-white dark:active:bg-slate-700"
-                          : "text-slate-700 hover:bg-slate-100 hover:text-slate-950 active:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-900 dark:hover:text-white dark:active:bg-slate-800",
-                      ]}
-                    >
-                      {label}
-                    </a>
-                  ))
-                }
-                <a
-                  href="/resume.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-ph-event="resume_clicked"
-                  data-ph-placement="mobile_menu"
-                  class="flex min-h-11 touch-manipulation items-center rounded-lg px-4 text-base text-slate-700 transition-[background-color,color,transform] hover:bg-slate-100 hover:text-slate-950 active:scale-[0.99] active:bg-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:text-slate-300 dark:hover:bg-slate-900 dark:hover:text-white dark:active:bg-slate-800"
-                >
-                  Resume (PDF)
-                </a>
-              </div>
-            </nav>
-          </details>
-        </div>
-      </div>
-    </header>
-
-    <main id="main" class="mx-auto w-full max-w-5xl flex-1 px-5 py-12 print:max-w-none print:px-0 print:py-0 sm:px-8 sm:py-20">
+    <main id="main" class:list={["site-main", { "site-main-wide": wideLayout, "site-main-home": homeLayout }]}>
       <slot />
     </main>
 
-    <footer class="border-t border-slate-200 print:hidden dark:border-slate-800">
+    <footer class="site-footer print:hidden">
       <div
-        class="mx-auto flex max-w-5xl flex-col gap-4 px-5 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-8 dark:text-slate-400"
+        class="site-footer-links"
       >
-        <div class="flex flex-col items-start gap-2">
-          <p>&copy; {new Date().getFullYear()} {profile.name} · {profile.location}</p>
+        <p class="footer-copyright">&copy; {new Date().getFullYear()} {profile.name} · {profile.location}</p>
+        <nav aria-label="Footer links" class="footer-navigation">
           <a
             href="/privacy"
-            class="inline-flex min-h-11 touch-manipulation items-center text-sm font-medium text-slate-600 underline decoration-slate-300 underline-offset-4 transition-colors hover:text-slate-950 active:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:text-slate-300 dark:decoration-slate-700 dark:hover:text-white dark:active:text-blue-300"
+            class="inline-flex min-h-11 touch-manipulation items-center underline underline-offset-4 focus-visible:rounded-sm"
           >Privacy</a>
-        </div>
-        <nav aria-label="Professional profiles" class="flex flex-wrap gap-x-5 gap-y-2">
           <a
             href="https://www.linkedin.com/in/vrajmp/"
             target="_blank"
             rel="noopener noreferrer"
             data-ph-event="social_profile_clicked"
             data-ph-network="linkedin"
-            class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-white"
-          >Contact on LinkedIn</a>
+            class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm dark:decoration-slate-700 dark:hover:text-white"
+          >LinkedIn</a>
           {
             profile.githubProfiles.map(({ href, label, username }) => (
               <a
@@ -269,50 +176,14 @@ const structuredData =
                 data-ph-event="social_profile_clicked"
                 data-ph-network="github"
                 data-ph-account={username}
-                class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-white"
+                class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm dark:decoration-slate-700 dark:hover:text-white"
               >{label}</a>
             ))
           }
         </nav>
       </div>
+      <StatusBar />
     </footer>
-    <script>
-      const setupMobileNavigation = () => {
-        const root = document.documentElement;
-        if (root.dataset.mobileNavigationReady === "true") return;
-
-        root.dataset.mobileNavigationReady = "true";
-
-        const openMenu = () =>
-          document.querySelector<HTMLDetailsElement>(
-            "details[data-mobile-menu][open]",
-          );
-
-        document.addEventListener("click", (event) => {
-          const menu = openMenu();
-          if (!menu || !(event.target instanceof Element)) return;
-
-          if (
-            event.target.closest("details[data-mobile-menu] a") ||
-            !event.target.closest("details[data-mobile-menu]")
-          ) {
-            menu.removeAttribute("open");
-          }
-        });
-
-        document.addEventListener("keydown", (event) => {
-          if (event.key !== "Escape") return;
-
-          const menu = openMenu();
-          if (!menu) return;
-
-          menu.removeAttribute("open");
-          menu.querySelector<HTMLElement>("summary")?.focus();
-        });
-      };
-
-      setupMobileNavigation();
-      document.addEventListener("astro:page-load", setupMobileNavigation);
-    </script>
+    <ShortcutsDialog />
   </body>
 </html>

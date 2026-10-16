@@ -1,0 +1,11 @@
+.header-prompt { position: relative; flex: 1; min-width: 0; }
+.header-command-preview { position: absolute; inset: 0; display: flex; align-items: center; gap: .55rem; min-width: 0; overflow: hidden; white-space: nowrap; font: .75rem/1.5 var(--font-mono); color: var(--ink); }
+.header-command-preview[hidden] { display: none; }
+.header-command-dollar { color: var(--accent); }
+.header-command-preview .terminal-cursor { margin-left: -.2rem; animation: none; }
+.header-prompt[data-command-running] .terminal-breadcrumb { opacity: 0; pointer-events: none; }
+.site-header a[data-command-active], .site-header a[data-command-active] .nav-number { color: var(--accent); }
+@media (max-width: 639px) {
+  .header-command-preview { gap: .35rem; font-size: .625rem; }
+  .header-command-preview .terminal-cursor { flex-basis: .25rem; margin-left: -.25rem; }
+}

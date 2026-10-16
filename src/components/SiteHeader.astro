@@ -1,0 +1,88 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+import { primaryNavigation as nav } from "../lib/siteNavigation";
+import "../styles/header-command.css";
+
+const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isCurrent = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+const segments = pathname.split("/").filter(Boolean).map((segment, index, all) => ({
+  href: `/${all.slice(0, index + 1).join("/")}`,
+  label: segment,
+}));
+---
+
+<header class="site-header print:hidden">
+  <div class="site-header-bar">
+    <div class="header-prompt" data-header-prompt>
+    <nav class="terminal-breadcrumb" aria-label="Breadcrumb">
+      <a href="/" data-command-link aria-current={pathname === "/" ? "page" : undefined}><span aria-hidden="true">~/</span>vraj-patel<span class="sr-only">, home</span></a>
+      {segments.map(({ href, label }, index) => <span class="breadcrumb-segment">
+        <span aria-hidden="true" class="breadcrumb-divider">/</span>
+        <a href={href} aria-current={index === segments.length - 1 ? "page" : undefined}>{label}</a>
+      </span>)}
+      <span class="terminal-cursor" aria-hidden="true"></span>
+    </nav>
+    <div class="header-command-preview" data-command-preview aria-hidden="true" hidden><span class="header-command-dollar">$</span><span data-command-text></span><span class="terminal-cursor"></span></div>
+    </div>
+    <span class="sr-only" role="status" data-navigation-live></span>
+
+    <nav aria-label="Primary" class="desktop-navigation">
+      {nav.map(({ path, label, key }) => <a href={path} data-shortcut-route={key} data-command-link aria-current={isCurrent(path) ? "page" : undefined}>
+        <span aria-hidden="true" class="nav-number">[{key}]</span> {label}
+        {isCurrent(path) && <span class="navigation-marker" aria-hidden="true"></span>}
+      </a>)}
+    </nav>
+
+    <div class="header-actions">
+      <a href="/resume.pdf" target="_blank" rel="noopener noreferrer"
+        data-ph-event="resume_clicked" data-ph-placement="header" data-shortcut-resume
+        class="header-resume" aria-label="Resume (PDF), opens in a new tab">
+        Resume (PDF) <span aria-hidden="true">↗</span>
+      </a>
+      <ThemeToggle />
+      <details data-mobile-menu class="mobile-menu">
+        <summary>Menu <span aria-hidden="true">+</span></summary>
+        <nav aria-label="Mobile" class="mobile-navigation">
+          <p class="mobile-menu-caption" aria-hidden="true">~/vraj-patel — ls</p>
+          {nav.map(({ path, label, key }) => <a href={path} data-command-link aria-current={isCurrent(path) ? "page" : undefined}>
+            <span aria-hidden="true" class="nav-number">[{key}]</span> {label} <span aria-hidden="true" class="mobile-arrow">→</span>
+          </a>)}
+          <a href="/about#contact"><span aria-hidden="true" class="nav-number">[→]</span> Contact</a>
+          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer"
+            data-ph-event="resume_clicked" data-ph-placement="mobile_menu">
+            <span aria-hidden="true" class="nav-number">[r]</span> Resume (PDF) <span aria-hidden="true" class="mobile-arrow">↗</span>
+          </a>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
+
+<script>
+  import { setupTerminalNavigation } from "../lib/terminalNavigation";
+  setupTerminalNavigation();
+  const setupMobileNavigation = () => {
+    const root = document.documentElement;
+    if (root.dataset.mobileNavigationReady === "true") return;
+    root.dataset.mobileNavigationReady = "true";
+    const openMenu = () => document.querySelector<HTMLDetailsElement>("details[data-mobile-menu][open]");
+    document.addEventListener("click", (event) => {
+      const menu = openMenu();
+      if (!menu || !(event.target instanceof Element)) return;
+      if (event.target.closest("details[data-mobile-menu] a") || !event.target.closest("details[data-mobile-menu]")) {
+        menu.removeAttribute("open");
+      }
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      const menu = openMenu();
+      if (!menu) return;
+      menu.removeAttribute("open");
+      menu.querySelector<HTMLElement>("summary")?.focus();
+    });
+    window.matchMedia("(min-width: 1024px)").addEventListener("change", (event) => {
+      if (event.matches) openMenu()?.removeAttribute("open");
+    });
+  };
+  setupMobileNavigation();
+</script>

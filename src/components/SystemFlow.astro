@@ -1,0 +1,100 @@
+---
+interface Props {
+  /** Home renders the figure twice; CSS shows one slot per width (see .home-system in global.css). */
+  placement: "hero" | "after-work";
+}
+const { placement } = Astro.props;
+const patternId = `flow-dots-${placement}`;
+const nodes = [
+  { x: 86, label: 'reconcile', detail: 'Keep the source record consistent before suggesting a destination.' },
+  { x: 208, label: 'suggest', detail: 'A model suggestion is advisory evidence, not a verified label.' },
+  { x: 330, label: 'review', detail: 'The operator can accept a suggestion without authorizing an external update.' },
+  { x: 452, label: 'controls', detail: 'Read-only runtime policy keeps external delivery blocked.' },
+];
+---
+<figure class="system-flow" data-system-flow data-system-flow-placement={placement}>
+  <div class="flow-frame instrument-frame">
+    <div class="flow-header"><span class="eyebrow">Review boundary</span><span class="flow-live"><span></span> synthetic</span></div>
+    <div class="flow-canvas" aria-hidden="true">
+      <svg viewBox="0 0 540 310" fill="none">
+        <defs><pattern id={patternId} width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="var(--line)" /></pattern></defs>
+        <rect width="540" height="310" fill={`url(#${patternId})`} />
+        <path d="M22 60H45Q86 60 86 133M22 238H45Q86 238 86 165" stroke="var(--line)" />
+        <path d="M86 150H452" stroke="var(--line)" stroke-width="1.5" />
+        <path d="M100 150H440" stroke="var(--accent)" stroke-opacity=".3" stroke-dasharray="3 5" />
+        <path d="M320 54V246" stroke="var(--accent)" stroke-opacity=".25" stroke-dasharray="4 5" />
+        <text x="330" y="40" class="boundary-label">human review</text>
+        <g class="record"><rect x="-37" y="-12" width="74" height="24" rx="5" fill="var(--paper)" stroke="var(--accent)" /><text x="0" y="4" text-anchor="middle" class="record-label">DEMO-104</text></g>
+        {nodes.map((node,index) => <g class:list={['flow-node', {'review-node': index===2}]}>
+          <title>{node.detail}</title>
+          <circle cx={node.x} cy="150" r="22" fill="var(--paper)" stroke="var(--line)" stroke-width="1.5" />
+          <circle class="node-core" cx={node.x} cy="150" r="7" fill={index===2 ? 'var(--accent)' : 'var(--paper-2)'} stroke="var(--accent)" stroke-width="1" />
+          <text x={node.x} y="197" text-anchor="middle" class="node-label">{node.label}</text>
+          <text x={node.x} y="218" text-anchor="middle" class="node-number">0{index+1}</text>
+        </g>)}
+        <g class="accepted"><rect x="286" y="90" width="88" height="25" rx="12.5" fill="var(--accent-soft)" /><text x="330" y="106" text-anchor="middle" class="accepted-label">accepted ✓</text></g>
+        <path d="M452 173V258H286" stroke="var(--line)" />
+        <circle cx="286" cy="258" r="3" fill="var(--accent)" />
+        <text x="273" y="262" text-anchor="end" class="output-label">delivery blocked · read-only</text>
+      </svg>
+    </div>
+    <div class="flow-footer"><span>approval ≠ permission to write</span><button type="button" data-flow-toggle hidden aria-label="Play system diagram"><span data-flow-action>Play</span> <span data-flow-icon aria-hidden="true">↻</span></button></div>
+  </div>
+  <p class="sr-only">A synthetic ticket is reconciled, receives a model suggestion, and is accepted by an operator. Runtime controls still block external delivery because the system is read-only.</p>
+</figure>
+<style>
+  .system-flow { position: relative; }
+  .system-flow::before { content: ''; position: absolute; inset: -35px 0; background: radial-gradient(ellipse, var(--accent-soft), transparent 70%); z-index: -1; }
+  .flow-frame { padding: 1.8rem 1rem .6rem; box-shadow: 0 8px 28px #00000004; }
+  .flow-frame::after { content: ''; position: absolute; top: 18px; bottom: 18px; left: 0; width: 7px; opacity: .3; background: repeating-linear-gradient(var(--muted) 0 1px, transparent 1px 8px); }
+  .flow-header { display: flex; gap: .5rem; align-items: center; justify-content: space-between; padding-inline: .4rem; }
+  .flow-header .eyebrow { font-size: .6rem; }
+  .flow-live { display: flex; align-items: center; gap: .4rem; color: var(--muted); font: .6rem var(--font-mono); }
+  .flow-live span { width: 5px; height: 5px; border-radius: 50%; background: var(--signal); }
+  .flow-canvas { padding-block: .6rem; }
+  svg { width: 100%; overflow: visible; }
+  .node-label { font: 12px var(--font-mono); fill: var(--ink); }
+  .node-number { font: 9px var(--font-mono); fill: var(--muted); }
+  .record-label { font: 9px var(--font-mono); fill: var(--accent); }
+  .boundary-label { font: 9px var(--font-mono); fill: var(--muted); }
+  .accepted-label { font: 9px var(--font-mono); fill: var(--accent); }
+  .output-label { font: 10px var(--font-mono); fill: var(--copy); }
+  .record { transform: translate(208px,110px); }
+  .flow-node:hover circle:first-of-type { stroke: var(--accent); fill: var(--accent-soft); }
+  .flow-footer { border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding-left: .4rem; font: .6rem/1.7 var(--font-mono); color: var(--muted); }
+  .flow-footer button { min-height: 44px; min-width: 56px; color: var(--copy); cursor: pointer; }
+  @media (prefers-reduced-motion: no-preference) {
+    [data-playing] .record { animation: record-flow 6s ease-in-out infinite; }
+    [data-playing] .review-node .node-core { animation: review-pulse 6s ease-in-out infinite; }
+    [data-playing] .accepted { animation: accepted 6s ease-in-out infinite; }
+  }
+  @keyframes record-flow { 0%,8% { transform: translate(86px,110px); opacity: 0; } 12% { opacity: 1; } 30% { transform: translate(208px,110px); } 50%,65% { transform: translate(330px,110px); } 85%,95% { transform: translate(452px,110px); opacity: 1; } 100% { transform: translate(452px,110px); opacity: 0; } }
+  @keyframes review-pulse { 0%,45%,75%,100% { opacity: .5; } 55%,65% { opacity: 1; stroke-width: 9; stroke-opacity: .12; } }
+  @keyframes accepted { 0%,52%,100% { opacity: 0; } 60%,90% { opacity: 1; } }
+</style>
+<script>
+  const flows = [...document.querySelectorAll<HTMLElement>('[data-system-flow]')];
+  if (flows.length) {
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    // Keep in sync with the .home-system breakpoint in global.css.
+    const wide = matchMedia('(min-width: 768px)');
+    let playing = !reduced.matches;
+    // One shared state; only the rendered placement animates.
+    const render = () => flows.forEach((flow) => {
+      flow.toggleAttribute('data-playing', playing && flow.getClientRects().length > 0);
+      const toggle = flow.querySelector<HTMLButtonElement>('[data-flow-toggle]');
+      if (!toggle) return;
+      toggle.hidden = reduced.matches;
+      toggle.setAttribute('aria-label', playing ? 'Pause system diagram' : 'Play system diagram');
+      toggle.querySelector('[data-flow-action]')!.textContent = playing ? 'Pause' : 'Play';
+      toggle.querySelector('[data-flow-icon]')!.textContent = playing ? '⏸' : '↻';
+    });
+    const setPlaying = (value: boolean) => { playing = value; render(); };
+    flows.forEach((flow) => flow.querySelector('[data-flow-toggle]')?.addEventListener('click', () => setPlaying(!playing)));
+    render();
+    reduced.addEventListener('change', () => { if (reduced.matches) setPlaying(false); else render(); });
+    wide.addEventListener('change', render);
+    window.addEventListener('beforeprint', () => setPlaying(false));
+    document.addEventListener('visibilitychange', () => { if (document.hidden) setPlaying(false); });
+  }
+</script>

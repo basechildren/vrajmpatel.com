@@ -37,6 +37,8 @@ jobs:
         run: pnpm audit --prod --audit-level=moderate
       - name: Run focused tests
         run: pnpm test
+      - name: Check product film asset budgets
+        run: pnpm test:media
       - name: Check Astro templates and content
         run: pnpm check
       - name: Refresh public GitHub activity for the deployment artifact

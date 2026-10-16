@@ -1,0 +1,24 @@
+<div class="status-bar" role="group" aria-label="Local time and shortcuts">
+  <div class="status-bar-inner">
+    <div class="status-tools">
+      <span class="status-clock">Boulder <time data-mountain-clock>MT</time></span>
+      <button type="button" class="shortcuts-open" data-shortcuts-open aria-haspopup="dialog" aria-controls="keyboard-shortcuts" hidden><kbd>?</kbd> shortcuts</button>
+    </div>
+  </div>
+</div>
+<script>
+  const clock = document.querySelector<HTMLTimeElement>("[data-mountain-clock]");
+  const mountainTime = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Denver", hour: "2-digit", minute: "2-digit", hour12: false,
+  });
+  const updateTime = () => {
+    if (!clock) return;
+    const now = new Date();
+    clock.dateTime = now.toISOString();
+    clock.textContent = `${mountainTime.format(now)} MT`;
+  };
+  updateTime();
+  const timer = window.setInterval(() => { if (!document.hidden) updateTime(); }, 60000);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) updateTime(); });
+  window.addEventListener("pagehide", event => { if (!event.persisted) window.clearInterval(timer); });
+</script>

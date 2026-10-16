@@ -10,10 +10,11 @@ const demo = projectDemos[project];
     <h2 id="walkthrough-heading" class="section-title">{demo.title}</h2>
     <p class="muted-copy">{demo.description}</p>
   </div>
-  <div class="workflow-surface" data-reveal>
+  <div class="workflow-surface instrument-frame" data-reveal>
+    <div class="workflow-chrome" aria-hidden="true"><span><i></i><i></i><i></i></span></div>
     <nav class="workflow-controls" aria-label="Example steps" hidden>
       {demo.steps.map((step, i) => <button type="button" data-step={i} aria-controls={`demo-panel-${i}`} aria-pressed={i === 0 ? "true" : "false"}>
-        <span class="eyebrow" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span><span>{step.title}</span>
+        <span class="step-number" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span><span>{step.title}</span>
       </button>)}
     </nav>
     {demo.steps.map((step, i) => <section class="workflow-panel" id={`demo-panel-${i}`} data-panel={i} aria-labelledby={`demo-title-${i}`}>
@@ -34,7 +35,18 @@ const demo = projectDemos[project];
   <noscript><p class="muted-copy">All steps are shown. Enable JavaScript to step through the example and try the illustrative actions.</p></noscript>
 </section>}
 <script>
-  import { reveal } from "../lib/motion";
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const running = new Set<Animation>();
+  const stop = () => { running.forEach(animation => animation.cancel()); running.clear(); };
+  const animate = (element: HTMLElement, keyframes: Keyframe[], duration = 220) => {
+    if (reduced.matches || element.contains(document.activeElement)) return;
+    const animation = element.animate(keyframes, { duration, easing: "cubic-bezier(.22,1,.36,1)" });
+    running.add(animation);
+    animation.finished.then(() => running.delete(animation), () => running.delete(animation));
+  };
+  const reveal = (element: HTMLElement, distance: number) => animate(element, [{ opacity: .35, transform: `translateY(${distance}px)` }, { opacity: 1, transform: "translateY(0)" }]);
+  reduced.addEventListener("change", () => { if (reduced.matches) stop(); });
+  window.addEventListener("beforeprint", stop);
   document.querySelectorAll<HTMLElement>("[data-workflow-demo]").forEach(root => {
     const panels = [...root.querySelectorAll<HTMLElement>("[data-panel]")];
     const selectors = [...root.querySelectorAll<HTMLButtonElement>("[data-step]")];
@@ -42,11 +54,15 @@ const demo = projectDemos[project];
     const next = root.querySelector<HTMLButtonElement>("[data-next]")!;
     const reset = root.querySelector<HTMLButtonElement>("[data-reset]")!;
     const status = root.querySelector<HTMLElement>("[data-demo-status]")!;
+    root.addEventListener("focusin", stop);
     let current = 0;
     function show(index: number, announce = true) {
       current = Math.max(0, Math.min(index, panels.length - 1));
       panels.forEach((panel, i) => { panel.hidden = i !== current; });
-      selectors.forEach((button, i) => button.setAttribute("aria-pressed", String(i === current)));
+      selectors.forEach((button, i) => {
+        button.setAttribute("aria-pressed", String(i === current));
+        button.dataset.complete = String(i < current);
+      });
       previous.disabled = current === 0;
       next.disabled = current === panels.length - 1;
       next.textContent = current === panels.length - 1 ? "Last step" : `Next: ${selectors[current + 1].lastElementChild?.textContent}`;
@@ -71,7 +87,10 @@ const demo = projectDemos[project];
         const updates: Record<string, string> = JSON.parse(button.dataset.updates ?? "{}");
         button.closest("[data-panel]")?.querySelectorAll<HTMLElement>("[data-field]").forEach(field => {
           const value = updates[field.dataset.field ?? ""];
-          if (value !== undefined) field.textContent = value;
+          if (value !== undefined) {
+            field.textContent = value;
+            animate(field, [{ backgroundColor: "var(--accent-soft, #dbeafe)" }, { backgroundColor: "transparent" }], 850);
+          }
         });
         result.hidden = false;
         button.disabled = true;
@@ -83,3 +102,32 @@ const demo = projectDemos[project];
     root.querySelectorAll<HTMLElement>(".workflow-controls, .workflow-actions").forEach(control => { control.hidden = false; });
   });
 </script>
+
+<style>
+  .workflow-surface { border-radius: 12px; background: var(--paper, var(--surface)); box-shadow: 0 14px 40px -30px color-mix(in oklch, var(--ink), transparent 65%); }
+  .workflow-chrome { display: flex; justify-content: space-between; align-items: center; gap: 1rem; border-bottom: 1px solid var(--line); padding: .8rem 1rem; font-family: var(--font-mono); font-size: .55rem; color: var(--muted); background: var(--paper-2, var(--surface)); }
+  .workflow-chrome > span:first-child { display: flex; gap: 5px; }
+  .workflow-chrome i { width: 5px; height: 5px; border: 1px solid var(--muted); border-radius: 50%; opacity: .6; }
+  .workflow-controls:not(.workflow-footer) { grid-template-columns: repeat(4, minmax(8rem, 1fr)); overflow-x: auto; scrollbar-width: thin; padding: 1.2rem .8rem .8rem; background: var(--paper-2, var(--surface)); }
+  .workflow-controls > button[data-step] { position: relative; isolation: isolate; flex-direction: column; align-items: flex-start; gap: .65rem; padding: .4rem .6rem .8rem; border: 0; font-size: .7rem; line-height: 1.5; transition: color 180ms; }
+  .workflow-controls > button[data-step]::after { content: ""; position: absolute; z-index: -1; top: 1.3rem; left: 2.4rem; width: calc(100% - 1.6rem); height: 1px; background: var(--line); transition: background 220ms; }
+  .workflow-controls > button[data-step]:last-child::after { display: none; }
+  .workflow-controls > button[data-complete="true"]::after { background: var(--accent); }
+  .workflow-controls button[aria-pressed="true"], .workflow-controls button[data-step]:hover { background: transparent; }
+  .step-number { display: grid; width: 1.85rem; height: 1.85rem; place-items: center; border-radius: 50%; border: 1px solid var(--line); background: var(--paper-2, var(--surface)); font-family: var(--font-mono); font-size: .65rem; font-weight: 400; color: var(--muted); transition: border-color 180ms, background 180ms, color 180ms; }
+  button[aria-pressed="true"] .step-number { border-color: var(--accent); background: var(--accent); color: var(--paper, #fff); box-shadow: 0 0 0 4px var(--accent-soft, var(--tint)); }
+  button[data-complete="true"] .step-number { border-color: var(--accent); color: var(--accent); }
+  .workflow-panel { padding: 1.5rem; min-height: 25rem; }
+  .workflow-panel-heading h3 { font-family: var(--font-display, Georgia, serif); font-size: 2rem; font-weight: 400; }
+  .workflow-record { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--paper-2, var(--surface)); }
+  .workflow-record > div { padding: .8rem 1rem; }
+  .workflow-record > div:first-child { border-top: 0; }
+  .workflow-record dt { font-family: var(--font-mono); font-size: .65rem; }
+  .workflow-record dd { font-size: .8rem; font-weight: 500; border-radius: 2px; }
+  .workflow-result { border: 1px solid var(--line); border-left: 2px solid var(--accent); border-radius: 4px; padding: .85rem 1rem; background: var(--accent-soft, var(--tint)); font-size: .85rem; }
+  .workflow-footer { padding: .6rem 1.5rem; background: var(--paper-2, var(--surface)); }
+  .workflow-footer .text-link { font-size: .7rem; }
+  @media (max-width: 639px) { .workflow-panel { padding: 1.1rem; } }
+  @media (prefers-reduced-motion: reduce) { .workflow-controls > button[data-step], .workflow-controls > button[data-step]::after, .step-number { transition: none; } }
+  @media print { .workflow-chrome { display: none; } .workflow-panel { min-height: 0; } }
+</style>

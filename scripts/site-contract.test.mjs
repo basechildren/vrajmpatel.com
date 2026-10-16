@@ -28,7 +28,7 @@ test("homepage and recruiter brief expose evidence-led navigation", async () => 
     homepage,
     /The Data Mine of the Rockies · Purdue University and L3Harris/,
   );
-  assert.match(homepage, /August 2024 – May 2025/);
+  assert.match(homepage, /Aug 2024 – May 2025/);
   assert.match(homepage, /github\.com\/basechildren/);
   assert.match(homepage, /github\.com\/PatVraj/);
   assert.doesNotMatch(homepage, /github\.com\/IBS-Vraj/);
@@ -44,8 +44,10 @@ test("homepage and recruiter brief expose evidence-led navigation", async () => 
 
 test("about leads with public GitHub activity before the profile narrative", async () => {
   const about = await readPage("about");
-  const headingIndex = about.indexOf("GitHub activity across personal and academic work");
-  const backgroundIndex = about.indexOf("Background");
+  const main = about.match(/<main\b[^>]*>([\s\S]*?)<\/main>/)?.[1];
+  assert.ok(main, "About page content was not generated");
+  const headingIndex = main.indexOf("GitHub activity across personal and academic work");
+  const backgroundIndex = main.indexOf("Background");
 
   assert.ok(headingIndex > -1, "GitHub activity heading was not generated");
   assert.ok(backgroundIndex > -1, "Background heading was not generated");
@@ -104,7 +106,8 @@ test("SeeMyRace presents recruiter-ready evidence without overstating ML ownersh
     /128(?: → | &rarr; )512 dimensions/,
     /Body-first analysis/,
     /Canny-backed Stroke Width Transform/,
-    /not evidence of a fourfold accuracy gain/i,
+    /These are architecture changes, not measured accuracy gains/,
+    /does not contain a controlled, labeled before-and-after accuracy study/,
   ]) {
     assert.match(page, evidence);
   }
@@ -184,7 +187,8 @@ test("privacy policy is published, linked, and opt-out capable", async () => {
   assert.match(privacy, /data-consent-status-replay/);
   assert.match(privacy, /data-consent-saved/);
   assert.match(privacy, /Save preferences/);
-  assert.match(privacy, /Other browsers and devices keep their own preferences/i);
+  assert.match(privacy, /Saved for this browser\./);
+  assert.match(privacy, /theme and shortcut preferences are saved separately/);
   assert.doesNotMatch(privacy, /both default to off/i);
   assert.doesNotMatch(privacy, /Do Not Track/);
   assert.doesNotMatch(privacy, /Global Privacy Control/);
@@ -200,4 +204,60 @@ test("privacy policy is published, linked, and opt-out capable", async () => {
   assert.ok(sitemapFile, "generated sitemap was not found");
   const sitemap = await readFile(path.join(dist, sitemapFile), "utf8");
   assert.match(sitemap, /https:\/\/www\.vrajmpatel\.com\/privacy\/?/);
+});
+
+test("engineering instrument includes accessible synthetic films and shortcuts", async () => {
+  const homepage = await readPage();
+  assert.equal((homepage.match(/<h1\b/g) ?? []).length, 1);
+  const placements = [...homepage.matchAll(/data-system-flow-placement="([\w-]+)"/g)].map((match) => match[1]);
+  assert.deepEqual(placements, ["hero", "after-work"]);
+  assert.ok(homepage.indexOf('data-system-flow-placement="hero"') < homepage.indexOf('id="selected-work"'));
+  assert.ok(homepage.indexOf('data-system-flow-placement="after-work"') > homepage.indexOf('id="selected-work"'));
+  const ids = [...homepage.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
+  assert.equal(new Set(ids).size, ids.length, "ids must be unique on the homepage");
+  for (const card of homepage.split('<article class="project-feature"').slice(1)) {
+    const copy = card.indexOf("project-feature-copy");
+    assert.ok(copy > -1 && copy < card.indexOf("data-film"), "project card text comes before its film");
+  }
+  assert.equal((homepage.match(/\bdata-film(?:\s|>)/g) ?? []).length, 3);
+  assert.match(homepage, /<dialog[^>]+id="keyboard-shortcuts"/);
+  assert.doesNotMatch(homepage, /data-build-time|status-branch|status-sha|Source revision/, "the status bar must not publish build metadata");
+  const videos = [...homepage.matchAll(/<video\b[^>]*>[\s\S]*?<\/video>/g)].map(match => match[0]);
+  assert.equal(videos.length, 3);
+  for (const video of videos) {
+    assert.match(video, /\bmuted\b/);
+    assert.match(video, /\bplaysinline\b/);
+    assert.match(video, /preload="none"/);
+    assert.match(video, /poster="\/films\/[^" ]+-poster\.webp"/);
+    assert.match(video, /<source data-src="[^" ]+\.webm" type="video\/webm"/);
+    assert.match(video, /<source data-src="[^" ]+\.mp4" type="video\/mp4"/);
+    assert.doesNotMatch(video, /<source src=/, "videos must not request bytes before interaction");
+  }
+  for (const caption of homepage.matchAll(/<figcaption\b[^>]*>([\s\S]*?)<\/figcaption>/g)) {
+    if (caption[1].includes("Recreation")) assert.match(caption[1], /synthetic data/);
+  }
+  assert.equal((homepage.match(/Recreation · synthetic data/g) ?? []).length, 3);
+  assert.doesNotMatch(homepage, /12 sec \/ loop/);
+  assert.doesNotMatch(homepage, /fig\. 0\d|System 01/);
+  await assert.rejects(access(path.join(dist, "dev", "films")));
+  for (const slug of ["operational-ticket-intelligence", "building-indian-parliamentary-datasets", "full-stack-biometric-marathon"]) {
+    const page = await readPage("projects", slug);
+    assert.match(page, /data-film-context="case"/);
+    assert.equal((page.match(/\bdata-film(?:\s|>)/g) ?? []).length, 1, "case studies show one film");
+    assert.ok(page.indexOf('id="overview"') < page.indexOf('data-film-context="case"'), "the case film follows the overview");
+    assert.doesNotMatch(page, />\s*Contribution\s*</, "the header Contribution cell duplicates My contribution");
+    assert.doesNotMatch(page, /fig\. 0\d|~\/work\//);
+    assert.match(page, /Recreation · synthetic data/);
+    const names = [...page.matchAll(/view-transition-name:\s*([\w-]+)/g)].map(match => match[1]);
+    assert.equal(new Set(names).size, names.length, "view transition names must be unique per page");
+  }
+});
+
+test("dev film recording sets stay out of the production build", async () => {
+  await assert.rejects(access(path.join(dist, "dev")));
+  const assets = (await readdir(path.join(dist, "_astro"))).filter((name) => /\.(?:css|js)$/.test(name));
+  for (const name of assets) {
+    const contents = await readFile(path.join(dist, "_astro", name), "utf8");
+    assert.doesNotMatch(contents, /\.film-set\b|__film|html,body\{width:1280px/, `${name} contains the dev film recording set`);
+  }
 });

@@ -1,0 +1,121 @@
+---
+import { projectFilms } from "../data/projectFilms";
+
+interface Props {
+  slug: string;
+  context?: "card" | "case";
+  transition?: boolean;
+}
+const { slug, context = "card", transition = true } = Astro.props;
+const film = projectFilms[slug];
+---
+
+{film && (
+  <figure class="project-film ph-no-capture" data-film data-film-context={context} data-film-name={film.name} style={transition ? `view-transition-name: film-${slug}` : undefined}>
+    <div class="project-film-screen">
+      <video muted loop playsinline preload="none" poster={film.poster} width={film.width} height={film.height} aria-label={film.label} data-film-video>
+        <source data-src={film.webm} type="video/webm" />
+        <source data-src={film.mp4} type="video/mp4" />
+      </video>
+      <button type="button" class="film-toggle" aria-label={`Play ${film.name} film`} data-film-toggle hidden>
+        <span data-film-icon aria-hidden="true">▶</span><span data-film-action>Play</span>
+      </button>
+    </div>
+    <figcaption><span>{film.caption}</span></figcaption>
+  </figure>
+)}
+
+<script>
+  const motion = matchMedia("(prefers-reduced-motion: reduce)");
+  const connection = (navigator as Navigator & { connection?: EventTarget & { saveData?: boolean; effectiveType?: string } }).connection;
+  const constrained = () => motion.matches || Boolean(connection?.saveData) || /^(slow-)?2g$/.test(connection?.effectiveType ?? "");
+  const cleanups: (() => void)[] = [];
+  const pauses: (() => void)[] = [];
+
+  document.querySelectorAll<HTMLElement>("[data-film]").forEach((figure) => {
+    const video = figure.querySelector<HTMLVideoElement>("[data-film-video]");
+    const button = figure.querySelector<HTMLButtonElement>("[data-film-toggle]");
+    if (!video || !button) return;
+    let visible = false;
+    let engaged = false;
+    let pausedByUser = false;
+    let optedIn = false;
+    let loaded = false;
+    let pendingPlay = 0;
+    video.muted = true;
+
+    const sync = () => {
+      const playing = !video.paused;
+      button.setAttribute("aria-label", `${playing ? "Pause" : "Play"} ${figure.dataset.filmName ?? "project"} film`);
+      const action = button.querySelector("[data-film-action]");
+      const icon = button.querySelector("[data-film-icon]");
+      if (action) action.textContent = playing ? "Pause" : "Play";
+      if (icon) icon.textContent = playing ? "⏸" : "▶";
+    };
+    const pause = () => {
+      pendingPlay += 1;
+      video.pause();
+      sync();
+    };
+    const play = async (explicit = false) => {
+      if (document.hidden || (!explicit && (!visible || pausedByUser || constrained()))) return;
+      if (explicit) { optedIn = true; pausedByUser = false; }
+      // Deferring source assignment makes the zero-initial-video-byte promise explicit.
+      if (!loaded) {
+        video.querySelectorAll<HTMLSourceElement>("source[data-src]").forEach((source) => { source.src = source.dataset.src!; });
+        video.load();
+        loaded = true;
+      }
+      const request = ++pendingPlay;
+      try {
+        await video.play();
+        if (request !== pendingPlay || document.hidden) video.pause();
+      } catch { /* A denied autoplay request leaves an operable Play button. */ }
+      sync();
+    };
+    button.addEventListener("click", () => {
+      if (!video.paused) { pausedByUser = true; pause(); }
+      else { engaged = true; void play(true); }
+    });
+    // Reduced-motion and data-saving visitors only load video after pressing Play.
+    figure.addEventListener("pointerenter", (event) => {
+      if (event.pointerType === "mouse") { engaged = true; void play(); }
+    });
+    figure.addEventListener("focusin", () => { engaged = true; void play(); });
+    figure.addEventListener("pointerleave", () => { if (figure.dataset.filmContext === "card" && !figure.contains(document.activeElement)) pause(); });
+    figure.addEventListener("focusout", () => { if (figure.dataset.filmContext === "card" && !figure.matches(":hover")) pause(); });
+    video.addEventListener("play", sync);
+    video.addEventListener("pause", sync);
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting && entry.intersectionRatio >= 0.4;
+      if (!visible) pause();
+      else if (engaged && !pausedByUser && (figure.dataset.filmContext === "case" || figure.matches(":hover") || figure.contains(document.activeElement)) && (!constrained() || optedIn)) void play(optedIn);
+    }, { threshold: [0, 0.4] });
+    observer.observe(figure);
+    const preferenceChanged = () => { optedIn = false; if (constrained()) pause(); };
+    const visibilityChanged = () => { if (document.hidden) pause(); };
+    motion.addEventListener("change", preferenceChanged);
+    connection?.addEventListener("change", preferenceChanged);
+    document.addEventListener("visibilitychange", visibilityChanged);
+    window.addEventListener("beforeprint", pause);
+    pauses.push(pause);
+    cleanups.push(() => { observer.disconnect(); pause(); motion.removeEventListener("change", preferenceChanged); connection?.removeEventListener("change", preferenceChanged); document.removeEventListener("visibilitychange", visibilityChanged); window.removeEventListener("beforeprint", pause); });
+    button.hidden = false;
+  });
+  window.addEventListener("pagehide", (event) => {
+    pauses.forEach((pause) => pause());
+    if (!event.persisted) cleanups.forEach((cleanup) => cleanup());
+  });
+</script>
+
+<style>
+  .project-film { margin: 0; overflow: hidden; background: var(--paper-2, #f5f4f0); border: 1px solid var(--line, #ddd); border-radius: var(--radius-2, 12px); }
+  .project-film-screen { position: relative; aspect-ratio: 8 / 5; overflow: hidden; background: #f2f1ed; }
+  video { display: block; width: 100%; height: 100%; object-fit: cover; }
+  figcaption { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .65rem .85rem; border-top: 1px solid var(--line, #ddd); color: var(--muted, #57545f); font: 10px/1.5 var(--font-mono, monospace); letter-spacing: .01em; }
+  .film-toggle { position: absolute; bottom: .75rem; right: .75rem; display: inline-flex; align-items: center; gap: .45rem; min-width: 5rem; min-height: 2.75rem; padding: .45rem .8rem; border: 1px solid #ffffff70; border-radius: 99px; background: #242330ed; color: white; box-shadow: 0 2px 10px #0002; cursor: pointer; font: 11px/1 var(--font-mono, monospace); }
+  .film-toggle:hover { background: #424052; }
+  .film-toggle[hidden] { display: none; }
+  .film-toggle:focus-visible { outline: 3px solid var(--accent, #5d55d8); outline-offset: 3px; }
+  @media print { .film-toggle { display: none; } }
+</style>

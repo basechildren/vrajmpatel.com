@@ -6,7 +6,7 @@ const { items, class: className, columns = 3 } = Astro.props;
 <dl class:list={["proof-grid", columns === 2 ? "proof-grid--two" : "proof-grid--three", className]}>
   {items.map((item) => (
     <div data-reveal>
-      <dt>{item.value}</dt>
+      <dt data-count>{item.value}</dt>
       <dd>{item.label}</dd>
       {item.href && <dd><a class="text-link" href={item.href}>{item.linkLabel ?? "See evidence"}</a></dd>}
     </div>

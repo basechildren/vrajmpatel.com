@@ -73,4 +73,4 @@ A Recharts dashboard exposes busiest weekdays and peak hours as independent meas
 
 Across the first 248 successful authenticated requests logged inside the running Compose app container on August 27, 2026, the stored analytics-snapshot endpoint measured 24.2 ms p50 and 45.8 ms p95 server-side latency. This was a warm local read of a persisted snapshot—not analytics recomputation, browser or network latency, concurrent load, or a production service-level objective.
 
-This case study describes source-level system behavior, the dated local database snapshot, and validated local measurements. It does not claim deployed staff adoption, production latency, or downstream staffing improvement.
+These are dated local measurements, not claims of production latency, staff adoption, or staffing impact.

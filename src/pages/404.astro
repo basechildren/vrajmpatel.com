@@ -12,19 +12,17 @@ const routes = [
   <section class="not-found" aria-labelledby="not-found-heading">
     <p class="eyebrow">Exit status 404</p>
     <h1 id="not-found-heading">A path less <em>found.</em></h1>
-    <p class="not-found-intro">That page is no longer here. There’s still plenty to explore.</p>
+    <p class="not-found-intro">That page doesn’t exist.</p>
     <div class="error-terminal">
-      <div class="terminal-title"><span class="terminal-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>vraj-patel — zsh</span><span>404</span></div>
+      <div class="terminal-title" aria-hidden="true"><span class="terminal-dots"><i></i><i></i><i></i></span><span>vraj-patel — zsh</span></div>
       <div class="terminal-body">
         <p class="terminal-error">zsh: no such file or directory: <span class="ph-no-capture" data-requested-path>/requested/path</span></p>
-        <p class="terminal-command"><span aria-hidden="true">❯</span> ls ~/vraj-patel</p>
+        <p class="terminal-command" aria-hidden="true"><span>❯</span> ls ~/vraj-patel</p>
         <nav aria-label="Available pages" class="terminal-routes">
           {routes.map(({ href, label, description }) => <a href={href}><span>{label}</span><span class="route-description">{description}</span><span aria-hidden="true">↗</span></a>)}
         </nav>
       </div>
-      <p class="terminal-footnote">Tip: press <kbd>g</kbd> then <kbd>h</kbd> to return home.</p>
     </div>
-    <a href="/projects" class="text-link">View selected work <span aria-hidden="true">&nbsp;↗</span></a>
   </section>
 </BaseLayout>
 <script>
@@ -40,7 +38,7 @@ const routes = [
   h1 em { font-family: var(--font-display, Georgia, serif); font-weight: 400; color: var(--accent); }
   .not-found-intro { margin-top: 1.25rem; color: var(--copy); font-size: 1rem; line-height: 1.8; }
   .error-terminal { margin: 2.5rem 0 1.5rem; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); overflow: hidden; box-shadow: 0 15px 45px #00000004; font: .75rem/1.7 var(--font-mono); }
-  .terminal-title { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .8rem 1.25rem; border-bottom: 1px solid var(--line); color: var(--muted); font-size: .625rem; background: var(--paper-2); }
+  .terminal-title { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem; padding: .8rem 1.25rem; border-bottom: 1px solid var(--line); color: var(--muted); font-size: .625rem; background: var(--paper-2); }
   .terminal-dots { display: flex; gap: .35rem; }
   .terminal-dots i { width: .45rem; height: .45rem; border: 1px solid var(--muted); border-radius: 100%; opacity: .5; }
   .terminal-body { padding: 1.5rem 1.75rem; }
@@ -53,12 +51,9 @@ const routes = [
   .terminal-routes a:hover { text-decoration: underline; text-underline-offset: 4px; }
   .terminal-routes a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
   .route-description { color: var(--muted); font-family: var(--font-sans); font-size: .75rem; }
-  .terminal-footnote { padding: .75rem 1.75rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .625rem; }
-  kbd { color: var(--ink); }
   @media (max-width: 480px) {
     .terminal-body { padding: 1.25rem; }
     .terminal-routes a { grid-template-columns: 1fr auto; }
     .route-description { display: none; }
-    .terminal-footnote { padding-inline: 1.25rem; }
   }
 </style>

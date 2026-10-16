@@ -32,7 +32,7 @@ const nodes = [
         <text x="273" y="262" text-anchor="end" class="output-label">delivery blocked · read-only</text>
       </svg>
     </div>
-    <div class="flow-footer"><span>approval ≠ permission to write</span><button type="button" data-flow-toggle hidden aria-pressed="false" aria-label="Play system diagram"><span data-flow-action>Play</span> <span data-flow-icon aria-hidden="true">↻</span></button></div>
+    <div class="flow-footer"><span>approval ≠ permission to write</span><button type="button" data-flow-toggle hidden aria-label="Play system diagram"><span data-flow-action>Play</span> <span data-flow-icon aria-hidden="true">↻</span></button></div>
   </div>
   <figcaption>fig. 01 — a synthetic record crossing the review boundary</figcaption>
   <p class="sr-only">A synthetic ticket is reconciled, receives a model suggestion, and is accepted by an operator. Runtime controls still block external delivery because the system is read-only.</p>
@@ -77,7 +77,6 @@ const nodes = [
     const setPlaying = (value: boolean) => {
       playing = value;
       flow.toggleAttribute('data-playing', value);
-      toggle.setAttribute('aria-pressed', String(value));
       toggle.setAttribute('aria-label', value ? 'Pause system diagram' : 'Play system diagram');
       toggle.querySelector('[data-flow-action]')!.textContent = value ? 'Pause' : 'Play';
       toggle.querySelector('[data-flow-icon]')!.textContent = value ? '⏸' : '↻';

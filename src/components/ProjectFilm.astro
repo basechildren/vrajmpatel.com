@@ -17,7 +17,7 @@ const film = projectFilms[slug];
         <source data-src={film.webm} type="video/webm" />
         <source data-src={film.mp4} type="video/mp4" />
       </video>
-      <button type="button" class="film-toggle" aria-label={`Play ${film.name} film`} aria-pressed="false" data-film-toggle hidden>
+      <button type="button" class="film-toggle" aria-label={`Play ${film.name} film`} data-film-toggle hidden>
         <span data-film-icon aria-hidden="true">▶</span><span data-film-action>Play</span>
       </button>
     </div>
@@ -46,7 +46,6 @@ const film = projectFilms[slug];
 
     const sync = () => {
       const playing = !video.paused;
-      button.setAttribute("aria-pressed", String(playing));
       button.setAttribute("aria-label", `${playing ? "Pause" : "Play"} ${figure.dataset.filmName ?? "project"} film`);
       const action = button.querySelector("[data-film-action]");
       const icon = button.querySelector("[data-film-icon]");

@@ -14,12 +14,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 >
   <header class="about-header pb-8 sm:pb-14">
     <div data-reveal>
-    <p class="eyebrow" data-scramble>Profile / behind the systems</p>
+    <p class="eyebrow" data-scramble>Profile</p>
     <h1 class="mt-3 text-4xl font-semibold tracking-[-0.035em] text-slate-950 dark:text-white sm:text-5xl">
       About
     </h1>
     </div>
-    <figure class="about-portrait" data-reveal><img src="/profile.jpg" alt="Vraj Patel" width="240" height="240" loading="eager" decoding="async" /><figcaption>{profile.location}</figcaption></figure>
+    <figure class="about-portrait" data-reveal><img src="/profile.jpg" alt="Vraj Patel" width="240" height="240" loading="eager" decoding="async" /></figure>
   </header>
 
   <section class="border-y border-slate-200 py-10 sm:py-12 dark:border-slate-800" aria-labelledby="github-activity-heading">
@@ -181,7 +181,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   .about-header h1 { font-family: var(--font-display, Georgia, serif); font-size: clamp(3.5rem, 7vw, 5.5rem); line-height: 1.05; font-weight: 400; color: var(--ink); }
   .about-portrait { flex-shrink: 0; width: clamp(6rem, 17vw, 12rem); padding: .5rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-2, var(--surface)); transform: rotate(2deg); }
   .about-portrait img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 4px; }
-  .about-portrait figcaption { margin-top: .5rem; text-align: center; font-family: var(--font-mono); color: var(--muted); font-size: .55rem; line-height: 1.5; }
   .about-affiliations { grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); }
   .about-affiliations > li { min-width: 0; flex-wrap: wrap; }
   .about-affiliations > li > span { color: var(--copy); }

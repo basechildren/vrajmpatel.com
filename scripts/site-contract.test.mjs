@@ -106,7 +106,8 @@ test("SeeMyRace presents recruiter-ready evidence without overstating ML ownersh
     /128(?: → | &rarr; )512 dimensions/,
     /Body-first analysis/,
     /Canny-backed Stroke Width Transform/,
-    /not evidence of a fourfold accuracy gain/i,
+    /These are architecture changes, not measured accuracy gains/,
+    /does not contain a controlled, labeled before-and-after accuracy study/,
   ]) {
     assert.match(page, evidence);
   }

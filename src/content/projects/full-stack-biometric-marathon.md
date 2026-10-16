@@ -9,7 +9,7 @@ privateRepo: true
 summary: "A team-built application for finding race photos by bib or selfie and reviewing uncertain matches."
 contribution: "I built athlete verification, GPX race creation, and upload/search workflows, and evaluated OCR approaches."
 setting: "Collaborative academic project"
-status: 'Private team project'
+status: 'Private repository'
 systemPathLabel: 'Current team architecture'
 systemPathHeading: 'How the multimodal retrieval system works'
 systemPathDescription: 'Independent bib and face signals, scoped by race, end in athlete review.'
@@ -68,6 +68,6 @@ The web, OCR, orchestration, and data layers use Flask, Jinja, YOLOv8, PaddleOCR
 
 This was a collaborative system, and the current YOLOv8, PaddleOCR, InsightFace, and pgvector implementation includes work added by other team members after my direct contribution window. My verified ownership is the review workflow, GPX-backed race creation, substantial upload/search interface work, and OCR/SWT evaluation described above.
 
-The repository does not contain a controlled, labeled before-and-after accuracy study. The move from 128- to 512-dimensional embeddings is an architectural change, not evidence of a fourfold accuracy gain. This case study reports the implementation facts rather than inventing an improvement percentage.
+The repository does not contain a controlled, labeled before-and-after accuracy study.
 
 The repository remains private, so this public case study omits team-owned datasets, biometric examples, credentials, and internal screenshots.

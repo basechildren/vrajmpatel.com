@@ -28,7 +28,7 @@ test("homepage and recruiter brief expose evidence-led navigation", async () => 
     homepage,
     /The Data Mine of the Rockies · Purdue University and L3Harris/,
   );
-  assert.match(homepage, /August 2024 – May 2025/);
+  assert.match(homepage, /Aug 2024 – May 2025/);
   assert.match(homepage, /github\.com\/basechildren/);
   assert.match(homepage, /github\.com\/PatVraj/);
   assert.doesNotMatch(homepage, /github\.com\/IBS-Vraj/);

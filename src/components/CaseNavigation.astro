@@ -1,9 +1,8 @@
 ---
-interface Props { sections: { id: string; label: string }[]; slug?: string; }
-const { sections, slug } = Astro.props;
+interface Props { sections: { id: string; label: string }[]; }
+const { sections } = Astro.props;
 ---
 <nav class="case-nav case-tree" aria-label="On this page" data-case-navigation>
-  <p class="case-tree-root" aria-hidden="true"><span>~/work/</span>{slug}</p>
   <div class="case-tree-links">
     {sections.map((section, index) => <a href={`#${section.id}`} aria-current={index === 0 ? "location" : undefined}>
       <span class="tree-branch" aria-hidden="true">{index === sections.length - 1 ? "└─" : "├─"}</span>
@@ -11,7 +10,6 @@ const { sections, slug } = Astro.props;
       <span>{section.label}</span><span class="tree-marker" aria-hidden="true"></span>
     </a>)}
   </div>
-  <p class="case-tree-hint" aria-hidden="true">j / k · move between sections</p>
 </nav>
 <script>
   const nav = document.querySelector<HTMLElement>("[data-case-navigation]");
@@ -54,19 +52,16 @@ const { sections, slug } = Astro.props;
   .case-nav.case-tree { min-width: 0; max-width: 100%; position: sticky; top: 5.5rem; display: block; z-index: 20; margin-top: 0; background: var(--paper, #faf9f6); border-bottom: 1px solid var(--line); overflow: visible; }
   .case-tree-links { min-width: 0; max-width: 100%; display: flex; gap: 1.25rem; overflow-x: auto; scrollbar-width: thin; }
   .case-tree a { gap: .45rem; font-family: var(--font-mono); font-size: .7rem; min-height: 3.5rem; }
-  .case-tree-root, .case-tree-hint, .tree-branch, .tree-marker { display: none; }
+  .tree-branch, .tree-marker { display: none; }
   .tree-index { color: var(--muted); font-size: .6rem; }
   @media (min-width: 1024px) {
     .case-nav.case-tree { top: 7rem; align-self: start; margin-top: 2.5rem; padding: .3rem 0 1.25rem 1rem; border: 0; border-left: 1px solid var(--line); background: transparent; }
     .case-tree-links { display: grid; gap: 0; overflow: visible; }
-    .case-tree-root { display: block; font-family: var(--font-mono); font-size: .65rem; line-height: 1.7; overflow-wrap: anywhere; color: var(--copy); margin-bottom: 1rem; }
-    .case-tree-root span { display: block; color: var(--accent); }
     .case-tree a { gap: .4rem; min-height: 2.75rem; border: 0; font-size: .67rem; white-space: normal; line-height: 1.5; }
     .tree-branch { display: inline; color: var(--muted); }
     .tree-marker { display: block; margin-left: auto; margin-right: .25rem; width: 5px; height: 5px; flex-shrink: 0; border-radius: 50%; background: transparent; }
     .case-tree a[aria-current="location"] { color: var(--accent); }
     .case-tree a[aria-current="location"] .tree-marker { background: var(--accent); }
-    .case-tree-hint { display: block; margin-top: 1rem; color: var(--muted); font-family: var(--font-mono); font-size: .55rem; line-height: 1.7; }
     .case-tree::after { bottom: auto; top: 0; width: 2px; height: 100%; transform-origin: top; }
   }
   @supports (animation-timeline: scroll()) {

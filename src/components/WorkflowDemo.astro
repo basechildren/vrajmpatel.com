@@ -11,7 +11,7 @@ const demo = projectDemos[project];
     <p class="muted-copy">{demo.description}</p>
   </div>
   <div class="workflow-surface instrument-frame" data-reveal>
-    <div class="workflow-chrome" aria-hidden="true"><span><i></i><i></i><i></i></span><span>workflow / synthetic environment</span><span>local only</span></div>
+    <div class="workflow-chrome" aria-hidden="true"><span><i></i><i></i><i></i></span></div>
     <nav class="workflow-controls" aria-label="Example steps" hidden>
       {demo.steps.map((step, i) => <button type="button" data-step={i} aria-controls={`demo-panel-${i}`} aria-pressed={i === 0 ? "true" : "false"}>
         <span class="step-number" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span><span>{step.title}</span>
@@ -31,7 +31,6 @@ const demo = projectDemos[project];
       <button type="button" class="text-link" data-next>Next step</button>
     </div>
   </div>
-  <p class="workflow-caption">fig. 02 — illustrative; no external update is sent</p>
   <p class="sr-only" role="status" aria-live="polite" aria-atomic="true" data-demo-status></p>
   <noscript><p class="muted-copy">All steps are shown. Enable JavaScript to step through the example and try the illustrative actions.</p></noscript>
 </section>}
@@ -109,7 +108,6 @@ const demo = projectDemos[project];
   .workflow-chrome { display: flex; justify-content: space-between; align-items: center; gap: 1rem; border-bottom: 1px solid var(--line); padding: .8rem 1rem; font-family: var(--font-mono); font-size: .55rem; color: var(--muted); background: var(--paper-2, var(--surface)); }
   .workflow-chrome > span:first-child { display: flex; gap: 5px; }
   .workflow-chrome i { width: 5px; height: 5px; border: 1px solid var(--muted); border-radius: 50%; opacity: .6; }
-  .workflow-chrome > span:last-child { margin-left: auto; color: var(--accent); }
   .workflow-controls:not(.workflow-footer) { grid-template-columns: repeat(4, minmax(8rem, 1fr)); overflow-x: auto; scrollbar-width: thin; padding: 1.2rem .8rem .8rem; background: var(--paper-2, var(--surface)); }
   .workflow-controls > button[data-step] { position: relative; isolation: isolate; flex-direction: column; align-items: flex-start; gap: .65rem; padding: .4rem .6rem .8rem; border: 0; font-size: .7rem; line-height: 1.5; transition: color 180ms; }
   .workflow-controls > button[data-step]::after { content: ""; position: absolute; z-index: -1; top: 1.3rem; left: 2.4rem; width: calc(100% - 1.6rem); height: 1px; background: var(--line); transition: background 220ms; }
@@ -129,8 +127,7 @@ const demo = projectDemos[project];
   .workflow-result { border: 1px solid var(--line); border-left: 2px solid var(--accent); border-radius: 4px; padding: .85rem 1rem; background: var(--accent-soft, var(--tint)); font-size: .85rem; }
   .workflow-footer { padding: .6rem 1.5rem; background: var(--paper-2, var(--surface)); }
   .workflow-footer .text-link { font-size: .7rem; }
-  .workflow-caption { margin-top: .8rem; color: var(--muted); font-family: var(--font-mono); font-size: .6rem; line-height: 1.7; }
-  @media (max-width: 639px) { .workflow-panel { padding: 1.1rem; } .workflow-chrome > span:last-child { display: none; } }
+  @media (max-width: 639px) { .workflow-panel { padding: 1.1rem; } }
   @media (prefers-reduced-motion: reduce) { .workflow-controls > button[data-step], .workflow-controls > button[data-step]::after, .step-number { transition: none; } }
   @media print { .workflow-chrome { display: none; } .workflow-panel { min-height: 0; } }
 </style>

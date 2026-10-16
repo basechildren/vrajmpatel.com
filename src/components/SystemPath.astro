@@ -1,7 +1,7 @@
 ---
 interface Step { title: string; purpose: string; technical: string; }
 interface Props { steps: readonly Step[]; label?: string; heading?: string; description?: string; }
-const { steps, label = "Architecture", heading = "How the parts work together", description = "Follow the responsibilities through the system. Expand a step for the decision behind it." } = Astro.props;
+const { steps, label = "Architecture", heading = "How the parts work together", description = "Select a step for the decision behind it." } = Astro.props;
 const width = steps.length * 148 + 16;
 const titleLines = (title: string) => {
   const lines = [""];
@@ -15,7 +15,6 @@ const titleLines = (title: string) => {
 <figure id="architecture" class="page-section system-path" aria-labelledby="system-path-heading" data-system-path>
   <figcaption data-reveal><p class="eyebrow">{label}</p><h2 id="system-path-heading" class="section-title">{heading}</h2><p class="muted-copy">{description}</p></figcaption>
   <div class="architecture-frame instrument-frame">
-    <p class="architecture-caption"><span>fig. 03 / system map</span><span>select a node to inspect</span></p>
     <div class="architecture-scroll" tabindex="0" role="region" aria-label="Scrollable architecture diagram">
       <svg class="architecture-diagram" viewBox={`0 0 ${width} 148`} width={width} height="148" aria-labelledby="architecture-diagram-title">
         <title id="architecture-diagram-title">System responsibilities. Select a step to open its design details.</title>
@@ -34,7 +33,7 @@ const titleLines = (title: string) => {
     {steps.map((step, i) => <li id={`architecture-step-${i + 1}`} class="system-step" data-reveal>
       <span class="eyebrow" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
       <h3>{step.title}</h3>
-      <div class="step-content"><p>{step.purpose}</p><details><summary>{step.title}: design details</summary><p>{step.technical}</p></details></div>
+      <div class="step-content"><p>{step.purpose}</p><details><summary>Design details<span class="sr-only"> for {step.title}</span></summary><p>{step.technical}</p></details></div>
     </li>)}
   </ol>
 </figure>
@@ -73,7 +72,6 @@ const titleLines = (title: string) => {
 <style>
   .system-path { view-timeline-name: --architecture; view-timeline-axis: block; }
   .architecture-frame { margin-top: 1.75rem; border: 1px solid var(--line); border-radius: 10px; background: var(--paper-2, var(--surface)); overflow: hidden; }
-  .architecture-caption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .4rem 1rem; padding: .8rem 1rem; border-bottom: 1px solid var(--line); font-family: var(--font-mono); font-size: .57rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
   .architecture-scroll { overflow-x: auto; scrollbar-width: thin; }
   .architecture-scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
   .architecture-diagram { display: block; width: 100%; min-width: 600px; height: auto; color: var(--accent); }

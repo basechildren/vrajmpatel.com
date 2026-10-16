@@ -12,7 +12,7 @@ setting: "Collaborative academic project"
 status: 'Private team project'
 systemPathLabel: 'Current team architecture'
 systemPathHeading: 'How the multimodal retrieval system works'
-systemPathDescription: 'The system combines independent bib and face signals with race context and user review. Open any step for the implementation decision behind it.'
+systemPathDescription: 'Independent bib and face signals, scoped by race, end in athlete review.'
 proof:
   - value: "Athlete review"
     label: "My confirm/deny workflow records a decision for each signed-in user."

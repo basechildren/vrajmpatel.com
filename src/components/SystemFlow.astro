@@ -14,7 +14,7 @@ const nodes = [
 ---
 <figure class="system-flow" data-system-flow data-system-flow-placement={placement}>
   <div class="flow-frame instrument-frame">
-    <div class="flow-header"><span class="eyebrow">System 01 / Review boundary</span><span class="flow-live"><span></span> synthetic</span></div>
+    <div class="flow-header"><span class="eyebrow">Review boundary</span><span class="flow-live"><span></span> synthetic</span></div>
     <div class="flow-canvas" aria-hidden="true">
       <svg viewBox="0 0 540 310" fill="none">
         <defs><pattern id={patternId} width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="var(--line)" /></pattern></defs>
@@ -40,7 +40,6 @@ const nodes = [
     </div>
     <div class="flow-footer"><span>approval ≠ permission to write</span><button type="button" data-flow-toggle hidden aria-label="Play system diagram"><span data-flow-action>Play</span> <span data-flow-icon aria-hidden="true">↻</span></button></div>
   </div>
-  <figcaption>fig. 01 — a synthetic record crossing the review boundary</figcaption>
   <p class="sr-only">A synthetic ticket is reconciled, receives a model suggestion, and is accepted by an operator. Runtime controls still block external delivery because the system is read-only.</p>
 </figure>
 <style>
@@ -64,7 +63,6 @@ const nodes = [
   .flow-node:hover circle:first-of-type { stroke: var(--accent); fill: var(--accent-soft); }
   .flow-footer { border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding-left: .4rem; font: .6rem/1.7 var(--font-mono); color: var(--muted); }
   .flow-footer button { min-height: 44px; min-width: 56px; color: var(--copy); cursor: pointer; }
-  figcaption { margin-top: .8rem; color: var(--muted); font: .59rem/1.8 var(--font-mono); }
   @media (prefers-reduced-motion: no-preference) {
     [data-playing] .record { animation: record-flow 6s ease-in-out infinite; }
     [data-playing] .review-node .node-core { animation: review-pulse 6s ease-in-out infinite; }

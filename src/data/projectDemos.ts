@@ -14,7 +14,7 @@ interface ProjectDemo {
 export const projectDemos: Record<string, ProjectDemo> = {
   "operational-ticket-intelligence": {
     title: "Follow a ticket through review",
-    description: "A synthetic example of the review boundary. No tickets are fetched or updated, and the suggested group is illustrative.",
+    description: "No tickets are fetched or updated; the suggested group is illustrative.",
     steps: [
       { title: "Reconcile", description: "Start with a consistent source record so the application can distinguish intake from later changes.", fields: [
         { label: "Example record", value: "DEMO-104" }, { label: "Request", value: "Set up a replacement laptop" }, { label: "Source state", value: "Open · imported for review" },

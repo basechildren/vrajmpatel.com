@@ -1,4 +1,10 @@
 ---
+interface Props {
+  /** Home renders the figure twice; CSS shows one slot per width (see .home-system in global.css). */
+  placement: "hero" | "after-work";
+}
+const { placement } = Astro.props;
+const patternId = `flow-dots-${placement}`;
 const nodes = [
   { x: 86, label: 'reconcile', detail: 'Keep the source record consistent before suggesting a destination.' },
   { x: 208, label: 'suggest', detail: 'A model suggestion is advisory evidence, not a verified label.' },
@@ -6,13 +12,13 @@ const nodes = [
   { x: 452, label: 'controls', detail: 'Read-only runtime policy keeps external delivery blocked.' },
 ];
 ---
-<figure class="system-flow" data-system-flow>
+<figure class="system-flow" data-system-flow data-system-flow-placement={placement}>
   <div class="flow-frame instrument-frame">
     <div class="flow-header"><span class="eyebrow">System 01 / Review boundary</span><span class="flow-live"><span></span> synthetic</span></div>
     <div class="flow-canvas" aria-hidden="true">
       <svg viewBox="0 0 540 310" fill="none">
-        <defs><pattern id="flow-dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="var(--line)" /></pattern></defs>
-        <rect width="540" height="310" fill="url(#flow-dots)" />
+        <defs><pattern id={patternId} width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="var(--line)" /></pattern></defs>
+        <rect width="540" height="310" fill={`url(#${patternId})`} />
         <path d="M22 60H45Q86 60 86 133M22 238H45Q86 238 86 165" stroke="var(--line)" />
         <path d="M86 150H452" stroke="var(--line)" stroke-width="1.5" />
         <path d="M100 150H440" stroke="var(--accent)" stroke-opacity=".3" stroke-dasharray="3 5" />
@@ -69,22 +75,27 @@ const nodes = [
   @keyframes accepted { 0%,52%,100% { opacity: 0; } 60%,90% { opacity: 1; } }
 </style>
 <script>
-  const flow = document.querySelector<HTMLElement>('[data-system-flow]');
-  const toggle = flow?.querySelector<HTMLButtonElement>('[data-flow-toggle]');
-  if (flow && toggle) {
+  const flows = [...document.querySelectorAll<HTMLElement>('[data-system-flow]')];
+  if (flows.length) {
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-    let playing = false;
-    const setPlaying = (value: boolean) => {
-      playing = value;
-      flow.toggleAttribute('data-playing', value);
-      toggle.setAttribute('aria-label', value ? 'Pause system diagram' : 'Play system diagram');
-      toggle.querySelector('[data-flow-action]')!.textContent = value ? 'Pause' : 'Play';
-      toggle.querySelector('[data-flow-icon]')!.textContent = value ? '⏸' : '↻';
-    };
-    setPlaying(!reduced.matches);
-    toggle.hidden = reduced.matches;
-    toggle.addEventListener('click', () => setPlaying(!playing));
-    reduced.addEventListener('change', () => { toggle.hidden = reduced.matches; if (reduced.matches) setPlaying(false); });
+    // Keep in sync with the .home-system breakpoint in global.css.
+    const wide = matchMedia('(min-width: 768px)');
+    let playing = !reduced.matches;
+    // One shared state; only the rendered placement animates.
+    const render = () => flows.forEach((flow) => {
+      flow.toggleAttribute('data-playing', playing && flow.getClientRects().length > 0);
+      const toggle = flow.querySelector<HTMLButtonElement>('[data-flow-toggle]');
+      if (!toggle) return;
+      toggle.hidden = reduced.matches;
+      toggle.setAttribute('aria-label', playing ? 'Pause system diagram' : 'Play system diagram');
+      toggle.querySelector('[data-flow-action]')!.textContent = playing ? 'Pause' : 'Play';
+      toggle.querySelector('[data-flow-icon]')!.textContent = playing ? '⏸' : '↻';
+    });
+    const setPlaying = (value: boolean) => { playing = value; render(); };
+    flows.forEach((flow) => flow.querySelector('[data-flow-toggle]')?.addEventListener('click', () => setPlaying(!playing)));
+    render();
+    reduced.addEventListener('change', () => { if (reduced.matches) setPlaying(false); else render(); });
+    wide.addEventListener('change', render);
     window.addEventListener('beforeprint', () => setPlaying(false));
     document.addEventListener('visibilitychange', () => { if (document.hidden) setPlaying(false); });
   }

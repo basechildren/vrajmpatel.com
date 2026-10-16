@@ -5,6 +5,7 @@
 .site-body::after { content: ""; position: absolute; z-index: -1; pointer-events: none; inset: 0 0 auto; height: 52rem; background: radial-gradient(ellipse at 75% 12%, var(--accent-soft, #3158e810), transparent 62%); }
 .site-main { width: 100%; max-width: 64rem; flex: 1; margin-inline: auto; padding: clamp(3.5rem, 7vw, 6rem) 2rem; }
 .site-main-wide { max-width: 78rem; }
+.site-main.site-main-home { padding-top: clamp(2rem, 4vw, 3rem); }
 .site-header { position: sticky; top: .9rem; z-index: 40; width: min(calc(100% - 3rem), 78rem); margin: .9rem auto 0; }
 .site-header-bar { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; min-height: 4.5rem; padding: .6rem 1rem .6rem 1.4rem; border: 1px solid var(--line); border-radius: 14px; background: color-mix(in oklch, var(--paper, #faf9f6) 88%, transparent); backdrop-filter: blur(12px) saturate(1.2); box-shadow: 0 1px 0 color-mix(in oklch, var(--surface) 65%, transparent) inset, 0 5px 24px #00000003; }
 .terminal-breadcrumb { display: flex; flex: 1; min-width: 0; align-items: center; overflow: hidden; white-space: nowrap; font: .75rem/1.5 var(--font-mono); color: var(--ink); }

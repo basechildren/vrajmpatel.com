@@ -208,6 +208,16 @@ test("privacy policy is published, linked, and opt-out capable", async () => {
 test("engineering instrument includes accessible synthetic films and shortcuts", async () => {
   const homepage = await readPage();
   assert.equal((homepage.match(/<h1\b/g) ?? []).length, 1);
+  const placements = [...homepage.matchAll(/data-system-flow-placement="([\w-]+)"/g)].map((match) => match[1]);
+  assert.deepEqual(placements, ["hero", "after-work"]);
+  assert.ok(homepage.indexOf('data-system-flow-placement="hero"') < homepage.indexOf('id="selected-work"'));
+  assert.ok(homepage.indexOf('data-system-flow-placement="after-work"') > homepage.indexOf('id="selected-work"'));
+  const ids = [...homepage.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
+  assert.equal(new Set(ids).size, ids.length, "ids must be unique on the homepage");
+  for (const card of homepage.split('<article class="project-feature"').slice(1)) {
+    const copy = card.indexOf("project-feature-copy");
+    assert.ok(copy > -1 && copy < card.indexOf("data-film"), "project card text comes before its film");
+  }
   assert.equal((homepage.match(/\bdata-film(?:\s|>)/g) ?? []).length, 3);
   assert.match(homepage, /<dialog[^>]+id="keyboard-shortcuts"/);
   assert.doesNotMatch(homepage, /data-build-time|status-branch|status-sha|Source revision/, "the status bar must not publish build metadata");

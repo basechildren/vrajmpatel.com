@@ -27,6 +27,7 @@ const {
 } = Astro.props;
 
 const wideLayout = Astro.url.pathname === "/" || Astro.url.pathname.startsWith("/projects");
+const homeLayout = Astro.url.pathname === "/";
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const imageUrl = new URL(ogImage, Astro.site);
 const person = {
@@ -144,7 +145,7 @@ const structuredData =
 
     <SiteHeader />
 
-    <main id="main" class:list={["site-main", { "site-main-wide": wideLayout }]}>
+    <main id="main" class:list={["site-main", { "site-main-wide": wideLayout, "site-main-home": homeLayout }]}>
       <slot />
     </main>
 

@@ -43,7 +43,7 @@ const recentExperience = (await getCollection("experience"))
         <a href="#contact" class="text-link">Contact</a>
       </nav>
     </div>
-    <div class="home-system"><SystemFlow /></div>
+    <div class="home-system"><SystemFlow placement="hero" /></div>
   </section>
 
   <section id="selected-work" class="page-section" aria-labelledby="work-heading">
@@ -53,6 +53,7 @@ const recentExperience = (await getCollection("experience"))
     </div>
     <div class="work-bento">{featured.map(entry => <ProjectCard entry={entry} headingLevel="h3" variant="feature" />)}</div>
   </section>
+  <div class="home-system-after-work"><SystemFlow placement="after-work" /></div>
 
   <section class="page-section" aria-labelledby="proof-heading">
     <div data-reveal><p class="eyebrow">02 / Evidence at a glance</p><h2 id="proof-heading" class="section-title">Results with context.</h2></div>

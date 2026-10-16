@@ -32,7 +32,6 @@ const hasRichActions = Boolean(
 {
   variant === "feature" ? (
     <article class="project-feature" data-reveal data-spotlight>
-      <ProjectFilm slug={entry.id} context="card" />
       <div class="project-feature-copy">
         <p class="eyebrow">{entry.data.domain}</p>
         <div class="project-feature-title">
@@ -53,6 +52,7 @@ const hasRichActions = Boolean(
           <a href={`/projects/${entry.id}`} class="text-link" data-ph-event="project_opened" data-ph-project={entry.id} data-ph-placement="project_list_action">View case study <span aria-hidden="true" class="ml-2">→</span></a>
         </div>
       </div>
+      <ProjectFilm slug={entry.id} context="card" />
     </article>
   ) : variant === "compact" ? (
     <article data-reveal class="project-row grid gap-3 border-t border-slate-200 py-6 sm:grid-cols-[8rem_1fr] sm:gap-7 dark:border-slate-800">

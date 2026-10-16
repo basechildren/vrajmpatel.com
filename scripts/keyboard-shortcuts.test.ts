@@ -5,7 +5,12 @@ import test from "node:test";
 import ts from "typescript";
 
 const component = readFileSync(new URL("../src/components/ShortcutsDialog.astro", import.meta.url), "utf8");
-const source = ts.transpileModule(component.match(/<script>([\s\S]*?)<\/script>/)![1], {
+// Plain string search: no regular expression matches HTML tags (CodeQL js/bad-tag-filter).
+const openTag = "<script>";
+const scriptStart = component.indexOf(openTag);
+const scriptEnd = component.indexOf("</script>", scriptStart);
+if (scriptStart === -1 || scriptEnd === -1) throw new Error("ShortcutsDialog.astro has no <script> block");
+const source = ts.transpileModule(component.slice(scriptStart + openTag.length, scriptEnd), {
   compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext },
 }).outputText;
 

@@ -15,7 +15,7 @@ const segments = pathname.split("/").filter(Boolean).map((segment, index, all) =
   <div class="site-header-bar">
     <div class="header-prompt" data-header-prompt>
     <nav class="terminal-breadcrumb" aria-label="Breadcrumb">
-      <a href="/" data-command-link aria-label="Vraj Patel — home" aria-current={pathname === "/" ? "page" : undefined}>~/vraj-patel</a>
+      <a href="/" data-command-link aria-current={pathname === "/" ? "page" : undefined}><span aria-hidden="true">~/</span>vraj-patel<span class="sr-only">, home</span></a>
       {segments.map(({ href, label }, index) => <span class="breadcrumb-segment">
         <span aria-hidden="true" class="breadcrumb-divider">/</span>
         <a href={href} aria-current={index === segments.length - 1 ? "page" : undefined}>{label}</a>
@@ -37,17 +37,17 @@ const segments = pathname.split("/").filter(Boolean).map((segment, index, all) =
       <a href="/resume.pdf" target="_blank" rel="noopener noreferrer"
         data-ph-event="resume_clicked" data-ph-placement="header" data-shortcut-resume
         class="header-resume" aria-label="Resume (PDF), opens in a new tab">
-        Resume <span aria-hidden="true">↗</span>
+        Resume (PDF) <span aria-hidden="true">↗</span>
       </a>
       <ThemeToggle />
       <details data-mobile-menu class="mobile-menu">
         <summary>Menu <span aria-hidden="true">+</span></summary>
         <nav aria-label="Mobile" class="mobile-navigation">
-          <p class="mobile-menu-caption">~/vraj-patel <span aria-hidden="true">— ls</span></p>
+          <p class="mobile-menu-caption" aria-hidden="true">~/vraj-patel — ls</p>
           {nav.map(({ path, label, key }) => <a href={path} data-command-link aria-current={isCurrent(path) ? "page" : undefined}>
-            <span aria-hidden="true" class="nav-number">[{key}]</span> {label} <span aria-hidden="true" class="mobile-arrow">↗</span>
+            <span aria-hidden="true" class="nav-number">[{key}]</span> {label} <span aria-hidden="true" class="mobile-arrow">→</span>
           </a>)}
-          <a href="/about#contact"><span aria-hidden="true" class="nav-number">[↗]</span> Contact</a>
+          <a href="/about#contact"><span aria-hidden="true" class="nav-number">[→]</span> Contact</a>
           <a href="/resume.pdf" target="_blank" rel="noopener noreferrer"
             data-ph-event="resume_clicked" data-ph-placement="mobile_menu">
             <span aria-hidden="true" class="nav-number">[r]</span> Resume (PDF) <span aria-hidden="true" class="mobile-arrow">↗</span>

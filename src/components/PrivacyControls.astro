@@ -1,110 +1,30 @@
-<section
-  class="ph-no-capture rounded-lg border border-slate-200 bg-white px-5 py-6 dark:border-slate-800 dark:bg-slate-950 sm:px-6"
-  aria-labelledby="browser-heading"
->
-  <h2
-    id="browser-heading"
-    class="text-2xl font-semibold tracking-tight text-slate-950 dark:text-white"
-  >
-    This browser
-  </h2>
-  <p class="mt-4 text-base leading-8 text-slate-600 dark:text-slate-400 sm:text-lg">
-    Analytics and masked session replay both start on. Choose either independently, then save. These settings apply to this browser only.
-  </p>
+<section class="privacy-settings instrument-frame ph-no-capture" aria-labelledby="browser-heading">
+  <p class="eyebrow">Privacy settings</p>
+  <h2 id="browser-heading">This browser</h2>
+  <p class="privacy-settings-intro">Uncheck an option to turn it off, then select Save preferences. These settings apply to this browser only.</p>
 
-  <dl
-    class="mt-6 grid gap-4 text-sm sm:grid-cols-2"
-    data-consent-status
-  >
-    <div>
-      <dt class="font-mono text-xs text-slate-500 dark:text-slate-400">Analytics</dt>
-      <dd
-        class="mt-1 font-medium text-slate-800 dark:text-slate-200"
-        data-consent-status-analytics
-      >
-        On
-      </dd>
-    </div>
-    <div>
-      <dt class="font-mono text-xs text-slate-500 dark:text-slate-400">
-        Session replay
-      </dt>
-      <dd
-        class="mt-1 font-medium text-slate-800 dark:text-slate-200"
-        data-consent-status-replay
-      >
-        On
-      </dd>
-    </div>
+  <dl class="privacy-current" data-consent-status aria-label="Saved settings">
+    <div><dt>Analytics</dt><dd data-consent-status-analytics>On</dd></div>
+    <div><dt>Session replay</dt><dd data-consent-status-replay>On</dd></div>
   </dl>
 
-  <form data-consent-form class="mt-8 flex flex-col gap-5">
-    <fieldset class="flex flex-col gap-4">
+  <form data-consent-form>
+    <fieldset class="privacy-options">
       <legend class="sr-only">Analytics and replay for this browser</legend>
-      <label
-        class="flex max-w-xl cursor-pointer items-start gap-2.5 text-sm text-slate-700 dark:text-slate-300"
-      >
-        <input
-          type="checkbox"
-          name="analytics"
-          data-consent-analytics
-          checked
-          class="mt-1 size-4 rounded border-slate-400 text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 disabled:cursor-not-allowed dark:border-slate-500"
-        />
-        <span>
-          <span class="font-medium text-slate-950 dark:text-white">Analytics</span>
-          <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400">
-            Pages you visit and how you interact with the site.
-          </span>
-        </span>
+      <label class="privacy-option">
+        <input type="checkbox" name="analytics" data-consent-analytics checked />
+        <span><strong>Analytics</strong><span class="privacy-option-description">Pages you visit and how you interact with the site.</span></span>
       </label>
-      <label
-        class="flex max-w-xl cursor-pointer items-start gap-2.5 text-sm text-slate-700 dark:text-slate-300"
-      >
-        <input
-          type="checkbox"
-          name="replay"
-          data-consent-replay
-          checked
-          class="mt-1 size-4 rounded border-slate-400 text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 disabled:cursor-not-allowed dark:border-slate-500"
-        />
-        <span>
-          <span class="font-medium text-slate-950 dark:text-white">Session replay</span>
-          <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400">
-            A replay of your visit with form inputs hidden.
-          </span>
-        </span>
+      <label class="privacy-option">
+        <input type="checkbox" name="replay" data-consent-replay checked />
+        <span><strong>Session replay</strong><span class="privacy-option-description">A replay of your visit with text entered in form fields hidden.</span></span>
       </label>
     </fieldset>
-
-    <p
-      class="hidden text-sm text-red-700 dark:text-red-400"
-      data-consent-error
-      role="alert"
-    >
-      Your browser could not save these preferences. Allow local storage for this site and try again.
-    </p>
-
-    <div>
-      <button
-        type="submit"
-        data-consent-save
-        disabled
-        class="inline-flex min-h-10 items-center rounded-md bg-slate-950 px-3.5 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-slate-950 dark:hover:bg-blue-200 dark:focus-visible:ring-offset-slate-950"
-      >
-        Save preferences
-      </button>
-    </div>
-
-    <p
-      class="hidden text-sm leading-6 text-slate-600 dark:text-slate-400"
-      data-consent-saved
-      role="status"
-    >
-      Saved for this browser only. Other browsers and devices keep their own preferences.
-    </p>
+    <p class="hidden privacy-error" data-consent-error role="alert">Your browser couldn’t save these settings. Check that local storage is allowed for this site, then try again.</p>
+    <button type="submit" data-consent-save disabled class="button-primary privacy-save">Save preferences</button>
+    <p class="hidden privacy-saved" data-consent-saved role="status">Saved for this browser only. Other browsers and devices keep their own preferences.</p>
   </form>
-  <noscript><p class="mt-4 text-sm">Enable JavaScript to save analytics and replay preferences in this browser.</p></noscript>
+  <noscript><p class="privacy-saved">Enable JavaScript to save analytics and replay preferences in this browser.</p></noscript>
 </section>
 
 <script>
@@ -208,3 +128,25 @@
   setupPrivacyControls();
   document.addEventListener("astro:page-load", setupPrivacyControls);
 </script>
+
+<style>
+  .privacy-settings { padding: clamp(1.25rem, 4vw, 2rem); background: var(--paper-2); color: var(--ink); }
+  h2 { margin-top: .5rem; color: var(--ink); font-size: 1.65rem; line-height: 1.25; font-weight: 550; letter-spacing: -.035em; }
+  .privacy-settings-intro { max-width: 56ch; margin-top: .85rem; color: var(--copy); font-size: .9375rem; line-height: 1.75; }
+  .privacy-current { display: flex; flex-wrap: wrap; gap: .65rem 1.5rem; margin-top: 1.4rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--line); font-size: .8125rem; }
+  .privacy-current > div { display: flex; gap: .6rem; align-items: center; }
+  .privacy-current dt { color: var(--copy); }
+  .privacy-current dd { border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 4px; padding: .1rem .5rem; font: .75rem/1.7 var(--font-mono); }
+  .privacy-options { margin: .25rem 0 1.4rem; border: 0; padding: 0; min-width: 0; }
+  .privacy-option { display: grid; grid-template-columns: 18px minmax(0,1fr); align-items: start; gap: .9rem; padding: 1.1rem 0; cursor: pointer; min-height: 44px; }
+  .privacy-option + .privacy-option { border-top: 1px solid var(--line); }
+  .privacy-option input { appearance: auto; width: 18px; height: 18px; margin: .15rem 0 0; accent-color: var(--accent); cursor: pointer; }
+  .privacy-option strong { display: block; color: var(--ink); font-size: .9375rem; font-weight: 550; line-height: 1.5; }
+  .privacy-option-description { display: block; margin-top: .3rem; color: var(--copy); font-size: .875rem; line-height: 1.7; }
+  .privacy-option:focus-within { outline: 2px solid var(--accent); outline-offset: 5px; border-radius: 3px; }
+  .privacy-save { min-height: 44px; cursor: pointer; }
+  .privacy-save:disabled { opacity: .55; cursor: not-allowed; }
+  .privacy-saved, .privacy-error { margin-top: 1rem; font-size: .8125rem; line-height: 1.75; color: var(--copy); }
+  .privacy-error { color: #a3202b; margin-bottom: 1rem; }
+  :global(.dark) .privacy-error { color: #ffabb2; }
+</style>

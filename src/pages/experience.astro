@@ -17,8 +17,8 @@ const experience = await Promise.all(
   title="Experience — Vraj Patel"
   description="Systems integration, backend, data, and machine-learning experience across CU Boulder, Purdue, and L3Harris."
 >
-  <header class="max-w-3xl pb-10 sm:pb-14">
-    <p class="font-mono text-xs text-slate-500 dark:text-slate-400">Career</p>
+  <header class="experience-header max-w-3xl pb-10 sm:pb-14" data-reveal>
+    <p class="eyebrow" data-scramble>Career / engineering log</p>
     <h1 class="mt-3 text-4xl font-semibold tracking-[-0.035em] text-slate-950 dark:text-white sm:text-5xl">
       Experience
     </h1>
@@ -28,7 +28,7 @@ const experience = await Promise.all(
     </p>
   </header>
 
-  <section aria-label="Professional experience">
+  <section class="experience-timeline" aria-label="Professional experience">
     {
       experience.map(({ entry, Content }) => (
         <ExperienceItem entry={entry} variant="detailed">
@@ -39,3 +39,8 @@ const experience = await Promise.all(
   </section>
   <ContactBlock />
 </BaseLayout>
+
+<style>
+  .experience-header h1 { font-family: var(--font-display, Georgia, serif); font-size: clamp(3.5rem, 7vw, 5.5rem); line-height: 1.05; font-weight: 400; color: var(--ink); }
+  .experience-timeline { max-width: 64rem; }
+</style>

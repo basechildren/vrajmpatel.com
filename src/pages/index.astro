@@ -6,6 +6,7 @@ import ProofGrid from "../components/ProofGrid.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import { profile } from "../data/profile";
 import ContactBlock from "../components/ContactBlock.astro";
+import SystemFlow from "../components/SystemFlow.astro";
 import { proofPoints } from "../data/recruiter";
 import {
   isCaseStudy,
@@ -28,38 +29,39 @@ const recentExperience = (await getCollection("experience"))
 ---
 <BaseLayout title="Vraj Patel — Systems Integration Engineer" description="Backend services, data pipelines, and applied ML systems built by Vraj Patel at CU Boulder." schemaType="Person">
   <section class="home-intro" aria-labelledby="intro-heading">
-    <div>
-      <p class="eyebrow">{profile.role} · {profile.location}</p>
-      <h1 id="intro-heading" class="home-name" data-intro>{profile.name}</h1>
-    </div>
-    <Image src="/profile.jpg" alt="Portrait of Vraj Patel" width={176} height={208} class="home-portrait" fetchpriority="high" loading="eager" />
     <div class="home-intro-copy">
-      <p class="home-statement" data-intro>I build backend services, data pipelines, and tools for support operations.</p>
+      <div class="home-identity">
+        <Image src="/profile.jpg" alt="Portrait of Vraj Patel" width={88} height={88} class="home-portrait" loading="eager" />
+        <p class="eyebrow"><span class="home-role" data-scramble>{profile.role}</span><br />{profile.location}</p>
+      </div>
+      <h1 id="intro-heading" class="home-name" data-intro>{profile.name}</h1>
+      <p class="home-statement" data-split>I build backend services, <em class="display-accent">data pipelines,</em> and tools for support operations.</p>
       <p class="muted-copy">At CU Boulder’s Institute of Behavioral Science. My work connects Python, SQL, applied ML, and the people who use the results.</p>
       <nav class="action-row" aria-label="Explore my work">
-        <a href="#selected-work" class="button-primary">Explore the work</a>
+        <a href="#selected-work" class="button-primary">Explore the work <span aria-hidden="true" class="ml-3">↗</span></a>
         <a href="/brief" class="text-link" data-ph-event="recruiter_brief_opened" data-ph-placement="hero">Recruiter brief</a>
         <a href="#contact" class="text-link">Contact</a>
       </nav>
     </div>
+    <div class="home-system"><SystemFlow /></div>
   </section>
 
   <section id="selected-work" class="page-section" aria-labelledby="work-heading">
     <div class="section-heading" data-reveal>
-      <div><p class="eyebrow">Selected work</p><h2 id="work-heading" class="section-title">Three systems. Different problems.</h2></div>
+      <div><p class="eyebrow" data-scramble>01 / Selected work</p><h2 id="work-heading" class="section-title">Three systems. Different problems.</h2></div>
       <a href="/projects" class="text-link">All case studies</a>
     </div>
-    <div class="mt-6">{featured.map(entry => <ProjectCard entry={entry} headingLevel="h3" variant="compact" />)}</div>
+    <div class="work-bento">{featured.map(entry => <ProjectCard entry={entry} headingLevel="h3" variant="feature" />)}</div>
   </section>
 
   <section class="page-section" aria-labelledby="proof-heading">
-    <div data-reveal><p class="eyebrow">Evidence at a glance</p><h2 id="proof-heading" class="section-title">Results with context.</h2></div>
+    <div data-reveal><p class="eyebrow">02 / Evidence at a glance</p><h2 id="proof-heading" class="section-title">Results with context.</h2></div>
     <ProofGrid items={proofPoints} class="mt-6" />
   </section>
 
   <section class="page-section" aria-labelledby="experience-heading">
     <div class="section-heading" data-reveal>
-      <div><p class="eyebrow">Career</p><h2 id="experience-heading" class="section-title">Engineering and research.</h2></div>
+      <div><p class="eyebrow">03 / Career</p><h2 id="experience-heading" class="section-title">Engineering and research.</h2></div>
       <a href="/experience" class="text-link">Full experience</a>
     </div>
     <div class="mt-6">{recentExperience.map(entry => <ExperienceItem entry={entry} variant="compact" />)}</div>

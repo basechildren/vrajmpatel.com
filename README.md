@@ -79,6 +79,26 @@ pnpm privacy:check
 
 `privacy:check` runs against the built site, so run `pnpm build` first.
 
+To verify the privacy controls and footer in Chrome, start a production preview:
+
+```bash
+pnpm build
+pnpm preview --host 127.0.0.1 --port 4323
+```
+
+Then, with Chrome installed, run in another terminal:
+
+```bash
+node scripts/privacy-browser-smoke.mjs
+```
+
+The browser check defaults to `http://127.0.0.1:4323`. Set `SITE_URL` to use
+another production preview, and `QA_OUTPUT` to change the screenshot and report
+directory. A production preview is required because the check deliberately
+blocks local storage; Astro's development toolbar also accesses that storage
+and would cause an unrelated runtime error. The check includes storage errors,
+independent preference persistence, both themes, and mobile and desktop layouts.
+
 ## Dependencies and deployment
 
 Dependabot checks npm packages and GitHub Actions every day. pnpm holds newly

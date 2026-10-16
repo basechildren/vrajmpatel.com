@@ -44,8 +44,10 @@ test("homepage and recruiter brief expose evidence-led navigation", async () => 
 
 test("about leads with public GitHub activity before the profile narrative", async () => {
   const about = await readPage("about");
-  const headingIndex = about.indexOf("GitHub activity across personal and academic work");
-  const backgroundIndex = about.indexOf("Background");
+  const main = about.match(/<main\b[^>]*>([\s\S]*?)<\/main>/)?.[1];
+  assert.ok(main, "About page content was not generated");
+  const headingIndex = main.indexOf("GitHub activity across personal and academic work");
+  const backgroundIndex = main.indexOf("Background");
 
   assert.ok(headingIndex > -1, "GitHub activity heading was not generated");
   assert.ok(backgroundIndex > -1, "Background heading was not generated");
@@ -200,4 +202,34 @@ test("privacy policy is published, linked, and opt-out capable", async () => {
   assert.ok(sitemapFile, "generated sitemap was not found");
   const sitemap = await readFile(path.join(dist, sitemapFile), "utf8");
   assert.match(sitemap, /https:\/\/www\.vrajmpatel\.com\/privacy\/?/);
+});
+
+test("engineering instrument includes accessible synthetic films and shortcuts", async () => {
+  const homepage = await readPage();
+  assert.equal((homepage.match(/<h1\b/g) ?? []).length, 1);
+  assert.equal((homepage.match(/\bdata-film(?:\s|>)/g) ?? []).length, 3);
+  assert.match(homepage, /<dialog[^>]+id="keyboard-shortcuts"/);
+  const videos = [...homepage.matchAll(/<video\b[^>]*>[\s\S]*?<\/video>/g)].map(match => match[0]);
+  assert.equal(videos.length, 3);
+  for (const video of videos) {
+    assert.match(video, /\bmuted\b/);
+    assert.match(video, /\bplaysinline\b/);
+    assert.match(video, /preload="none"/);
+    assert.match(video, /poster="\/films\/[^" ]+-poster\.webp"/);
+    assert.match(video, /<source data-src="[^" ]+\.webm" type="video\/webm"/);
+    assert.match(video, /<source data-src="[^" ]+\.mp4" type="video\/mp4"/);
+    assert.doesNotMatch(video, /<source src=/, "videos must not request bytes before interaction");
+  }
+  for (const caption of homepage.matchAll(/<figcaption\b[^>]*>([\s\S]*?)<\/figcaption>/g)) {
+    if (caption[1].includes("Recreation")) assert.match(caption[1], /synthetic data/);
+  }
+  assert.equal((homepage.match(/Recreation · synthetic data/g) ?? []).length, 3);
+  await assert.rejects(access(path.join(dist, "dev", "films")));
+  for (const slug of ["operational-ticket-intelligence", "building-indian-parliamentary-datasets", "full-stack-biometric-marathon"]) {
+    const page = await readPage("projects", slug);
+    assert.match(page, /data-film-context="case"/);
+    assert.match(page, /Recreation · synthetic data/);
+    const names = [...page.matchAll(/view-transition-name:\s*([\w-]+)/g)].map(match => match[1]);
+    assert.equal(new Set(names).size, names.length, "view transition names must be unique per page");
+  }
 });

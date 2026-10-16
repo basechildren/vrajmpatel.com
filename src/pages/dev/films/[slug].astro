@@ -1,0 +1,126 @@
+---
+import { projectDemos } from "../../../data/projectDemos";
+import "../../../styles/film-set.css";
+
+export function getStaticPaths() {
+  // Recording sets are development tools and must never become public routes.
+  return import.meta.env.PROD ? [] : Object.keys(projectDemos).map((slug) => ({ params: { slug } }));
+}
+const slug = Astro.params.slug!;
+const demo = projectDemos[slug];
+const kind = slug === "operational-ticket-intelligence" ? "ticket" : slug === "building-indian-parliamentary-datasets" ? "pipeline" : "race";
+const field = (step: number, index: number) => demo.steps[step].fields[index].value;
+const titles = { ticket: "Review workspace", pipeline: "Dataset workbench", race: "Race workspace" };
+---
+
+<!doctype html>
+<html lang="en">
+  <head><meta charset="UTF-8" /><meta name="robots" content="noindex,nofollow" /><title>Synthetic film set</title></head>
+  <body>
+    <div class={`film-set ${kind}`} data-film-kind={kind}>
+      <div class="set-heading"><span class="brand">vp<span class="brand-dot">.</span> <span class="brand-separator">/</span> {titles[kind]}</span><span class="set-label">RECREATION · SYNTHETIC DATA</span></div>
+      <div class="app-shell">
+        <aside class="app-sidebar">
+          <div class="app-mark">{kind === "ticket" ? "OI" : kind === "pipeline" ? "DP" : "SR"}</div>
+          <span class="sidebar-label">WORKSPACE</span>
+          <div class="sidebar-item selected"><span>◫</span> {kind === "ticket" ? "Review queue" : kind === "pipeline" ? "Processing" : "My races"}</div>
+          <div class="sidebar-item"><span>≡</span> {kind === "ticket" ? "Decisions" : kind === "pipeline" ? "Sources" : "Candidates"}</div>
+          <div class="sidebar-item"><span>⌘</span> {kind === "ticket" ? "Controls" : kind === "pipeline" ? "Checkpoints" : "Courses"}</div>
+          <div class="sidebar-bottom"><span class="status-dot"></span> Local demonstration<span class="small">No external updates</span></div>
+        </aside>
+        <main>
+          <header class="app-toolbar"><span>{kind === "ticket" ? "Operations / Review queue" : kind === "pipeline" ? "Parliamentary data / Run demo-003" : "SeeMyRace / Athlete workspace"}</span><span class="avatar">{kind === "race" ? "A" : "VP"}</span></header>
+          {kind === "ticket" && (
+            <div class="workspace ticket-workspace">
+              <div class="workspace-title"><div><p class="overline">HUMAN REVIEW / SYSTEM CONTROLS</p><h1>A suggestion needs a decision.</h1><p>And a decision still needs permission to deliver.</p></div><span class="pill">◉ Read-only</span></div>
+              <div class="ticket-grid">
+                <section class="panel queue-panel"><div class="panel-heading"><h2>Review queue</h2><span class="subtle">03 records</span></div>
+                  <div class="table-head"><span>RECORD / REQUEST</span><span>STATE</span></div>
+                  <div class="queue-row"><div><b>DEMO-102</b><span>Access to a shared folder</span></div><span class="tiny-badge">Open</span></div>
+                  <div class="queue-row selected-record" data-select="1800"><div><b>{field(0, 0)}</b><span>{field(0, 1)}</span></div><span class="tiny-badge accent">Review</span></div>
+                  <div class="queue-row"><div><b>DEMO-108</b><span>Update a display name</span></div><span class="tiny-badge">Open</span></div>
+                  <div class="queue-note"><span class="status-dot"></span> Source records reconciled<span class="small">Intake is distinct from later changes.</span></div>
+                </section>
+                <section class="panel suggestion-panel" data-enter="2600"><div class="panel-heading"><h2>Routing suggestion</h2><span class="record-ref">DEMO-104</span></div><div class="suggestion-body"><p class="field-label">ILLUSTRATIVE DESTINATION</p><h3>{field(1, 0)}</h3><p class="boundary-note">{field(1, 1)}</p><div class="decision-row"><span>Operator decision</span><span data-swap="6200" data-before="Awaiting review" data-after="Accepted ✓">Awaiting review</span></div><div class="mock-button" data-select="6000">Accept example suggestion <span>↗</span></div><div class="control-result" data-enter="6900"><span class="control-icon">⊘</span><div><strong>Delivery blocked</strong><span>Read-only · automatic delivery disabled</span><span class="small">No external update was sent.</span></div></div></div></section>
+              </div>
+              <div class="process-rail"><span class="complete">01 Reconcile</span><i></i><span data-stage="2600">02 Suggest</span><i></i><span data-stage="6200">03 Review</span><i></i><span data-stage="6900">04 Apply controls</span></div>
+            </div>
+          )}
+          {kind === "pipeline" && (
+            <div class="workspace">
+              <div class="workspace-title"><div><p class="overline">SOURCE → RECORD → CHECKPOINT</p><h1>Keep the work. Resume the run.</h1><p>A recoverable pipeline preserves the boundary.</p></div><span class="pill">Run / demo-003</span></div>
+              <div class="pipeline-grid">
+                <section class="panel source-panel"><div class="panel-heading"><h2>Source document</h2><span class="subtle">PDF / p. 2</span></div><div class="document"><p class="document-number">STATEMENT DEMO / 003</p><h3>Example Affairs</h3><div class="document-line wide"></div><div class="document-line"></div><div class="document-highlight">{field(0, 2)}</div><div class="document-line"></div><div class="document-line wide"></div><div class="document-line short"></div><p class="source-caption">{field(0, 0)}</p></div><div class="waveform">{Array.from({ length: 38 }, (_, i) => <i style={`height:${12 + ((i * 17 + 23) % 36)}px`}></i>)}<span>audio / illustrative</span></div></section>
+                <div class="pipeline-right"><section class="panel"><div class="panel-heading"><h2>Extracted fields</h2><span class="tiny-badge accent" data-enter="2800">Normalized</span></div><div class="fields"><span class="field-label">RAW MINISTRY</span><p data-enter="1000">{field(0, 1)}</p><span class="field-label">CANDIDATE NAME</span><p data-enter="2800">{field(1, 1)}</p><div class="review-warning" data-enter="3400">◌ Candidate name still needs verification</div></div></section><section class="panel checkpoint"><div class="panel-heading"><h2>Checkpoint</h2><span class="run-state" data-swap="7900" data-before="Retained boundary" data-after="Resumed ✓">Retained boundary</span></div><div class="checkpoint-row"><span>demo-001</span><span class="green">✓ retained</span></div><div class="checkpoint-row"><span>demo-002</span><span class="green">✓ retained</span></div><div class="checkpoint-row"><span>demo-003</span><span data-swap="8800" data-before="○ pending" data-after="✓ processed">○ pending</span></div></section></div>
+              </div>
+              <div class="run-log"><span class="log-dot" data-interrupt="5400"></span><span data-swap="5400" data-before="Extracting source text; keeping provenance…" data-after="Run interrupted. Completed records retained." data-resume="7900" data-final="Resumed at demo-003. Prior work reused; candidate awaits review.">Extracting source text; keeping provenance…</span></div>
+            </div>
+          )}
+          {kind === "race" && (
+            <div class="workspace">
+              <div class="workspace-title"><div><p class="overline">RETRIEVE → REVIEW → CONFIRM</p><h1>Your race. Your review.</h1><p>A candidate becomes a match when the athlete confirms.</p></div><span class="pill">Example athlete A</span></div>
+              <div class="race-search"><div><span class="field-label">RACE</span><strong>{field(0, 0)} <span>⌄</span></strong></div><div><span class="field-label">BIB SEARCH</span><strong><span class="search-icon">⌕</span><span data-swap="1200" data-before="Enter bib number" data-after="204">Enter bib number</span></strong></div><div class="mock-button" data-select="1800">Find candidates ↗</div></div>
+              <div class="race-grid"><section class="panel candidate-panel" data-enter="2200"><div class="panel-heading"><h2>Candidate review</h2><span class="subtle">Wireframes only / no photos</span></div><div class="candidate-grid">{["photo-demo-017", "photo-demo-021", "photo-demo-036"].map((id, i) => <div class:list={["candidate", { chosen: i === 0 }]}><div class="photo-placeholder"><svg viewBox="0 0 160 130" fill="none"><path d="M0 0 160 130M160 0 0 130" stroke="currentColor" stroke-dasharray="3 5"/><rect x="49" y="39" width="62" height="51" rx="3" stroke="currentColor"/><path d="m53 83 20-18 12 10 13-13 9 12" stroke="currentColor"/><circle cx="96" cy="51" r="5" stroke="currentColor"/></svg><span>PLACEHOLDER</span></div><b>{id}</b><span>{i === 0 ? "Bib text matches 204" : "Unreviewed candidate"}</span>{i === 0 && <div class="candidate-confirmed" data-enter="5400">✓ Confirmed for you</div>}</div>)}</div><div class="candidate-footer"><span>Each athlete’s review stays independent.</span><span class="mock-button" data-select="5100" data-swap="5400" data-before="Confirm example match" data-after="Review saved ✓">Confirm example match</span></div></section>
+                <section class="panel route-panel" data-enter="6500"><div class="panel-heading"><h2>Course import</h2><span class="tiny-badge accent">GPX</span></div><div class="route-map"><svg viewBox="0 0 270 200" fill="none"><path class="map-road" d="M-10 30 280 140M-10 135 150 10 230 210M65-10 90 210M-10 185 280 45"/><path class="course-line" data-draw="7800" d="M57 151C25 112 67 101 69 67S118 29 149 56 202 42 213 88 176 115 188 142 128 182 119 146 72 175 57 151Z"/><circle cx="57" cy="151" r="5" fill="#5b54cf"/></svg><span class="map-label">ILLUSTRATIVE COURSE</span></div><div class="course-file"><span>{field(3, 0)}</span><span data-swap="7600" data-before="Validating…" data-after="✓ Validated">Validating…</span></div><p class="course-note">Allowlisted extension · sanitized filename<br/>Course metadata associated with the race</p></section>
+              </div>
+            </div>
+          )}
+        </main>
+      </div>
+      <div class="set-footer"><span>ILLUSTRATIVE WORKFLOW · NO LIVE APPLICATION DATA</span><span class="timeline"><i data-timeline></i></span><span>12 SEC LOOP</span></div>
+      <svg class="film-cursor" data-cursor viewBox="0 0 26 30" fill="none" aria-hidden="true"><path d="M3 2v23l6-6 5 9 5-3-5-8h9L3 2Z" fill="#383044" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>
+    </div>
+    <script>
+      const duration = 12000;
+      const animations: Animation[] = [];
+      const add = (element: Element, frames: Keyframe[], options: KeyframeAnimationOptions = {}) => {
+        const animation = element.animate(frames, { duration, fill: "both", ...options });
+        animation.pause(); animations.push(animation);
+      };
+      document.querySelectorAll<HTMLElement>("[data-enter]").forEach((element) => {
+        const start = Number(element.dataset.enter) / duration;
+        add(element, [{ opacity: 0, transform: "translateY(12px)", offset: 0 }, { opacity: 0, transform: "translateY(12px)", offset: start }, { opacity: 1, transform: "translateY(0)", offset: start + .055 }, { opacity: 1, transform: "translateY(0)", offset: .91 }, { opacity: 0, transform: "translateY(12px)", offset: .995 }, { opacity: 0, transform: "translateY(12px)", offset: 1 }]);
+      });
+      document.querySelectorAll<HTMLElement>("[data-select]").forEach((element) => {
+        const start = Number(element.dataset.select) / duration;
+        add(element, [{ boxShadow: "inset 0 0 0 0px #7063e000", offset: 0 }, { boxShadow: "inset 0 0 0 0px #7063e000", offset: start }, { boxShadow: "inset 0 0 0 2px #7063e0", offset: start + .035 }, { boxShadow: "inset 0 0 0 2px #7063e066", offset: .92 }, { boxShadow: "inset 0 0 0 0px #7063e000", offset: .995 }, { boxShadow: "inset 0 0 0 0px #7063e000", offset: 1 }]);
+      });
+      document.querySelectorAll<SVGPathElement>("[data-draw]").forEach((element) => {
+        const length = element.getTotalLength();
+        element.style.strokeDasharray = String(length);
+        const start = Number(element.dataset.draw) / duration;
+        add(element, [{ strokeDashoffset: length, offset: 0 }, { strokeDashoffset: length, offset: start }, { strokeDashoffset: 0, offset: start + .14 }, { strokeDashoffset: 0, offset: 1 }]);
+      });
+      const timeline = document.querySelector("[data-timeline]");
+      if (timeline) add(timeline, [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }]);
+      const cursor = document.querySelector("[data-cursor]");
+      const kind = document.querySelector<HTMLElement>("[data-film-kind]")?.dataset.filmKind;
+      const points = kind === "ticket" ? [[1110, 655], [405, 450], [1000, 475], [1130, 540]] : kind === "pipeline" ? [[1110, 655], [885, 429], [1045, 680], [1110, 613]] : [[1110, 655], [855, 302], [755, 614], [1100, 587]];
+      if (cursor) add(cursor, [
+        { opacity: 0, transform: `translate(${points[0][0]}px, ${points[0][1]}px)`, offset: 0 },
+        { opacity: 1, transform: `translate(${points[0][0]}px, ${points[0][1]}px)`, offset: .08 },
+        { opacity: 1, transform: `translate(${points[1][0]}px, ${points[1][1]}px)`, offset: .15, easing: "ease-in-out" },
+        { opacity: 1, transform: `translate(${points[1][0]}px, ${points[1][1]}px)`, offset: .28, easing: "ease-in-out" },
+        { opacity: 1, transform: `translate(${points[2][0]}px, ${points[2][1]}px)`, offset: .43 },
+        { opacity: 1, transform: `translate(${points[2][0]}px, ${points[2][1]}px) scale(.88)`, offset: .5 },
+        { opacity: 1, transform: `translate(${points[2][0]}px, ${points[2][1]}px)`, offset: .53, easing: "ease-in-out" },
+        { opacity: 1, transform: `translate(${points[3][0]}px, ${points[3][1]}px)`, offset: .66 },
+        { opacity: 1, transform: `translate(${points[3][0]}px, ${points[3][1]}px)`, offset: .88 },
+        { opacity: 0, transform: `translate(${points[3][0]}px, ${points[3][1]}px)`, offset: .96 },
+        { opacity: 0, transform: `translate(${points[0][0]}px, ${points[0][1]}px)`, offset: 1 },
+      ]);
+      const seek = (milliseconds: number) => {
+        const time = Math.max(0, Math.min(milliseconds, duration));
+        animations.forEach((animation) => { animation.pause(); animation.currentTime = time; });
+        document.querySelectorAll<HTMLElement>("[data-swap]").forEach((element) => {
+          const active = time < duration * .965;
+          element.textContent = active && element.dataset.resume && time >= Number(element.dataset.resume) ? element.dataset.final! : active && time >= Number(element.dataset.swap) ? element.dataset.after! : element.dataset.before!;
+        });
+        document.querySelectorAll<HTMLElement>("[data-stage]").forEach((element) => { element.classList.toggle("complete", time >= Number(element.dataset.stage) && time < duration * .965); });
+        document.querySelectorAll<HTMLElement>("[data-interrupt]").forEach((element) => { element.classList.toggle("interrupted", time >= Number(element.dataset.interrupt) && time < 7900); });
+      };
+      (window as Window & { __film?: { duration: number; seek: typeof seek } }).__film = { duration, seek };
+      seek(0);
+    </script>
+  </body>
+</html>

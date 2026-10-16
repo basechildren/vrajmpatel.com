@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
+import ProjectFilm from "../../components/ProjectFilm.astro";
 import WorkflowDemo from "../../components/WorkflowDemo.astro";
 import ContactBlock from "../../components/ContactBlock.astro";
 import CaseNavigation from "../../components/CaseNavigation.astro";
@@ -43,7 +44,7 @@ const hasHeaderResources = Boolean(
   ogImageAlt={`Project preview for ${entry.data.title}`}
   schemaType="WebPage"
 >
-  <article class="mx-auto max-w-3xl">
+  <article class="case-study">
     <a
       href="/projects"
       class="inline-flex min-h-11 items-center text-sm underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:decoration-slate-700 dark:hover:text-blue-400"
@@ -51,11 +52,11 @@ const hasHeaderResources = Boolean(
       All projects
     </a>
 
-    <header class="mt-6 border-b border-slate-200 pb-8 dark:border-slate-800 sm:mt-10 sm:pb-10">
-      <p class="font-mono text-xs text-slate-500 dark:text-slate-400">
+    <header class="case-header">
+      <p class="eyebrow" data-scramble>
         {entry.data.domain}
       </p>
-      <h1 class="mt-3 text-3xl font-semibold tracking-[-0.035em] text-slate-950 dark:text-white sm:text-5xl">
+      <h1 class="case-title" style={`view-transition-name: title-${entry.id}`}>
         {entry.data.title}
       </h1>
       {
@@ -125,8 +126,8 @@ const hasHeaderResources = Boolean(
 
       {
         (entry.data.contribution || entry.data.setting || entry.data.status) && (
-          <dl class="mt-6 grid grid-cols-1 gap-x-5 gap-y-6 border-t border-slate-200 pt-6 sm:mt-8 sm:grid-cols-2 sm:gap-8 dark:border-slate-800">
-            {entry.data.contribution && !entry.data.overview && (
+          <dl class="case-specification">
+            {entry.data.contribution && (
               <div class="sm:col-span-1">
                 <dt class="font-mono text-xs text-slate-500 dark:text-slate-400">
                   Contribution
@@ -159,9 +160,12 @@ const hasHeaderResources = Boolean(
           </dl>
         )
       }
+      <div class="case-film"><ProjectFilm slug={entry.id} context="case" /></div>
     </header>
 
-    <CaseNavigation sections={sections} />
+    <div class="case-layout">
+    <CaseNavigation sections={sections} slug={entry.id} />
+    <div class="case-content">
     {entry.data.overview && <section id="overview" class="case-overview" aria-labelledby="overview-heading" data-reveal>
       <p class="eyebrow">Overview</p>
       <h2 id="overview-heading" class="section-title">The problem</h2>
@@ -190,7 +194,58 @@ const hasHeaderResources = Boolean(
         </section>
       )
     }
-    {nextProject && <a href={`/projects/${nextProject.id}`} class="related-project text-link" data-ph-event="project_opened" data-ph-project={nextProject.id} data-ph-placement="related_project"><span class="eyebrow">Continue exploring</span><strong>{nextProject.data.title}</strong></a>}
+    {nextProject && <section class="next-case" aria-labelledby="next-case-heading">
+      <p class="eyebrow">Continue exploring</p>
+      <div class="next-case-film"><ProjectFilm slug={nextProject.id} context="card" transition={false} /></div>
+      <a href={`/projects/${nextProject.id}`} class="related-project" data-ph-event="project_opened" data-ph-project={nextProject.id} data-ph-placement="related_project"><h2 id="next-case-heading">{nextProject.data.title}</h2><span aria-hidden="true">↗</span></a>
+      <p class="muted-copy">{nextProject.data.summary}</p>
+    </section>}
     <ContactBlock project={entry.data.title} compact />
+    </div>
+    </div>
   </article>
 </BaseLayout>
+
+<style>
+  .case-study { max-width: 72rem; margin-inline: auto; }
+  .case-header { margin-top: 2.25rem; padding-bottom: 1.5rem; }
+  .case-title { max-width: 21ch; margin-top: 1rem; font-family: var(--font-display, Georgia, serif); font-size: clamp(2.75rem, 6vw, 5rem); font-weight: 400; line-height: 1.06; letter-spacing: -.035em; color: var(--ink); text-wrap: balance; }
+  .case-header > p { max-width: 64ch; }
+  .case-specification { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 2rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-2, var(--surface)); overflow: hidden; }
+  .case-specification > div { padding: 1.25rem; }
+  .case-specification > div + div { border-left: 1px solid var(--line); }
+  .case-specification dt { text-transform: uppercase; font-size: .65rem; letter-spacing: .09em; }
+  .case-specification dd { color: var(--ink); }
+  .case-film { margin-top: 2rem; }
+  .case-layout { display: grid; grid-template-columns: minmax(0, 1fr); min-width: 0; }
+  .case-content { min-width: 0; }
+  .case-content :global(.page-section) { margin-top: 0; padding-block: 3.5rem 1rem; }
+  .case-content :global(.case-overview) { padding-top: 2.5rem; }
+  .case-content :global(#overview), .case-content :global(#walkthrough), .case-content :global(#results), .case-content :global(#architecture), .case-content :global(#evidence) { scroll-margin-top: 10rem; }
+  .next-case { margin-top: 3rem; padding-block: 2rem; border-top: 1px solid var(--line); }
+  .next-case-film { margin-top: 1.25rem; }
+  .related-project { display: flex; justify-content: space-between; gap: 1rem; align-items: center; margin-top: 1.1rem; padding: 0; border: 0; color: var(--ink); }
+  .related-project h2 { font-family: var(--font-display, Georgia, serif); font-weight: 400; font-size: 2rem; line-height: 1.2; }
+  .related-project > span { font-size: 1.5rem; color: var(--accent); }
+  .related-project:hover h2 { color: var(--accent); }
+  .related-project:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+  .next-case > p:last-child { margin-top: .75rem; }
+  @media (min-width: 1024px) {
+    .case-layout { grid-template-columns: 13.5rem minmax(0, 1fr); gap: 3.5rem; align-items: start; }
+    .case-content { max-width: 48rem; }
+    .case-content :global(.system-step) { grid-template-columns: 2rem 1fr; }
+    .case-content :global(.system-step .step-content) { grid-column: 2; }
+    .case-content :global(#overview), .case-content :global(#walkthrough), .case-content :global(#results), .case-content :global(#architecture), .case-content :global(#evidence) { scroll-margin-top: 7rem; }
+  }
+  @media (max-width: 639px) {
+    .case-header { margin-top: 1.5rem; }
+    .case-specification { grid-template-columns: 1fr; }
+    .case-specification > div { padding: 1rem; }
+    .case-specification > div + div { border-left: 0; border-top: 1px solid var(--line); }
+  }
+  @media print {
+    .case-layout { display: block; }
+    .case-film, .next-case { display: none; }
+    .case-title { font-size: 28pt; }
+  }
+</style>

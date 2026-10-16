@@ -43,7 +43,7 @@ const cellStyle = (day: (typeof data.days)[number]) => {
 ---
 
 <div
-  class="mt-7"
+  class="activity-instrument instrument-frame mt-7"
   data-github-activity
   data-ph-component="github_activity"
 >
@@ -155,7 +155,7 @@ const cellStyle = (day: (typeof data.days)[number]) => {
     </div>
   </div>
 
-  <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-500 dark:text-slate-400" aria-label="Account color key">
+  <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-500 dark:text-slate-400" role="group" aria-label="Account color key">
     <span class="inline-flex items-center gap-2"><span class="github-activity-key github-activity-key--personal" aria-hidden="true"></span>Personal</span>
     <span class="inline-flex items-center gap-2"><span class="github-activity-key github-activity-key--academic" aria-hidden="true"></span>Academic</span>
     <span class="inline-flex items-center gap-2"><span class="github-activity-key github-activity-key--both" aria-hidden="true"></span>Both on the same day</span>
@@ -213,6 +213,36 @@ const cellStyle = (day: (typeof data.days)[number]) => {
     }
   };
 
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const running = new Set<Animation>();
+  const stop = () => { running.forEach(animation => animation.cancel()); running.clear(); };
+  reduced.addEventListener("change", () => { if (reduced.matches) stop(); });
+  window.addEventListener("beforeprint", stop);
+  document.querySelectorAll<HTMLElement>("[data-github-activity]").forEach(root => {
+    root.addEventListener("focusin", stop);
+    if (!("IntersectionObserver" in window) || reduced.matches) return;
+    const observer = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      observer.disconnect();
+      if (reduced.matches || root.contains(document.activeElement)) return;
+      root.querySelectorAll<HTMLElement>(".github-activity-cell").forEach((cell, index) => {
+        const animation = cell.animate([{ opacity: .25 }, { opacity: 1 }], { duration: 230, delay: Math.floor(index / 7) * 7, easing: "ease-out" });
+        running.add(animation);
+        animation.finished.then(() => running.delete(animation), () => running.delete(animation));
+      });
+    }, { threshold: .25 });
+    observer.observe(root.querySelector("[data-activity-calendar]")!);
+  });
+
   setupActivityCalendar();
   document.addEventListener("astro:page-load", setupActivityCalendar);
 </script>
+
+<style is:global>
+  .activity-instrument { border: 1px solid var(--line); border-radius: 12px; padding: 1.5rem; background: var(--paper-2, var(--surface)); }
+  .activity-instrument [data-activity-total] { font-family: var(--font-display, Georgia, serif); font-size: 2.5rem; font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .activity-instrument .github-activity-cell { border-color: var(--line); }
+  .activity-instrument .activity-text { background: var(--paper, transparent); border-radius: 6px; padding: .25rem 1rem; }
+  @media (max-width: 639px) { .activity-instrument { padding: 1rem; } }
+  @media print { .activity-instrument { padding: 0; border: 0; } }
+</style>

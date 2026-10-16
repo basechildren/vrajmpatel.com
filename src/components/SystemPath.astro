@@ -2,14 +2,100 @@
 interface Step { title: string; purpose: string; technical: string; }
 interface Props { steps: readonly Step[]; label?: string; heading?: string; description?: string; }
 const { steps, label = "Architecture", heading = "How the parts work together", description = "Follow the responsibilities through the system. Expand a step for the decision behind it." } = Astro.props;
+const width = steps.length * 148 + 16;
+const titleLines = (title: string) => {
+  const lines = [""];
+  for (const word of title.split(" ")) {
+    if (lines[lines.length - 1].length + word.length > 17) lines.push(word);
+    else lines[lines.length - 1] += `${lines[lines.length - 1] ? " " : ""}${word}`;
+  }
+  return lines;
+};
 ---
-<figure id="architecture" class="page-section" aria-labelledby="system-path-heading">
+<figure id="architecture" class="page-section system-path" aria-labelledby="system-path-heading" data-system-path>
   <figcaption data-reveal><p class="eyebrow">{label}</p><h2 id="system-path-heading" class="section-title">{heading}</h2><p class="muted-copy">{description}</p></figcaption>
-  <ol class="mt-6 border-t border-slate-200 dark:border-slate-800">
-    {steps.map((step, i) => <li class="system-step" data-reveal>
+  <div class="architecture-frame instrument-frame">
+    <p class="architecture-caption"><span>fig. 03 / system map</span><span>select a node to inspect</span></p>
+    <div class="architecture-scroll" tabindex="0" role="region" aria-label="Scrollable architecture diagram">
+      <svg class="architecture-diagram" viewBox={`0 0 ${width} 148`} width={width} height="148" aria-labelledby="architecture-diagram-title">
+        <title id="architecture-diagram-title">System responsibilities. Select a step to open its design details.</title>
+        <defs><marker id="architecture-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M 0 0 L 8 4 L 0 8" fill="currentColor" /></marker></defs>
+        {steps.slice(0, -1).map((_, i) => <path class="architecture-edge" d={`M ${i * 148 + 140} 74 H ${i * 148 + 158}`} pathLength="1" marker-end="url(#architecture-arrow)" />)}
+        {steps.map((step, i) => <a href={`#architecture-step-${i + 1}`} class="architecture-node" data-architecture-node={i + 1}>
+          <rect x={i * 148 + 16} y="24" width="124" height="100" rx="8" />
+          <text class="node-number" x={i * 148 + 29} y="47">{String(i + 1).padStart(2, "0") + " "}</text>
+          <circle cx={i * 148 + 123} cy="43" r="3" />
+          <text class="node-label" x={i * 148 + 29} y="74">{titleLines(step.title).map((line, lineIndex) => <tspan x={i * 148 + 29} dy={lineIndex === 0 ? 0 : 15}>{line + " "}</tspan>)}</text>
+        </a>)}
+      </svg>
+    </div>
+  </div>
+  <ol class="system-step-list mt-6 border-t border-slate-200 dark:border-slate-800">
+    {steps.map((step, i) => <li id={`architecture-step-${i + 1}`} class="system-step" data-reveal>
       <span class="eyebrow" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
       <h3>{step.title}</h3>
       <div class="step-content"><p>{step.purpose}</p><details><summary>{step.title}: design details</summary><p>{step.technical}</p></details></div>
     </li>)}
   </ol>
 </figure>
+<script>
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const running = new Set<Animation>();
+  const stop = () => { running.forEach(animation => animation.cancel()); running.clear(); };
+  reduced.addEventListener("change", () => { if (reduced.matches) stop(); });
+  window.addEventListener("beforeprint", stop);
+  document.querySelectorAll<HTMLElement>("[data-system-path]").forEach(root => {
+    root.addEventListener("focusin", stop);
+    root.querySelectorAll<SVGAElement>("[data-architecture-node]").forEach(node => {
+      node.addEventListener("click", () => {
+        const target = document.getElementById(`architecture-step-${node.dataset.architectureNode}`);
+        const details = target?.querySelector("details");
+        if (details) {
+          details.open = true;
+          details.querySelector("summary")?.focus({ preventScroll: true });
+        }
+      });
+    });
+    if (CSS.supports("animation-timeline", "view()") || !("IntersectionObserver" in window)) return;
+    const observer = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      observer.disconnect();
+      if (reduced.matches || root.contains(document.activeElement)) return;
+      root.querySelectorAll<SVGPathElement>(".architecture-edge").forEach((edge, index) => {
+        const animation = edge.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: 650, delay: index * 80, easing: "ease-out" });
+        running.add(animation);
+        animation.finished.then(() => running.delete(animation), () => running.delete(animation));
+      });
+    }, { threshold: .2 });
+    observer.observe(root.querySelector(".architecture-frame")!);
+  });
+</script>
+<style>
+  .system-path { view-timeline-name: --architecture; view-timeline-axis: block; }
+  .architecture-frame { margin-top: 1.75rem; border: 1px solid var(--line); border-radius: 10px; background: var(--paper-2, var(--surface)); overflow: hidden; }
+  .architecture-caption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .4rem 1rem; padding: .8rem 1rem; border-bottom: 1px solid var(--line); font-family: var(--font-mono); font-size: .57rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+  .architecture-scroll { overflow-x: auto; scrollbar-width: thin; }
+  .architecture-scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .architecture-diagram { display: block; width: 100%; min-width: 600px; height: auto; color: var(--accent); }
+  .architecture-edge { fill: none; stroke: var(--accent); stroke-width: 1.25; stroke-dasharray: 1; stroke-dashoffset: 0; }
+  .architecture-node rect { fill: var(--paper, #fff); stroke: var(--line); stroke-width: 1; transition: stroke 180ms, fill 180ms; }
+  .architecture-node circle { fill: var(--accent); opacity: .6; }
+  .node-number { fill: var(--accent); font-family: var(--font-mono); font-size: 9px; }
+  .node-label { fill: var(--ink); font-family: var(--font-sans); font-size: 10px; font-weight: 500; }
+  .architecture-node:hover rect, .architecture-node:focus-visible rect { stroke: var(--accent); stroke-width: 2; fill: var(--accent-soft, var(--tint)); }
+  .architecture-node:focus-visible { outline: none; }
+  .system-step { scroll-margin-top: 8rem; }
+  .system-step:target { background: var(--accent-soft, var(--tint)); }
+  .system-step-list { margin-top: 1.5rem; }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .architecture-edge { animation: architecture-draw linear both; animation-timeline: --architecture; animation-range: entry 10% entry 85%; }
+      .architecture-node circle { animation: architecture-signal linear both; animation-timeline: --architecture; animation-range: entry 10% entry 85%; }
+    }
+  }
+  @keyframes architecture-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes architecture-signal { from { opacity: .2; } to { opacity: 1; } }
+  .system-path:focus-within .architecture-edge, .system-path:focus-within .architecture-node circle { animation: none; }
+  @media (prefers-reduced-motion: reduce) { .architecture-node rect { transition: none; } }
+  @media print { .architecture-edge, .architecture-node circle { animation: none !important; } .architecture-diagram { min-width: 0; } }
+</style>

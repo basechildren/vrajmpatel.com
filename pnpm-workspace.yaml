@@ -5,5 +5,6 @@ allowBuilds:
 minimumReleaseAge: 1440
 minimumReleaseAgeStrict: true
 minimumReleaseAgeExcludePrune: true
-minimumReleaseAgeExclude:
-  - astro@7.2.7
+# Keep PostCSS's compatible source-map dependency on the audited patch.
+overrides:
+  'postcss>source-map-js': 1.2.2

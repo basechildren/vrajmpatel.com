@@ -12,25 +12,27 @@ export const { getStaticPaths, GET } = await OGImageRoute({
   getImageOptions: async (_path, page: any) => ({
     title: page.title,
     description: page.summary || "Selected work by Vraj Patel.",
-    bgGradient: [[15, 23, 42]],
+    bgGradient: [[248, 247, 242]],
     border: {
-      color: [37, 99, 235],
+      color: [49, 72, 218],
       width: 10,
       side: "inline-start",
     },
     font: {
       title: {
-        weight: 'Bold',
-        families: ['Inter']
+        weight: 'Normal',
+        color: [22, 22, 29],
+        families: ['Instrument Serif']
       },
       description: {
         weight: 'Normal',
-        families: ['Inter']
+        color: [78, 77, 90],
+        families: ['IBM Plex Mono']
       }
     },
     fonts: [
-      './node_modules/@fontsource/inter/files/inter-latin-400-normal.woff',
-      './node_modules/@fontsource/inter/files/inter-latin-700-normal.woff'
+      './node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff',
+      './node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff'
     ]
   }),
 });

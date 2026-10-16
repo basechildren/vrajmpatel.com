@@ -1,0 +1,31 @@
+:root {
+  --hue: 268;
+  --paper: oklch(98.2% 0.004 95);
+  --paper-2: oklch(96.4% 0.005 95);
+  --grid: oklch(83% 0.008 95 / .32);
+  --ink: oklch(19% 0.012 var(--hue));
+  --copy: oklch(42% 0.018 var(--hue));
+  --muted: oklch(49% 0.016 var(--hue));
+  --line: oklch(86% 0.008 var(--hue));
+  --accent: oklch(48% 0.23 var(--hue));
+  --accent-soft: oklch(52% 0.23 268 / .07);
+  --signal: oklch(48% 0.13 150);
+  --surface: var(--paper);
+  --tint: var(--accent-soft);
+  --radius-1: 6px; --radius-2: 12px; --radius-3: 20px;
+  --ease-out: cubic-bezier(.22,1,.36,1);
+  --ease-spring: linear(0, .009, .035 2.1%, .141 4.4%, .723 12.9%, .938 16.7%, 1.017 20.3%, 1.041 24.3%, 1.01 33.3%, .998 43.8%, 1);
+  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+}
+:root.dark {
+  --paper: oklch(14.5% 0.012 var(--hue));
+  --paper-2: oklch(18% 0.014 var(--hue));
+  --grid: oklch(38% 0.02 var(--hue) / .26);
+  --ink: oklch(94% 0.006 var(--hue));
+  --copy: oklch(77% 0.02 var(--hue));
+  --muted: oklch(70% 0.016 var(--hue));
+  --line: oklch(32% 0.02 var(--hue));
+  --accent: oklch(75% 0.13 var(--hue));
+  --accent-soft: oklch(72% 0.14 268 / .09);
+  --signal: oklch(75% 0.14 150);
+}

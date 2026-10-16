@@ -1,16 +1,21 @@
 <script>
-  import { reveal } from "../lib/motion";
-
-  // Content is always visible. Motion is a one-time enhancement, never a loading gate.
+  import { reveal, splitLines, scramble, countUp, onEnter } from "../lib/motion";
+  // Every effect enhances visible content and is removed on focus, print, or reduced motion.
   document.querySelectorAll<HTMLElement>("[data-intro]").forEach(element => reveal(element, 8));
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        reveal(entry.target as HTMLElement);
-        observer.unobserve(entry.target);
+  document.querySelectorAll<HTMLElement>("[data-split]").forEach(splitLines);
+  onEnter("[data-reveal]", reveal);
+  onEnter("[data-reveal-stagger]", element => {
+    element.querySelectorAll<HTMLElement>(":scope > *").forEach((child, index) => reveal(child, 12, Math.min(index * .025, .4)));
+  });
+  onEnter("[data-scramble]", scramble);
+  onEnter("[data-count]", countUp);
+  if (matchMedia("(pointer: fine) and (prefers-reduced-motion: no-preference)").matches) {
+    document.querySelectorAll<HTMLElement>("[data-spotlight]").forEach(card => {
+      card.addEventListener("pointermove", event => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty("--mx", `${event.clientX - rect.left}px`);
+        card.style.setProperty("--my", `${event.clientY - rect.top}px`);
       });
-    }, { threshold: 0.08 });
-    document.querySelectorAll<HTMLElement>("[data-reveal]").forEach(element => observer.observe(element));
+    });
   }
 </script>

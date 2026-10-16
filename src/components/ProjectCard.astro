@@ -1,11 +1,12 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import ProjectFilm from "./ProjectFilm.astro";
 
 interface Props {
   entry: CollectionEntry<"projects">;
   headingLevel?: "h2" | "h3";
   showDomain?: boolean;
-  variant?: "compact" | "rich";
+  variant?: "compact" | "rich" | "feature";
 }
 
 const {
@@ -29,7 +30,31 @@ const hasRichActions = Boolean(
 ---
 
 {
-  variant === "compact" ? (
+  variant === "feature" ? (
+    <article class="project-feature" data-reveal data-spotlight>
+      <ProjectFilm slug={entry.id} context="card" />
+      <div class="project-feature-copy">
+        <p class="eyebrow">{entry.data.domain}</p>
+        <div class="project-feature-title">
+          <Heading style={`view-transition-name: title-${entry.id}`}>
+            <a href={`/projects/${entry.id}`} data-ph-event="project_opened" data-ph-project={entry.id} data-ph-placement="project_list">{entry.data.title}</a>
+          </Heading>
+          <span class="project-arrow" aria-hidden="true">↗</span>
+        </div>
+        <p class="project-feature-summary">{entry.data.summary}</p>
+        {entry.data.contribution && <p class="project-feature-summary">{entry.data.contribution}</p>}
+        {entry.data.proof?.[0] && (
+          <p class="project-feature-proof">
+            <strong class="font-medium">{entry.data.proof[0].value}</strong>
+            <span class="mt-1 block font-sans text-xs leading-relaxed">{entry.data.proof[0].label}</span>
+          </p>
+        )}
+        <div class="project-action">
+          <a href={`/projects/${entry.id}`} class="text-link" data-ph-event="project_opened" data-ph-project={entry.id} data-ph-placement="project_list_action">View case study <span aria-hidden="true" class="ml-2">→</span></a>
+        </div>
+      </div>
+    </article>
+  ) : variant === "compact" ? (
     <article data-reveal class="project-row grid gap-3 border-t border-slate-200 py-6 sm:grid-cols-[8rem_1fr] sm:gap-7 dark:border-slate-800">
       <div>
         {showDomain && (

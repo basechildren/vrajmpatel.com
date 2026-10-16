@@ -21,7 +21,7 @@ Implemented October 15, 2026. This policy supersedes the animation-library and v
 
 `src/data/projectFilms.ts` maps the three public case studies to committed WebM, MP4, and WebP assets in `public/films/`. Every film is explicitly captioned **Recreation · synthetic data**. The film sets use invented records from `projectDemos.ts`; they are editorial explanations, not real product recordings or evidence of measured performance. SeeMyRace contains wireframe placeholders, never photos or biometric data.
 
-The dev-only `/dev/films/[slug]` routes are omitted from production builds. Each exposes `window.__film.seek(ms)` for deterministic capture. No private application is accessed. The twelve-second storyboards cover ticket review and blocked delivery, source normalization and checkpoint recovery, and athlete-owned candidate verification and GPX course creation.
+`astro.config.mjs` registers the `/dev/films/[slug]` routes only under `astro dev`, so production builds contain neither the pages nor their stylesheet. Each exposes `window.__film.seek(ms)` for deterministic capture. No private application is accessed. The twelve-second storyboards cover ticket review and blocked delivery, source normalization and checkpoint recovery, and athlete-owned candidate verification and GPX course creation.
 
 ### Playback policy
 
@@ -39,7 +39,7 @@ pnpm test:media
 
 The recorder uses installed Google Chrome through `playwright-core` and system `ffmpeg`. Set `FILM_BASE_URL` to override the dev server URL and `FILM_DPR` to choose capture density (default 2; committed assets captured at 1). Use `--slug=operational-ticket-intelligence` to record a single film. Output is 1280 × 800 at 30 fps, with deterministic seeking. Encoded files are committed; production CI never records them.
 
-Budgets per film: WebM at most 900,000 bytes; MP4 at most 1,400,000 bytes; poster at most 120,000 bytes. `test:media` verifies actual file presence and size; generated-site contracts verify lazy sources, synthetic captions, unique transitions, and absence of dev film routes.
+Budgets per film: WebM at most 900,000 bytes; MP4 at most 1,400,000 bytes; poster at most 120,000 bytes. `test:media` verifies actual file presence and size; generated-site contracts verify lazy sources, synthetic captions, unique transitions, and that no dev film route or stylesheet ships.
 
 ## Verification
 

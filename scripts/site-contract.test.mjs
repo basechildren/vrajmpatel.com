@@ -234,3 +234,12 @@ test("engineering instrument includes accessible synthetic films and shortcuts",
     assert.equal(new Set(names).size, names.length, "view transition names must be unique per page");
   }
 });
+
+test("dev film recording sets stay out of the production build", async () => {
+  await assert.rejects(access(path.join(dist, "dev")));
+  const assets = (await readdir(path.join(dist, "_astro"))).filter((name) => /\.(?:css|js)$/.test(name));
+  for (const name of assets) {
+    const contents = await readFile(path.join(dist, "_astro", name), "utf8");
+    assert.doesNotMatch(contents, /\.film-set\b|__film|html,body\{width:1280px/, `${name} contains the dev film recording set`);
+  }
+});

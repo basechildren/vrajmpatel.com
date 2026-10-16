@@ -1,17 +1,5 @@
----
-const sha = import.meta.env.PUBLIC_BUILD_SHA || "local";
-const branch = import.meta.env.PUBLIC_BUILD_BRANCH || "local";
-const builtAt = import.meta.env.PUBLIC_BUILD_TIME || "";
-const validBuild = builtAt && Number.isFinite(Date.parse(builtAt));
-const buildLabel = validBuild ? new Date(builtAt).toISOString().slice(0, 10) : "local preview";
----
-<div class="status-bar" role="group" aria-label="Site information">
+<div class="status-bar" role="group" aria-label="Local time and shortcuts">
   <div class="status-bar-inner">
-    <div class="status-build">
-      <span class="status-branch"><span aria-hidden="true">⑂</span> {branch}</span>
-      <span class="status-sha" title="Source revision">{sha}</span>
-      <span class="status-built">built <time datetime={validBuild ? builtAt : undefined} data-build-time={validBuild ? builtAt : undefined} title={validBuild ? builtAt : undefined}>{buildLabel}</time></span>
-    </div>
     <div class="status-tools">
       <span class="status-clock">Boulder <time data-mountain-clock>MT</time></span>
       <button type="button" class="shortcuts-open" data-shortcuts-open aria-haspopup="dialog" aria-controls="keyboard-shortcuts" hidden><kbd>?</kbd> shortcuts</button>
@@ -20,20 +8,14 @@ const buildLabel = validBuild ? new Date(builtAt).toISOString().slice(0, 10) : "
 </div>
 <script>
   const clock = document.querySelector<HTMLTimeElement>("[data-mountain-clock]");
-  const buildTime = document.querySelector<HTMLTimeElement>("[data-build-time]");
   const mountainTime = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/Denver", hour: "2-digit", minute: "2-digit", hour12: false,
   });
   const updateTime = () => {
+    if (!clock) return;
     const now = new Date();
-    if (clock) {
-      clock.dateTime = now.toISOString();
-      clock.textContent = `${mountainTime.format(now)} MT`;
-    }
-    if (buildTime?.dataset.buildTime) {
-      const minutes = Math.max(0, Math.floor((now.getTime() - Date.parse(buildTime.dataset.buildTime)) / 60000));
-      buildTime.textContent = minutes < 1 ? "just now" : minutes < 60 ? `${minutes}m ago` : minutes < 1440 ? `${Math.floor(minutes / 60)}h ago` : `${Math.floor(minutes / 1440)}d ago`;
-    }
+    clock.dateTime = now.toISOString();
+    clock.textContent = `${mountainTime.format(now)} MT`;
   };
   updateTime();
   const timer = window.setInterval(() => { if (!document.hidden) updateTime(); }, 60000);

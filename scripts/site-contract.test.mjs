@@ -209,6 +209,7 @@ test("engineering instrument includes accessible synthetic films and shortcuts",
   assert.equal((homepage.match(/<h1\b/g) ?? []).length, 1);
   assert.equal((homepage.match(/\bdata-film(?:\s|>)/g) ?? []).length, 3);
   assert.match(homepage, /<dialog[^>]+id="keyboard-shortcuts"/);
+  assert.doesNotMatch(homepage, /data-build-time|status-branch|status-sha|Source revision/, "the status bar must not publish build metadata");
   const videos = [...homepage.matchAll(/<video\b[^>]*>[\s\S]*?<\/video>/g)].map(match => match[0]);
   assert.equal(videos.length, 3);
   for (const video of videos) {

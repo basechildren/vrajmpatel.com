@@ -36,11 +36,8 @@
 .site-footer-links a { color: var(--copy); font-size: .75rem; text-decoration-color: var(--line); }
 .site-footer-links a:hover { color: var(--accent); }
 .status-bar { border-top: 1px solid var(--line); color: var(--muted); font: .625rem/1.5 var(--font-mono); }
-.status-bar-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .25rem 1.5rem; max-width: 78rem; padding: 0 2rem; margin: auto; }
-.status-build, .status-tools { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem; min-height: 44px; }
-.status-branch { color: var(--ink); display: inline-flex; gap: .45rem; align-items: center; }
-.status-branch > span { color: var(--accent); font-size: .95rem; }
-.status-sha { border-left: 1px solid var(--line); padding-left: 1rem; }
+.status-bar-inner { display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: .25rem 1.5rem; max-width: 78rem; padding: 0 2rem; margin: auto; }
+.status-tools { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem; min-height: 44px; }
 .status-clock { white-space: nowrap; }
 .shortcuts-open { min-height: 44px; color: var(--copy); cursor: pointer; }
 .shortcuts-open:hover { color: var(--accent); }
@@ -96,9 +93,7 @@
   .footer-navigation { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .25rem 1rem; }
   .footer-navigation a { justify-self: start; }
   .status-bar-inner { padding: .4rem 1.25rem; gap: 0 1rem; }
-  .status-build, .status-tools { min-height: 36px; gap: .7rem; }
-  .status-sha { padding-left: .7rem; }
-  .status-tools { width: 100%; justify-content: space-between; }
+  .status-tools { width: 100%; justify-content: space-between; min-height: 36px; gap: .7rem; }
   .shortcuts-dialog { padding: 1.25rem; }
   .shortcuts-list > div { grid-template-columns: 7rem 1fr; gap: .5rem; }
 }

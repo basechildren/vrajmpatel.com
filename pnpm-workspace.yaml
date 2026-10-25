@@ -8,3 +8,9 @@ minimumReleaseAgeExcludePrune: true
 # Keep PostCSS's compatible source-map dependency on the audited patch.
 overrides:
   'postcss>source-map-js': 1.2.2
+  # Keep sitemap's Zod on the patched version already used by Astro.
+  '@astrojs/sitemap>zod': 4.6.7
+  # Patch the compatible HTTP client used by Astro's font tooling.
+  'unifont>undici': 8.12.2
+  # Patch URI handling in the YAML language server's Ajv dependency.
+  'ajv>fast-uri': 3.1.9

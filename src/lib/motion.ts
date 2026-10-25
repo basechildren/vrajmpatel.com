@@ -7,13 +7,16 @@ function track(element: HTMLElement, cancel: () => void) {
   const set = running.get(element) ?? new Set();
   set.add(cancel);
   running.set(element, set);
-  return () => { set.delete(cancel); if (!set.size) running.delete(element); };
+  return () => { if (set.delete(cancel) && !set.size) running.delete(element); };
 }
 
 export function reveal(element: HTMLElement, distance = 14, delay = 0) {
   if (!eligible(element)) return;
   const animation = animate(element, { opacity: [0.35, 1], transform: [`translateY(${distance}px)`, "translateY(0)"] }, { duration: .7, delay, ease: [.22, 1, .36, 1] });
-  const done = track(element, () => animation.cancel());
+  const done = track(element, () => {
+    // Motion's completion promise stays pending when an animation is canceled.
+    try { animation.cancel(); } finally { done(); }
+  });
   animation.finished.then(done, done);
 }
 

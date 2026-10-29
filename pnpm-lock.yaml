@@ -42,8 +42,8 @@ importers:
         specifier: ^14.3.0
         version: 14.6.0
       posthog-js:
-        specifier: 1.438.15
-        version: 1.438.15
+        specifier: 1.441.0
+        version: 1.441.0
       tailwindcss:
         specifier: ^4.3.3
         version: 4.3.3
@@ -656,14 +656,14 @@ packages:
   '@oxc-project/types@0.154.0':
     resolution: {integrity: sha512-KYOUGQFlLWR+s4QMV2Q9ko38TZm7EdO87Qm7rvZLqk/webse/cDjtyxKhg/47l0byCbs/k46LT8qc4PKjAikzA==}
 
-  '@posthog/browser-common@0.9.7':
-    resolution: {integrity: sha512-w/vXohv6OdFa5MFTH3tCS0zXnKWmHGB/hOWjRSYxztL7RpT+DIbqwsqoadKg4iGkmaARlwbNJOLFJumChQfNKw==}
+  '@posthog/browser-common@0.10.0':
+    resolution: {integrity: sha512-4+UbPIoXNcZnGOX7zapLDvrq01zidM7kfG/MgQsQxC1aqxipAz+AydXrw4DosI0sIoUujFoLTjfOqceIa/LYgA==}
 
-  '@posthog/core@1.59.3':
-    resolution: {integrity: sha512-XbfpD82YSms/asHU44xQq5vqadi6rHTRg6fyoTqjdGTiC1NiPRCeO8xhtANT682BkvlKJo+JwRDBu3Q8oEqQpw==}
+  '@posthog/core@1.61.1':
+    resolution: {integrity: sha512-qyMTxPfjeJkHIhpcukOgBN3BWXbCyFRPz8/Voy5qZtVh9NZqj3EhC6LLeYZuJhL3WpqhQTgn2FMIwAo/ag6fmw==}
 
-  '@posthog/types@1.416.0':
-    resolution: {integrity: sha512-0/9+02s/0uDyrH4G/qUg1yyl6gXUg8Uuxw/PlDad3KLzo9FFS9zS/kAQaEshx/saVGupj1aAy/4EUBxWisBogw==}
+  '@posthog/types@1.418.0':
+    resolution: {integrity: sha512-WqDXUWH1R8OilBp2PfDpQIRZSCs3QyOnw7H3YK7lvZLCMIsOqSZAKJrrqYWt4f7FvnVCACRuNGCC0HKh3J/HWw==}
 
   '@rolldown/binding-android-arm-eabi@1.2.14':
     resolution: {integrity: sha512-aWR+XKH9+rW7m5fWq/5360J3mHycrx/o6xZM2DQFdJnTMdyP7/WzxPjhtLbVWdKo2y612/4U1bWqb3HQhiF7vg==}
@@ -1599,8 +1599,8 @@ packages:
     resolution: {integrity: sha512-zkd+e9S1AQHhmaBKye9zlFHWjOwVgqXl1q3ECYy8561K7qxR2cREf/STLskulBFd78k6AOFeA+ff1TtEzk9bAA==}
     engines: {node: ^10 || ^12 || >=14}
 
-  posthog-js@1.438.15:
-    resolution: {integrity: sha512-ZcXp4nF+8X+W5am0W45KIT+l6kGvhrJEzm5U9WD37Dh2PHbWLKc2mZeHI3qvcVXRpi04Z+qFgomWv5Ss7WuuAQ==}
+  posthog-js@1.441.0:
+    resolution: {integrity: sha512-iL3GpR6ASrlAp7P3jZepskpMm4pe8jRR4VaENyB4BtJ5+IhrkXeb2pLCTPuQvju7yna22BB06r0DychtBDJAJw==}
     peerDependencies:
       '@types/react': '>=16.8.0'
       react: '>=16.8.0'
@@ -2585,19 +2585,19 @@ snapshots:
 
   '@oxc-project/types@0.154.0': {}
 
-  '@posthog/browser-common@0.9.7':
+  '@posthog/browser-common@0.10.0':
     dependencies:
-      '@posthog/core': 1.59.3
-      '@posthog/types': 1.416.0
+      '@posthog/core': 1.61.1
+      '@posthog/types': 1.418.0
       preact: 10.29.8
     transitivePeerDependencies:
       - preact-render-to-string
 
-  '@posthog/core@1.59.3':
+  '@posthog/core@1.61.1':
     dependencies:
-      '@posthog/types': 1.416.0
+      '@posthog/types': 1.418.0
 
-  '@posthog/types@1.416.0': {}
+  '@posthog/types@1.418.0': {}
 
   '@rolldown/binding-android-arm-eabi@1.2.14':
     optional: true
@@ -3479,11 +3479,11 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.2
 
-  posthog-js@1.438.15:
+  posthog-js@1.441.0:
     dependencies:
-      '@posthog/browser-common': 0.9.7
-      '@posthog/core': 1.59.3
-      '@posthog/types': 1.416.0
+      '@posthog/browser-common': 0.10.0
+      '@posthog/core': 1.61.1
+      '@posthog/types': 1.418.0
       core-js: 3.50.0
       dompurify: 3.4.17
       fflate: 0.4.9

@@ -5,7 +5,8 @@ portfolio. It is a static Astro site deployed with GitHub Pages.
 
 ## Local development
 
-Use Node.js 26 and the pnpm version declared in `package.json`.
+Use Node.js 26.12.1 or a newer Node.js 26 release and the pnpm version declared
+in `package.json`.
 
 ```bash
 pnpm install --frozen-lockfile

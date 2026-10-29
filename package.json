@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "packageManager": "pnpm@11.24.0",
   "engines": {
-    "node": "^26.0.0"
+    "node": "^26.12.1"
   },
   "scripts": {
     "dev": "astro dev",
@@ -24,15 +24,15 @@
     "@fontsource/ibm-plex-mono": "^5.3.0",
     "@fontsource/instrument-serif": "^5.3.0",
     "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.4.1",
+    "astro": "^7.4.2",
     "astro-og-canvas": "^0.13.2",
     "canvaskit-wasm": "0.42.0",
-    "motion": "^12.43.0",
+    "motion": "^14.3.0",
     "posthog-js": "1.438.15",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.11",
+    "@astrojs/check": "^0.9.12",
     "playwright-core": "^1.64.1",
     "typescript": "^6.0.3",
     "yaml": "2.9.1"

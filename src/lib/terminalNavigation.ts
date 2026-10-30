@@ -10,7 +10,7 @@ export function setupTerminalNavigation() {
   if (!header || !prompt || !preview || !text || !live || header.dataset.navigationReady) return;
   header.dataset.navigationReady = "true";
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const currentPath = window.location.pathname.replace(/\/$/, "") || "/";
+  const currentPath = window.location.pathname.replace(/\/?$/, "/");
   let frame = 0;
   let timer = 0;
   let generation = 0;
@@ -65,7 +65,7 @@ export function setupTerminalNavigation() {
     if (!header.contains(link) || !link.hasAttribute("data-command-link")) { reset(); return; }
     if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey || link.hasAttribute("download") || (link.target && link.target !== "_self")) { reset(); return; }
     const url = new URL(link.href, window.location.href);
-    const route = animatedNavigation.find(route => route.path === url.pathname);
+    const route = animatedNavigation.find(route => route.path === url.pathname.replace(/\/?$/, "/"));
     if (!route || url.origin !== location.origin || url.search || url.hash || reducedMotion.matches) { reset(); return; }
     event.preventDefault();
     animate(route.path, route.label, link);

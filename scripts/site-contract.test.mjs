@@ -2,10 +2,60 @@ import assert from "node:assert/strict";
 import { access, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const dist = path.resolve("dist");
 const readPage = (...segments) =>
   readFile(path.join(dist, ...segments, "index.html"), "utf8");
+
+async function builtHtmlFiles(directory = dist) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  return (await Promise.all(entries.map(entry => {
+    const filename = path.join(directory, entry.name);
+    return entry.isDirectory() ? builtHtmlFiles(filename) : entry.name.endsWith(".html") ? [filename] : [];
+  }))).flat();
+}
+
+test("Astro preview accepts public page URLs with and without trailing slashes", async () => {
+  const config = (await import("../astro.config.mjs")).default;
+  const astro = path.dirname(fileURLToPath(import.meta.resolve("astro/package.json")));
+  const { vitePluginAstroPreview } = await import(pathToFileURL(path.join(astro, "dist/core/preview/vite-plugin-astro-preview.js")).href);
+  const middleware = [];
+  const server = { middlewares: { stack: middleware, use: handle => middleware.push({ handle }) } };
+  const plugin = vitePluginAstroPreview({ config: { ...config, base: "/", outDir: pathToFileURL(`${dist}/`) } });
+  plugin.configurePreviewServer(server)();
+  for (const filename of await builtHtmlFiles()) {
+    if (!filename.endsWith(`${path.sep}index.html`)) continue;
+    const route = "/" + path.relative(dist, path.dirname(filename)).split(path.sep).filter(Boolean).join("/");
+    for (const requestPath of new Set([route, route.replace(/\/?$/, "/")])) {
+      const req = { url: requestPath };
+      let continued = false;
+      const res = { statusCode: 200, setHeader() {}, end() {} };
+      middleware[0].handle(req, res, () => middleware[1].handle(req, res, () => { continued = true; }));
+      assert.equal(res.statusCode, 200, `${requestPath} was rejected by Astro preview`);
+      assert.ok(continued, `${requestPath} must reach static file serving`);
+      await access(path.join(dist, req.url.endsWith("/") ? `${req.url}index.html` : req.url));
+    }
+  }
+});
+
+test("built internal links use canonical paths and point to published files and sections", async () => {
+  for (const filename of await builtHtmlFiles()) {
+    const html = await readFile(filename, "utf8");
+    for (const match of html.matchAll(/\bhref="(\/[^"\s]*)"/g)) {
+      const url = new URL(match[1].replace(/&amp;/g, "&"), "https://www.vrajmpatel.com");
+      if (url.origin !== "https://www.vrajmpatel.com") continue;
+      const isPage = !path.posix.extname(url.pathname);
+      if (isPage) assert.ok(url.pathname.endsWith("/"), `${filename}: noncanonical page link ${match[1]}`);
+      const target = path.join(dist, isPage ? `${url.pathname}index.html` : url.pathname);
+      await access(target);
+      if (isPage && url.hash) {
+        const contents = await readFile(target, "utf8");
+        assert.ok(contents.includes(`id="${decodeURIComponent(url.hash.slice(1))}"`), `${match[1]} must link to an existing section`);
+      }
+    }
+  }
+});
 
 test("discovery documents link to built public resources and preserve evidence scope", async () => {
   const index = await readFile(path.join(dist, "llms.txt"), "utf8");
@@ -221,7 +271,7 @@ test("privacy policy is published, linked, and opt-out capable", async () => {
     readPage("privacy"),
   ]);
 
-  assert.match(homepage, /href="\/privacy"/);
+  assert.match(homepage, /href="\/privacy\/"/);
   assert.match(homepage, />Privacy</);
   assert.match(homepage, /name="posthog-config"/);
   assert.match(homepage, /data-api-host="https:\/\//);

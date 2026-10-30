@@ -14,7 +14,7 @@ const projects = (await getCollection("projects")).filter(isPublicProject).filte
       <p class="muted-copy">Python, SQL, backend systems, and applied ML. I build internal software and data workflows with clear state, review, and recovery.</p>
       <nav class="action-row print:hidden" aria-label="Recruiter resources">
         <a href="/resume.pdf" class="button-primary" target="_blank" rel="noopener noreferrer" data-ph-event="resume_clicked" data-ph-placement="recruiter_brief">Resume (PDF)</a>
-        <a href="/resume" class="text-link">All resume versions</a>
+        <a href="/resume/" class="text-link">All resume versions</a>
         <button type="button" class="text-link" data-print-brief hidden>Print / save brief</button>
         <a href="#contact" class="text-link">Contact</a>
       </nav>
@@ -28,7 +28,7 @@ const projects = (await getCollection("projects")).filter(isPublicProject).filte
       <ol class="brief-projects">
         {projects.map((entry, i) => <li>
           <span class="eyebrow" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
-          <div><h3><a class="text-link" href={`/projects/${entry.id}`} data-ph-event="project_opened" data-ph-project={entry.id} data-ph-placement="recruiter_brief">{entry.data.title}</a></h3>
+          <div><h3><a class="text-link" href={`/projects/${entry.id}/`} data-ph-event="project_opened" data-ph-project={entry.id} data-ph-placement="recruiter_brief">{entry.data.title}</a></h3>
           <p>{entry.data.contribution}</p><p class="brief-evidence">{entry.data.proof?.[entry.id === "full-stack-biometric-marathon" ? 2 : 0]?.value} — {entry.data.proof?.[entry.id === "full-stack-biometric-marathon" ? 2 : 0]?.label}</p></div>
         </li>)}
       </ol>

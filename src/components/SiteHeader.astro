@@ -4,9 +4,9 @@ import { primaryNavigation as nav } from "../lib/siteNavigation";
 import "../styles/header-command.css";
 
 const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
-const isCurrent = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+const isCurrent = (href: string) => pathname === href.replace(/\/$/, "") || pathname.startsWith(href);
 const segments = pathname.split("/").filter(Boolean).map((segment, index, all) => ({
-  href: `/${all.slice(0, index + 1).join("/")}`,
+  href: pathname === "/404" ? "/404.html" : `/${all.slice(0, index + 1).join("/")}/`,
   label: segment,
 }));
 ---
@@ -47,7 +47,7 @@ const segments = pathname.split("/").filter(Boolean).map((segment, index, all) =
           {nav.map(({ path, label, key }) => <a href={path} data-command-link aria-current={isCurrent(path) ? "page" : undefined}>
             <span aria-hidden="true" class="nav-number">[{key}]</span> {label} <span aria-hidden="true" class="mobile-arrow">→</span>
           </a>)}
-          <a href="/about#contact"><span aria-hidden="true" class="nav-number">[→]</span> Contact</a>
+          <a href="/about/#contact"><span aria-hidden="true" class="nav-number">[→]</span> Contact</a>
           <a href="/resume.pdf" target="_blank" rel="noopener noreferrer"
             data-ph-event="resume_clicked" data-ph-placement="mobile_menu">
             <span aria-hidden="true" class="nav-number">[r]</span> Resume (PDF) <span aria-hidden="true" class="mobile-arrow">↗</span>

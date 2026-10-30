@@ -19,10 +19,12 @@ const devFilmRoutes = {
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.vrajmpatel.com',
-  trailingSlash: 'always',
+  trailingSlash: 'ignore',
 
   vite: {
     plugins: [tailwindcss()],
   },
-  integrations: [sitemap(), devFilmRoutes],
+  integrations: [sitemap({
+    serialize: (page) => ({ ...page, url: page.url.replace(/\/?$/, '/') }),
+  }), devFilmRoutes],
 });

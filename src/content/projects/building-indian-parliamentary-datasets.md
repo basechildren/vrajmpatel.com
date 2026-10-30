@@ -67,4 +67,4 @@ I parsed thousands of parliamentary statements and used fuzzy matching to map in
 
 ## Research context
 
-This project spanned three appointments: Studio Lab at CU Boulder (January 21–April 13, 2024), my IBS research appointment (production speech pipeline, 2024), and Princeton (January 15, 2025–May 2026). [Experience](/experience) lists the roles and their distinct contributions.
+This project spanned three appointments: Studio Lab at CU Boulder (January 21–April 13, 2024), my IBS research appointment (production speech pipeline, 2024), and Princeton (January 15, 2025–May 2026). [Experience](/experience/) lists the roles and their distinct contributions.

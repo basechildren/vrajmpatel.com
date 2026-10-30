@@ -1,9 +1,9 @@
 /** Shared destinations for the visible navigation and its command animation. */
 export const primaryNavigation = [
-  { path: "/projects", label: "Work", key: "1" },
-  { path: "/experience", label: "Experience", key: "2" },
-  { path: "/about", label: "About", key: "3" },
-  { path: "/brief", label: "Brief", key: "4" },
+  { path: "/projects/", label: "Work", key: "1" },
+  { path: "/experience/", label: "Experience", key: "2" },
+  { path: "/about/", label: "About", key: "3" },
+  { path: "/brief/", label: "Brief", key: "4" },
 ] as const;
 
 export const animatedNavigation = [{ path: "/", label: "Home" }, ...primaryNavigation] as const;

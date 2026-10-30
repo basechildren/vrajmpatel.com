@@ -28,7 +28,7 @@ const {
 
 const wideLayout = Astro.url.pathname === "/" || Astro.url.pathname.startsWith("/projects");
 const homeLayout = Astro.url.pathname === "/";
-const canonicalPath = Astro.url.pathname.endsWith(".html") ? Astro.url.pathname : Astro.url.pathname.replace(/\/?$/, "/");
+const canonicalPath = Astro.url.pathname === "/404" ? "/404.html" : Astro.url.pathname.endsWith(".html") ? Astro.url.pathname : Astro.url.pathname.replace(/\/?$/, "/");
 const canonicalUrl = new URL(canonicalPath, Astro.site);
 const imageUrl = new URL(ogImage, Astro.site);
 const personId = new URL("/#person", Astro.site).href;
@@ -175,7 +175,7 @@ const structuredData = {
         <p class="footer-copyright">&copy; {new Date().getFullYear()} {profile.name} · {profile.location}</p>
         <nav aria-label="Footer links" class="footer-navigation">
           <a
-            href="/privacy"
+            href="/privacy/"
             class="inline-flex min-h-11 touch-manipulation items-center underline underline-offset-4 focus-visible:rounded-sm"
           >Privacy</a>
           <a

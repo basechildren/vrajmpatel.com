@@ -19,6 +19,7 @@ const devFilmRoutes = {
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.vrajmpatel.com',
+  trailingSlash: 'always',
 
   vite: {
     plugins: [tailwindcss()],

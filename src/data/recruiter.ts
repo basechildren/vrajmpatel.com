@@ -19,9 +19,9 @@ export const proofPoints: readonly ProofPoint[] = [
     linkLabel: "Data and evidence",
   },
   {
-    value: "40+ GB of audio",
-    label: "Campaign recordings processed for parliamentary-data research.",
-    href: "/projects/building-indian-parliamentary-datasets#princeton-engineering-phase",
+    value: "200+ hours of audio",
+    label: "40+ GB of 2014, 2019, and 2024 campaign speeches transcribed and translated with Amazon Transcribe.",
+    href: "/projects/building-indian-parliamentary-datasets#ibs-production-speech-pipeline-2024",
     linkLabel: "Pipeline work",
   },
 ];

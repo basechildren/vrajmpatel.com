@@ -7,6 +7,65 @@ const dist = path.resolve("dist");
 const readPage = (...segments) =>
   readFile(path.join(dist, ...segments, "index.html"), "utf8");
 
+test("discovery documents link to built public resources and preserve evidence scope", async () => {
+  const index = await readFile(path.join(dist, "llms.txt"), "utf8");
+  const full = await readFile(path.join(dist, "llms-full.txt"), "utf8");
+  assert.match(index, /^# Vraj Patel\n\n> Software engineer/);
+  assert.ok(Buffer.byteLength(index) < 6000, "the index should remain a concise entry point");
+  const localLinks = [...index.matchAll(/https:\/\/www\.vrajmpatel\.com([^\s)]+)/g)].map(match => match[1]);
+  for (const href of localLinks) {
+    const target = href.endsWith("/") ? `${href}index.html` : href;
+    await access(path.join(dist, target));
+  }
+  assert.match(full, /1951[–-]2024/);
+  assert.match(full, /unreleased BERT candidate/i);
+  assert.match(full, /not a controlled, labeled study stored in the repository/);
+  const projects = await readdir(path.join(dist, "projects"));
+  assert.equal(projects.filter(name => name.endsWith(".md")).length, 3);
+});
+
+test("all four resume versions publish PDF and text with a stable default", async () => {
+  const page = await readPage("resume");
+  for (const variant of ["master", "data", "ml", "software"]) {
+    assert.match(page, new RegExp(`href="/resumes/${variant}\\.pdf"`));
+    assert.match(page, new RegExp(`href="/resumes/${variant}\\.md"`));
+    const pdf = await readFile(path.join(dist, "resumes", `${variant}.pdf`));
+    assert.equal(pdf.subarray(0, 5).toString(), "%PDF-");
+    const text = await readFile(path.join(dist, "resumes", `${variant}.md`), "utf8");
+    assert.match(text, /^# Vraj Patel/);
+    assert.match(text, /Expected May 2028/);
+  }
+  assert.deepEqual(await readFile(path.join(dist, "resume.pdf")), await readFile(path.join(dist, "resumes", "software.pdf")));
+  const brief = await readPage("brief");
+  assert.match(brief, /href="\/resume\/?"/);
+});
+
+test("profile metadata uses stable identities, canonical URLs and public alternatives", async () => {
+  const home = await readPage();
+  const about = await readPage("about");
+  const project = await readPage("projects", "operational-ticket-intelligence");
+  for (const html of [home, about, project]) {
+    const structured = html.match(/<script[^>]+type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/);
+    assert.ok(structured, "structured data must be published");
+    const graph = JSON.parse(structured[1])["@graph"];
+    const person = graph.find(entry => entry["@type"] === "Person");
+    const webpage = graph.find(entry => ["WebPage", "ProfilePage"].includes(entry["@type"]));
+    assert.equal(person["@id"], "https://www.vrajmpatel.com/#person");
+    assert.equal(webpage.author["@id"], person["@id"]);
+    assert.ok(webpage.url.endsWith("/"));
+    if (html !== project) {
+      assert.equal(webpage["@type"], "ProfilePage");
+      assert.equal(webpage.mainEntity["@id"], person["@id"]);
+    }
+    assert.match(html, /rel="describedby" href="\/llms\.txt"/);
+  }
+  assert.match(home, /rel="alternate" type="text\/markdown" href="\/profile\.md"/);
+  assert.match(project, /rel="alternate" type="text\/markdown" href="\/projects\/operational-ticket-intelligence\.md"/);
+  const og = await readFile(path.join(dist, "og", "profile.png"));
+  assert.equal(og.readUInt32BE(16), 1200);
+  assert.equal(og.readUInt32BE(20), 630);
+});
+
 test("homepage and recruiter brief expose evidence-led navigation", async () => {
   const [homepage, brief] = await Promise.all([
     readPage(),
@@ -16,7 +75,7 @@ test("homepage and recruiter brief expose evidence-led navigation", async () => 
   assert.match(homepage, /Evidence at a glance/);
   assert.match(homepage, /Recruiter brief/);
   assert.match(homepage, /10\.8K tickets/);
-  assert.match(homepage, /40\+ GB of audio/);
+  assert.match(homepage, /200\+ hours of audio/);
   assert.match(homepage, /15 minutes to under 1/);
   assert.match(homepage, /August 27, 2026/);
   assert.ok(homepage.indexOf('id="selected-work"') < homepage.indexOf('id="proof-heading"'));
@@ -97,7 +156,7 @@ test("SeeMyRace presents recruiter-ready evidence without overstating ML ownersh
   const [page, brief, llms] = await Promise.all([
     readPage("projects", "full-stack-biometric-marathon"),
     readPage("brief"),
-    readFile(path.join(dist, "llms.txt"), "utf8"),
+    readFile(path.join(dist, "llms-full.txt"), "utf8"),
   ]);
 
   for (const evidence of [
@@ -107,7 +166,7 @@ test("SeeMyRace presents recruiter-ready evidence without overstating ML ownersh
     /Body-first analysis/,
     /Canny-backed Stroke Width Transform/,
     /These are architecture changes, not measured accuracy gains/,
-    /does not contain a controlled, labeled before-and-after accuracy study/,
+    /not a controlled, labeled study stored in the repository/,
   ]) {
     assert.match(page, evidence);
   }
@@ -120,9 +179,9 @@ test("SeeMyRace presents recruiter-ready evidence without overstating ML ownersh
   assert.match(page, /restricted to non-commercial research/);
   assert.match(page, /work added by other team members/);
   assert.match(page, /proof-grid--three/);
-  assert.match(llms, /user-scoped match verification/);
-  assert.match(llms, /Full-Stack Software Engineering and Applied ML/);
-  assert.match(llms, /architectural changes, not measured accuracy gains/);
+  assert.match(llms, /user-scoped confirm\/deny workflow/);
+  assert.match(llms, /team-built application for finding race photos/);
+  assert.match(llms, /architecture changes, not measured accuracy gains/);
 });
 
 test("archived projects and retired research PDFs are not published", async () => {
@@ -137,6 +196,7 @@ test("archived projects and retired research PDFs are not published", async () =
   const retiredPaths = [
     ...archivedSlugs.flatMap((slug) => [
       path.join(dist, "projects", slug, "index.html"),
+      path.join(dist, "projects", `${slug}.md`),
       path.join(dist, "og", `${slug}.png`),
     ]),
     path.join(dist, "mental-health-classification-chatbot.pdf"),

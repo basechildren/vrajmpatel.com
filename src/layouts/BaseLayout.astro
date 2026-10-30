@@ -19,22 +19,31 @@ interface Props {
 
 const {
   title = "Vraj Patel",
-  description = "Systems integration engineer building backend and ML systems at CU Boulder.",
-  ogImage = "/profile.jpg",
-  ogImageAlt = "Portrait of Vraj Patel",
+  description = profile.description,
+  ogImage = "/og/profile.png",
+  ogImageAlt = "Vraj Patel — Software, Data and ML Engineering",
   schemaType = "WebPage",
   robots = "index, follow",
 } = Astro.props;
 
 const wideLayout = Astro.url.pathname === "/" || Astro.url.pathname.startsWith("/projects");
 const homeLayout = Astro.url.pathname === "/";
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const canonicalPath = Astro.url.pathname.endsWith(".html") ? Astro.url.pathname : Astro.url.pathname.replace(/\/?$/, "/");
+const canonicalUrl = new URL(canonicalPath, Astro.site);
 const imageUrl = new URL(ogImage, Astro.site);
+const personId = new URL("/#person", Astro.site).href;
+const websiteId = new URL("/#website", Astro.site).href;
+const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
+const markdownPath = pathname === "/" ? "/profile.md" : /^\/projects\/[^/]+$/.test(pathname) ? `${pathname}.md` : undefined;
 const person = {
+  "@id": personId,
   "@type": "Person",
   name: profile.name,
-  url: "https://www.vrajmpatel.com",
+  url: new URL("/", Astro.site).href,
+  description: profile.description,
+  image: new URL("/profile.jpg", Astro.site).href,
   jobTitle: profile.role,
+  knowsAbout: ["Software engineering", "Data engineering", "Backend systems", "Applied machine learning", "Model evaluation"],
   worksFor: {
     "@type": "Organization",
     name: profile.employer.name,
@@ -48,22 +57,30 @@ const person = {
     name: "University of Colorado Boulder",
   },
   sameAs: [
-    "https://www.linkedin.com/in/vrajmp/",
+    profile.linkedin,
     ...profile.githubProfiles.map(({ href }) => href),
   ],
 };
 
-const structuredData =
-  schemaType === "Person"
-    ? { "@context": "https://schema.org", ...person }
-    : {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        name: title,
-        description,
-        url: canonicalUrl,
-        author: person,
-      };
+const page = {
+  "@id": `${canonicalUrl.href}#webpage`,
+  "@type": schemaType === "Person" || pathname === "/about" ? "ProfilePage" : "WebPage",
+  name: title,
+  description,
+  url: canonicalUrl.href,
+  inLanguage: "en-US",
+  isPartOf: { "@id": websiteId },
+  author: { "@id": personId },
+  ...(schemaType === "Person" || pathname === "/about" ? { mainEntity: { "@id": personId } } : {}),
+};
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    person,
+    { "@type": "WebSite", "@id": websiteId, name: profile.name, url: new URL("/", Astro.site).href, publisher: { "@id": personId } },
+    page,
+  ],
+};
 ---
 
 <!DOCTYPE html>
@@ -102,6 +119,8 @@ const structuredData =
 
     <link rel="canonical" href={canonicalUrl} />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="describedby" href="/llms.txt" />
+    {markdownPath && <link rel="alternate" type="text/markdown" href={markdownPath} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
@@ -109,7 +128,7 @@ const structuredData =
     <script
       is:inline
       type="application/ld+json"
-      set:html={JSON.stringify(structuredData)}
+      set:html={JSON.stringify(structuredData).replace(/</g, "\\u003c")}
     ></script>
     <script is:inline>
       (() => {

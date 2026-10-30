@@ -1,11 +1,13 @@
 import { OGImageRoute } from 'astro-og-canvas';
 import { getCollection } from 'astro:content';
 import { isPublicProject } from '../../lib/projects';
+import { profile } from '../../data/profile';
 
 const collection = (await getCollection('projects')).filter(isPublicProject);
-const pages = Object.fromEntries(
+const pages: Record<string, { title: string; summary?: string }> = Object.fromEntries(
   collection.map(({ id, data }) => [id, data])
 );
+pages.profile = { title: profile.name, summary: 'Software engineering. Data pipelines. Applied ML systems.' };
 
 export const { getStaticPaths, GET } = await OGImageRoute({
   pages,

@@ -4,9 +4,9 @@ domain: 'Machine Learning'
 featured: false
 order: 7
 visibility: 'archived'
-tech: ['SentenceTransformers', 'TensorFlow', 'Scikit-Learn', 'SHAP']
+tech: ['SentenceTransformers', 'scikit-learn', 'TensorFlow', 'SHAP']
 github: 'https://github.com/PatVraj/automated-interview-scoring'
-summary: 'Interview scoring model combining text embeddings with 100+ audio features. Five-fold validation produced MAE below 0.4 and Pearson r above 0.70.'
+summary: 'Group course project that predicts interview ratings for 138 MIT mock interviews from language and prosodic features.'
 ---
 
-Built a regression model that combines `sentence-transformers/all-mpnet-base-v2` text embeddings with 100+ audio features, including pitch variance, speech rate, and pause density. Used cosine similarity to represent conversational coherence and evaluated the model with five-fold cross-validation. It produced MAE below 0.4 on normalized scores and Pearson r above 0.70 against human ratings. Used SHAP to inspect which language and audio features affected the scores.
+Group project (CSCI 5622) that predicts Overall and Excited interview ratings for 138 MIT mock interviews. Interviewer turns are aligned to canonical questions with `all-MiniLM-L6-v2` sentence embeddings (cosine similarity ≥ 0.40). Lexical features (cohesion, type-token ratio, filler ratio, sentiment) and 35 averaged prosodic features are ranked by mutual information and fed to k-fold gradient-boosting, random-forest, and feed-forward regressors, with SHAP analysis code for interpretation. The committed notebooks do not retain metric outputs, so no scores are claimed here until they are re-run.

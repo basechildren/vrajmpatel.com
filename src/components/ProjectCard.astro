@@ -16,6 +16,7 @@ const {
   variant = "rich",
 } = Astro.props;
 const Heading = headingLevel;
+const featuredProof = entry.data.proof?.[entry.id === "full-stack-biometric-marathon" ? 2 : 0];
 const technologies = entry.data.tech?.slice(0, 4) ?? [];
 const showPrivateLabel =
   entry.data.privateRepo &&
@@ -42,10 +43,10 @@ const hasRichActions = Boolean(
         </div>
         <p class="project-feature-summary">{entry.data.summary}</p>
         {entry.data.contribution && <p class="project-feature-summary">{entry.data.contribution}</p>}
-        {entry.data.proof?.[0] && (
+        {featuredProof && (
           <p class="project-feature-proof">
-            <strong class="font-medium">{entry.data.proof[0].value}</strong>
-            <span class="mt-1 block font-sans text-xs leading-relaxed">{entry.data.proof[0].label}</span>
+            <strong class="font-medium">{featuredProof.value}</strong>
+            <span class="mt-1 block font-sans text-xs leading-relaxed">{featuredProof.label}</span>
           </p>
         )}
         <div class="project-action">

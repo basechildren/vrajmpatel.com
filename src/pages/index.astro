@@ -27,7 +27,7 @@ const recentExperience = (await getCollection("experience"))
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 4);
 ---
-<BaseLayout title="Vraj Patel — Systems Integration Engineer" description="Backend services, data pipelines, and applied ML systems built by Vraj Patel at CU Boulder." schemaType="Person">
+<BaseLayout title="Vraj Patel — Systems Integration Engineer | Data and ML" description={profile.description} schemaType="Person">
   <section class="home-intro" aria-labelledby="intro-heading">
     <div class="home-intro-copy">
       <div class="home-identity">
@@ -35,11 +35,11 @@ const recentExperience = (await getCollection("experience"))
         <p class="eyebrow"><span class="home-role" data-scramble>{profile.role}</span><br />{profile.location}</p>
       </div>
       <h1 id="intro-heading" class="home-name" data-intro>{profile.name}</h1>
-      <p class="home-statement" data-split>I build backend services, <em class="display-accent">data pipelines,</em> and tools for support operations.</p>
-      <p class="muted-copy">At CU Boulder’s Institute of Behavioral Science. My work connects Python, SQL, applied ML, and the people who use the results.</p>
+      <p class="home-statement" data-split>I build reliable software, <em class="display-accent">data pipelines,</em> and applied ML systems.</p>
+      <p class="muted-copy">At CU Boulder’s Institute of Behavioral Science. I connect Python, TypeScript, and SQL with research, operational workflows, and the people who use the results.</p>
       <nav class="action-row" aria-label="Explore my work">
         <a href="#selected-work" class="button-primary">Explore the work <span aria-hidden="true" class="ml-3">↗</span></a>
-        <a href="/brief" class="text-link" data-ph-event="recruiter_brief_opened" data-ph-placement="hero">Recruiter brief</a>
+        <a href="/brief/" class="text-link" data-ph-event="recruiter_brief_opened" data-ph-placement="hero">Recruiter brief</a>
         <a href="#contact" class="text-link">Contact</a>
       </nav>
     </div>
@@ -49,7 +49,7 @@ const recentExperience = (await getCollection("experience"))
   <section id="selected-work" class="page-section" aria-labelledby="work-heading">
     <div class="section-heading" data-reveal>
       <div><p class="eyebrow" data-scramble>01 / Selected work</p><h2 id="work-heading" class="section-title">Three systems. Different problems.</h2></div>
-      <a href="/projects" class="text-link">All case studies</a>
+      <a href="/projects/" class="text-link">All case studies</a>
     </div>
     <div class="work-bento">{featured.map(entry => <ProjectCard entry={entry} headingLevel="h3" variant="feature" />)}</div>
   </section>
@@ -63,7 +63,7 @@ const recentExperience = (await getCollection("experience"))
   <section class="page-section" aria-labelledby="experience-heading">
     <div class="section-heading" data-reveal>
       <div><p class="eyebrow">03 / Career</p><h2 id="experience-heading" class="section-title">Engineering and research.</h2></div>
-      <a href="/experience" class="text-link">Full experience</a>
+      <a href="/experience/" class="text-link">Full experience</a>
     </div>
     <div class="mt-6">{recentExperience.map(entry => <ExperienceItem entry={entry} variant="compact" />)}</div>
   </section>

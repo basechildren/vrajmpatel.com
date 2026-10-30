@@ -9,6 +9,6 @@ context: "Parliamentary-data engineering \u00b7 separate Princeton appointment"
 relatedProject: "building-indian-parliamentary-datasets"
 ---
 
-- Built dynamic archive scraping with pagination handling and resumable SQLite state.
-- Orchestrated collection, speech and translation processing, PDF extraction, normalization, and structured research outputs.
-- Processed 40+ GB of campaign audio and thousands of parliamentary documents with retained intermediate artifacts and restart points.
+- Built fault-tolerant Selenium collection workflows for Indian parliamentary archives spanning 1951–2024, including Lok Sabha and Rajya Sabha records, with pagination handling and resumable SQLite state across multi-day runs.
+- Extracted thousands of parliamentary PDFs with PyMuPDF and mapped inconsistent ministry names to a standardized list with fuzzy matching.
+- Evaluated OCR approaches for historical records and kept raw, intermediate, and normalized outputs separate so transformations stay reviewable.

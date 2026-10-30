@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { resumeVariants } from "../data/resumes";
+---
+
+<BaseLayout title="Resumes — Vraj Patel | Software, Data and ML Engineering" description="Download Vraj Patel's software engineering, data engineering, ML engineering, and comprehensive master resumes.">
+  <header class="max-w-3xl">
+    <p class="eyebrow">Resume collection</p>
+    <h1 class="page-title mt-3">A focused version for the role.</h1>
+    <p class="muted-copy mt-5">The same engineering background, with the most relevant work up front. Choose a focused one-page resume or the two-page master.</p>
+    <p class="mt-5"><a href="/brief/" class="text-link">Read the recruiter brief <span aria-hidden="true">→</span></a></p>
+  </header>
+  <section class="resume-grid" aria-label="Resume versions">
+    {resumeVariants.map((variant) => (
+      <article class="instrument-frame resume-card" data-reveal>
+        <p class="eyebrow">{variant.pages === 1 ? "One page" : "Two pages"} · PDF</p>
+        <h2>{variant.label}</h2>
+        <p>{variant.summary}</p>
+        <div class="resume-actions">
+          <a href={variant.pdf} class="button-primary" target="_blank" rel="noopener noreferrer" data-ph-event="resume_clicked" data-ph-placement={`resume_${variant.id}`}>View PDF <span class="sr-only">— {variant.label}</span><span aria-hidden="true"> ↗</span></a>
+          <a href={variant.markdown} class="text-link">Text version <span class="sr-only">— {variant.label}</span></a>
+        </div>
+      </article>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .resume-grid { display: grid; gap: 1.25rem; margin-top: 2.5rem; }
+  .resume-card { padding: 1.75rem; display: flex; flex-direction: column; }
+  h2 { font-size: 1.55rem; line-height: 1.25; letter-spacing: -.035em; margin-top: .8rem; font-weight: 550; }
+  .resume-card > p:not(.eyebrow) { color: var(--copy); font-size: .9375rem; line-height: 1.8; margin-top: 1rem; }
+  .resume-actions { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: center; margin-top: auto; padding-top: 1.75rem; }
+  @media (min-width: 720px) { .resume-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>

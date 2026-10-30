@@ -318,7 +318,7 @@
 .home-identity { display: flex; align-items: center; gap: .85rem; margin-bottom: 1rem; }
 .home-portrait { width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; object-position: center 20%; }
 .home-identity .eyebrow { min-width: 0; }
-.home-role { white-space: nowrap; }
+.home-role { white-space: normal; }
 .home-name { margin: 0 0 1.1rem; font-size: clamp(1rem, 1.5vw, 1.1rem); font-weight: 550; letter-spacing: -.02em; line-height: 1.5; }
 .home-statement { max-width: 19ch; font-size: clamp(2.5rem, 4.3vw, 3.7rem); font-weight: 530; letter-spacing: -.055em; line-height: 1.08; text-wrap: initial; }
 .home-statement .display-accent { font-size: 1.09em; }
@@ -341,8 +341,9 @@
 .project-feature:hover .project-arrow { transform: translate(2px,-2px); color: var(--accent); }
 .project-feature-summary { color: var(--copy); font-size: .875rem; line-height: 1.75; margin-top: .8rem; }
 .project-feature-proof { font: .6875rem/1.6 var(--font-mono); display: inline-block; color: var(--copy); border: 1px solid var(--line); border-radius: 4px; padding: .3rem .5rem; margin-top: 1.15rem; background: var(--paper-2); }
-/* Secondary home cards show eyebrow, title, and link at every width. */
-.work-bento > :not(:first-child) .project-feature-summary, .work-bento > :not(:first-child) .project-feature-proof { display: none; }
+/* Keep a scoped proof point visible on every selected project. */
+.work-bento > :not(:first-child) .project-feature-summary { display: none; }
+.work-bento > :not(:first-child) .project-feature-proof { margin-top: .8rem; }
 .project-feature .project-action { display: flex; justify-content: space-between; align-items: center; gap: .5rem; flex-wrap: wrap; margin-top: .5rem; }
 .project-feature .project-action .text-link { font-size: .75rem; }
 .proof-grid { margin-top: 1.7rem; padding-block: .5rem; }
@@ -358,15 +359,17 @@
   .home-system-after-work { display: none; }
   .work-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .work-grid > :first-child { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1.25fr; align-items: center; gap: 1rem; }
-  .work-bento { grid-template-columns: minmax(0,1.65fr) minmax(0,1fr); }
-  .work-bento > :first-child { grid-row: span 2; display: flex; flex-direction: column; }
-  .work-bento > :first-child .project-feature-copy { padding: 1.25rem 1.15rem 1rem; display: flex; flex: 1; flex-direction: column; }
+  .work-bento { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .work-bento > :first-child { grid-column: 1 / -1; }
+  .work-bento > :first-child .project-feature-copy { padding: 1.25rem 1.15rem 1rem; }
   .work-bento > :first-child .project-feature-title a { font-size: clamp(1.75rem, 3vw, 2.4rem); }
   .work-bento > :first-child .project-feature-summary { font-size: 1rem; max-width: 52ch; }
-  .work-bento > :first-child .project-action { margin-top: auto; padding-top: 1rem; }
+  .work-bento > :first-child .project-action { margin-top: .75rem; }
   .work-bento > :not(:first-child) .project-feature-title a { font-size: 1.3rem; }
   .work-bento > :not(:first-child) .project-action { margin-top: 0; }
-  .work-bento > :first-child .project-feature-proof { align-self: flex-start; }
+}
+@media (min-width: 1024px) {
+  .work-bento > :first-child { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.2fr); align-items: center; gap: .75rem; }
 }
 @media (min-width: 1100px) { .home-intro { gap: 3.5rem; } }
 @media (prefers-reduced-motion: reduce) { .project-feature:hover, .project-feature:hover .project-arrow { transform: none; } }

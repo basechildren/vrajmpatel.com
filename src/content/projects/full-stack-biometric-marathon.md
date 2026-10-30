@@ -9,7 +9,7 @@ privateRepo: true
 summary: "A team-built application for finding race photos by bib or selfie and reviewing uncertain matches."
 contribution: "I built athlete verification, GPX race creation, and upload/search workflows, and evaluated OCR approaches."
 setting: "Collaborative academic project"
-status: 'Private repository'
+status: '1st place, CU Boulder CS Capstone (April 2025) · Now commercial · Private repository'
 systemPathLabel: 'Current team architecture'
 systemPathHeading: 'How the multimodal retrieval system works'
 systemPathDescription: 'Independent bib and face signals, scoped by race, end in athlete review.'
@@ -68,6 +68,8 @@ The web, OCR, orchestration, and data layers use Flask, Jinja, YOLOv8, PaddleOCR
 
 This was a collaborative system, and the current YOLOv8, PaddleOCR, InsightFace, and pgvector implementation includes work added by other team members after my direct contribution window. My verified ownership is the review workflow, GPX-backed race creation, substantial upload/search interface work, and OCR/SWT evaluation described above.
 
-The repository does not contain a controlled, labeled before-and-after accuracy study.
+Team-measured during the capstone, on the earlier 128-dimension pipeline: pgvector face search in under 50 ms, under 100 ms of UI latency during asynchronous bulk uploads, and about 30% higher athlete recall on hard images (glare, truncated or crumpled bibs) from combining face embeddings with adaptive-threshold bib OCR. These were team measurements, not a controlled, labeled study stored in the repository.
+
+After the capstone, SeeMyRace continued as a commercial service at [seemyrace.ecolocate.org](https://seemyrace.ecolocate.org/).
 
 The repository remains private, so this public case study omits team-owned datasets, biometric examples, credentials, and internal screenshots.

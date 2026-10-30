@@ -1,0 +1,429 @@
+{
+  "updated": "2026-10-30",
+  "person": {
+    "name": "Vraj Patel",
+    "role": "Systems Integration Engineer",
+    "location": "Boulder, Colorado",
+    "citizenship": "U.S. Citizen",
+    "site": "https://www.vrajmpatel.com",
+    "linkedin": "https://www.linkedin.com/in/vrajmp/",
+    "education": "M.S. Computer Science + M.E. Engineering Management",
+    "graduation": "Expected May 2028",
+    "description": "Systems integration engineer in Boulder, Colorado building backend services, data pipelines, and applied ML systems. Python, TypeScript, SQL, and research-driven engineering at CU Boulder."
+  },
+  "education": [
+    {
+      "degree": "M.S. Computer Science + M.E. Engineering Management",
+      "date": "Expected May 2028",
+      "detail": "University of Colorado Boulder | Concurrent dual degree"
+    },
+    {
+      "degree": "B.S. Computer Science, Business Minor",
+      "date": "May 2025",
+      "detail": "University of Colorado Boulder | GPA: 3.84 technical, 3.65 overall"
+    }
+  ],
+  "experience": [
+    {
+      "id": "ibs",
+      "title": "Systems Integration Engineer",
+      "organization": "CU Boulder | Institute of Behavioral Science",
+      "period": "May 2025 - Present",
+      "bullets": {
+        "platform": "Build a FastAPI, React/TypeScript, and PostgreSQL support-operations platform around 10,803 reconciled Freshdesk tickets in the August 2026 snapshot.",
+        "sync": "Designed incremental source reconciliation with durable watermarks, idempotent upserts, lifecycle-aware records, and fail-closed readiness checks.",
+        "bert": "Trained an unreleased BERT routing candidate on 6,137 tickets: 82.63% sealed-test accuracy and 0.7563 macro-F1, above the prior XGBoost baseline by 3.11 and 5.36 points.",
+        "boundary": "Keep model predictions advisory, with provenance, human review, separate training/serving paths, and runtime controls around external updates.",
+        "analytics": "Reduced the analytics visualization payload from 361 KB to 123 KB gzip (66%) by replacing Plotly with Recharts and accessible chart tables.",
+        "cohorts": "Separate source intake from reportable workload and training eligibility; the dated 10,803-ticket snapshot yielded 6,487 eligible records across seven routing classes.",
+        "automation": "Automated Active Directory offboarding with PowerShell, reducing typical group-cleanup effort from about 15 minutes to under one minute per user.",
+        "delivery": "Containerized the platform for CU's Red Hat OpenShift environment and am integrating Microsoft Entra ID single sign-on for internal access."
+      }
+    },
+    {
+      "id": "princeton",
+      "title": "Research Assistant, Data Engineering",
+      "organization": "Princeton University | Indian parliamentary research",
+      "period": "Jan 2025 - May 2026",
+      "bullets": {
+        "collection": "Built fault-tolerant Selenium collection workflows for Indian parliamentary archives spanning 1951-2024, with pagination and resumable SQLite state.",
+        "normalization": "Extracted thousands of parliamentary PDFs with PyMuPDF and standardized inconsistent ministry names with fuzzy matching and reviewable intermediate data.",
+        "recovery": "Separated raw, intermediate, and normalized artifacts so multi-day collection jobs could recover from interruptions and transformations remained inspectable."
+      }
+    },
+    {
+      "id": "research",
+      "title": "Lead Technical Research Assistant",
+      "organization": "CU Boulder | Institute of Behavioral Science",
+      "period": "Mar 2023 - May 2025",
+      "bullets": {
+        "speech": "Built a Python/AWS speech pipeline using Amazon Transcribe, Translate, and S3; the combined campaign collection covered 200+ hours, with 181 speeches in the 2024 run.",
+        "wer": "Adapted Amazon Transcribe with a custom language model trained on about 110K Hindi words; WER fell from 40.1% to 30.1% on one held-out speech, not a corpus-wide benchmark.",
+        "legislation": "Collected 111,000+ state bill records and built a resumable LegiScan client with caching, HTTP 429 backoff, and per-bill checkpoints.",
+        "vision": "Built PyTorch/ResNet50 embedding and k-means analysis workflows with researchers studying visual bias in COVID-19 news imagery."
+      }
+    },
+    {
+      "id": "satellite",
+      "title": "Undergraduate Research Assistant, Satellite Telemetry",
+      "organization": "The Data Mine of the Rockies | Purdue and L3Harris",
+      "period": "Aug 2024 - May 2025",
+      "bullets": {
+        "models": "Trained Isolation Forest and LSTM models on synthetic NOS3 satellite telemetry to detect and classify simulated cyberattack anomalies.",
+        "research": "Presented satellite cybersecurity research with a nine-student, four-university team; mapped scenarios to SPARTA and MITRE ATT&CK."
+      }
+    },
+    {
+      "id": "studio",
+      "title": "Research Assistant, Data Engineering and ML",
+      "organization": "CU Boulder | Studio Lab",
+      "period": "Jan - Apr 2024",
+      "bullets": {
+        "evaluation": "Compared six Hindi speech-to-text engines with word-error-rate evaluation and assessed translation services; recommended Amazon Transcribe for the later IBS pipeline."
+      }
+    }
+  ],
+  "projects": [
+    {
+      "id": "race",
+      "title": "SeeMyRace | Race Photo Search",
+      "tech": "Flask, PostgreSQL/pgvector, Docker",
+      "bullets": {
+        "ownership": "Built authenticated, user-scoped match verification and GPX-backed race creation for a team race-photo application; authored 32 commits across 24 paths through seven merged PRs.",
+        "workflow": "Implemented upload/search and admin workflows, and evaluated OCR/SWT approaches; later face/OCR model and retrieval changes include work by teammates."
+      }
+    },
+    {
+      "id": "netprice",
+      "title": "NetPrice Finder | Price Comparison",
+      "tech": "FastAPI, Redis, Playwright, Docker Compose",
+      "bullets": {
+        "system": "Built a multi-service price-comparison system with a REST API, browser scraper, Redis caching, database persistence, container health checks, and an internal service network."
+      }
+    },
+    {
+      "id": "portfolio",
+      "title": "vrajmpatel.com | Portfolio and Delivery Pipeline",
+      "tech": "Astro, TypeScript, GitHub Actions, Cloudflare Workers",
+      "bullets": {
+        "delivery": "Built static-site CI/CD with automated tests, dependency audit/review gates, SHA-pinned actions, a public-asset privacy scan, and verified GitHub Pages artifacts."
+      }
+    },
+    {
+      "id": "hate",
+      "title": "HateBlocker | Classical NLP Models",
+      "tech": "scikit-learn, XGBoost, TF-IDF",
+      "bullets": {
+        "models": "Owned classical-ML exploration, 5,000-term TF-IDF features, 17 stylometric features, and grid-searched baselines in a five-person project; XGBoost reached 90.72% held-out accuracy.",
+        "limits": "Evaluated three classes on 2,479 held-out examples; hateful-class recall remained 0.24. Teammates owned BERT, the FastAPI service, and browser extension."
+      }
+    },
+    {
+      "id": "interview",
+      "title": "Automated Interview Scoring",
+      "tech": "SentenceTransformers, scikit-learn, TensorFlow",
+      "bullets": {
+        "features": "Team project using MiniLM alignment, lexical and 35 prosodic features, mutual-information selection, k-fold regressors, and SHAP analysis for 138 mock interviews."
+      }
+    },
+    {
+      "id": "diabetes",
+      "title": "Diabetes Risk Modeling",
+      "tech": "TensorFlow, Keras Tuner, scikit-learn, SHAP",
+      "bullets": {
+        "models": "Built SVM and neural-network models plus SHAP analysis in a three-person project using the balanced 70,692-record BRFSS diabetes sample; compared results with teammates' baselines."
+      }
+    },
+    {
+      "id": "grpc",
+      "title": "REST and gRPC Benchmark",
+      "tech": "Python, Protobuf, GCP",
+      "bullets": {
+        "benchmark": "Built and benchmarked REST and gRPC services on GCP VMs, comparing cross-region raw-image calls and persistent-connection reuse."
+      }
+    },
+    {
+      "id": "homelab",
+      "title": "Hybrid Home and Cloud Infrastructure",
+      "tech": "Terraform, Oracle Cloud, Docker Compose, Tailscale",
+      "bullets": {
+        "operations": "Operate a Terraform-defined cloud node and local container services with private remote access, internal database networking, and reproducible deployment configuration."
+      }
+    }
+  ],
+  "skills": {
+    "Languages": "Python, TypeScript, JavaScript, SQL, C++, Bash, PowerShell",
+    "Software": "FastAPI, Flask, React, SQLAlchemy, REST, gRPC, pytest",
+    "Data": "PostgreSQL, SQLite, Redis, pgvector, Pandas, source reconciliation, data validation",
+    "ML": "PyTorch, scikit-learn, Transformers, TensorFlow, NLP, model evaluation, SHAP",
+    "Infrastructure": "Docker, Kubernetes/OpenShift, AWS, GCP, Terraform, Linux, GitHub Actions"
+  },
+  "variants": [
+    {
+      "id": "software",
+      "label": "Software engineering",
+      "pages": 1,
+      "headline": "Software Engineering | Backend, Full-Stack and Internal Tools",
+      "summary": "Build reliable internal software and data workflows with Python, TypeScript, and SQL. Experience spans backend services, operational analytics, applied ML, and research systems.",
+      "experience": [
+        {
+          "id": "ibs",
+          "bullets": [
+            "platform",
+            "sync",
+            "analytics",
+            "automation"
+          ]
+        },
+        {
+          "id": "princeton",
+          "bullets": [
+            "collection",
+            "normalization"
+          ]
+        },
+        {
+          "id": "research",
+          "bullets": [
+            "speech"
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "race",
+          "bullets": [
+            "ownership"
+          ]
+        },
+        {
+          "id": "netprice",
+          "bullets": [
+            "system"
+          ]
+        }
+      ],
+      "skillGroups": [
+        "Languages",
+        "Software",
+        "Data",
+        "Infrastructure"
+      ]
+    },
+    {
+      "id": "data",
+      "label": "Data engineering",
+      "pages": 1,
+      "headline": "Data Engineering | Pipelines, Analytics and Research Data",
+      "summary": "Build restartable data pipelines and trustworthy analytical datasets. Focus on source reconciliation, durable progress, data quality, SQL-backed applications, and recoverable research workflows.",
+      "experience": [
+        {
+          "id": "ibs",
+          "bullets": [
+            "platform",
+            "sync",
+            "cohorts"
+          ]
+        },
+        {
+          "id": "princeton",
+          "bullets": [
+            "collection",
+            "normalization",
+            "recovery"
+          ]
+        },
+        {
+          "id": "research",
+          "bullets": [
+            "speech",
+            "legislation"
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "netprice",
+          "bullets": [
+            "system"
+          ]
+        },
+        {
+          "id": "grpc",
+          "bullets": [
+            "benchmark"
+          ]
+        }
+      ],
+      "skillGroups": [
+        "Languages",
+        "Data",
+        "Software",
+        "Infrastructure"
+      ]
+    },
+    {
+      "id": "ml",
+      "label": "ML engineering",
+      "pages": 1,
+      "headline": "ML Engineering | Applied NLP, Evaluation and ML Systems",
+      "summary": "Build and evaluate applied ML workflows with clear baselines, data boundaries, and human review. Experience includes ticket routing, classical NLP, speech adaptation, and anomaly detection.",
+      "experience": [
+        {
+          "id": "ibs",
+          "bullets": [
+            "bert",
+            "boundary",
+            "cohorts"
+          ]
+        },
+        {
+          "id": "research",
+          "bullets": [
+            "wer",
+            "vision"
+          ]
+        },
+        {
+          "id": "satellite",
+          "bullets": [
+            "models"
+          ]
+        },
+        {
+          "id": "studio",
+          "bullets": [
+            "evaluation"
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "hate",
+          "bullets": [
+            "models",
+            "limits"
+          ]
+        },
+        {
+          "id": "interview",
+          "bullets": [
+            "features"
+          ]
+        }
+      ],
+      "skillGroups": [
+        "Languages",
+        "ML",
+        "Data",
+        "Infrastructure"
+      ]
+    },
+    {
+      "id": "master",
+      "label": "Master resume",
+      "pages": 2,
+      "headline": "Software Engineering, Data Engineering and Applied ML",
+      "summary": "Build software and research data systems that connect backend engineering, dependable pipelines, and applied ML. Work spans CU Boulder internal tools, parliamentary archives, speech processing, and team research projects.",
+      "experience": [
+        {
+          "id": "ibs",
+          "bullets": [
+            "platform",
+            "sync",
+            "bert",
+            "analytics",
+            "automation"
+          ]
+        },
+        {
+          "id": "princeton",
+          "bullets": [
+            "collection",
+            "normalization"
+          ]
+        },
+        {
+          "id": "research",
+          "bullets": [
+            "speech",
+            "wer",
+            "vision"
+          ]
+        },
+        {
+          "id": "satellite",
+          "bullets": [
+            "models",
+            "research"
+          ]
+        },
+        {
+          "id": "studio",
+          "bullets": [
+            "evaluation"
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "id": "race",
+          "bullets": [
+            "ownership",
+            "workflow"
+          ]
+        },
+        {
+          "id": "netprice",
+          "bullets": [
+            "system"
+          ]
+        },
+        {
+          "id": "hate",
+          "bullets": [
+            "models",
+            "limits"
+          ]
+        },
+        {
+          "id": "interview",
+          "bullets": [
+            "features"
+          ]
+        },
+        {
+          "id": "diabetes",
+          "bullets": [
+            "models"
+          ]
+        },
+        {
+          "id": "grpc",
+          "bullets": [
+            "benchmark"
+          ]
+        },
+        {
+          "id": "portfolio",
+          "bullets": [
+            "delivery"
+          ]
+        },
+        {
+          "id": "homelab",
+          "bullets": [
+            "operations"
+          ]
+        }
+      ],
+      "skillGroups": [
+        "Languages",
+        "Software",
+        "Data",
+        "ML",
+        "Infrastructure"
+      ]
+    }
+  ]
+}

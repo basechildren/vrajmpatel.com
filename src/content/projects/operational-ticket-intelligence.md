@@ -9,7 +9,7 @@ tech: ['FastAPI', 'PostgreSQL', 'React', 'TypeScript', 'SQLAlchemy', 'Recharts',
 summary: "A support-operations platform for reconciling tickets, reviewing routing suggestions, and understanding workload."
 contribution: "I built backend workflows, integration controls, operational analytics, and model-release tooling."
 setting: 'Internal support operations · CU Boulder IBS'
-status: "Active development · read-only integration"
+status: "Active development · deployed on CU OpenShift for internal IT use · read-only integration"
 proof:
   - value: "10,803 tickets"
     label: "Local reconciled corpus on August 27, 2026; 96.7% carried support-group IDs."

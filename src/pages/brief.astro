@@ -10,16 +10,17 @@ const projects = (await getCollection("projects")).filter(isPublicProject).filte
     <header>
       <p class="eyebrow">Recruiter brief</p>
       <h1 class="page-title">{profile.name}</h1>
-      <p class="brief-position">Systems Integration Engineer · CU Boulder</p>
+      <p class="brief-position">{profile.role} · CU Boulder</p>
       <p class="muted-copy">Python, SQL, backend systems, and applied ML. I build internal software and data workflows with clear state, review, and recovery.</p>
       <nav class="action-row print:hidden" aria-label="Recruiter resources">
         <a href="/resume.pdf" class="button-primary" target="_blank" rel="noopener noreferrer" data-ph-event="resume_clicked" data-ph-placement="recruiter_brief">Resume (PDF)</a>
+        <a href="/resume/" class="text-link">All resume versions</a>
         <button type="button" class="text-link" data-print-brief hidden>Print / save brief</button>
         <a href="#contact" class="text-link">Contact</a>
       </nav>
     </header>
     <dl class="brief-facts">
-      <div><dt class="eyebrow">Strongest fit</dt><dd>Backend / Platform · Data Engineering · Systems Integration · Applied ML Infrastructure</dd></div>
+      <div><dt class="eyebrow">Strongest fit</dt><dd>Backend / Platform · Data Engineering · Applied ML</dd></div>
       <div><dt class="eyebrow">Location</dt><dd>{profile.location}</dd></div>
     </dl>
     <section aria-labelledby="brief-projects">
@@ -27,14 +28,14 @@ const projects = (await getCollection("projects")).filter(isPublicProject).filte
       <ol class="brief-projects">
         {projects.map((entry, i) => <li>
           <span class="eyebrow" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
-          <div><h3><a class="text-link" href={`/projects/${entry.id}`} data-ph-event="project_opened" data-ph-project={entry.id} data-ph-placement="recruiter_brief">{entry.data.title}</a></h3>
+          <div><h3><a class="text-link" href={`/projects/${entry.id}/`} data-ph-event="project_opened" data-ph-project={entry.id} data-ph-placement="recruiter_brief">{entry.data.title}</a></h3>
           <p>{entry.data.contribution}</p><p class="brief-evidence">{entry.data.proof?.[entry.id === "full-stack-biometric-marathon" ? 2 : 0]?.value} — {entry.data.proof?.[entry.id === "full-stack-biometric-marathon" ? 2 : 0]?.label}</p></div>
         </li>)}
       </ol>
     </section>
     <section class="brief-education" aria-labelledby="brief-education">
       <h2 id="brief-education" class="section-title">Education</h2>
-      <p>Dual M.S. programs in Computer Science and Engineering Management, in progress at CU Boulder.</p>
+      <p>M.S. Computer Science + M.E. Engineering Management (concurrent dual degree) · CU Boulder · expected May 2028.</p>
       <p>B.S. in Computer Science, Business minor · CU Boulder.</p>
     </section>
     <section id="contact" class="brief-contact" aria-labelledby="contact-heading">

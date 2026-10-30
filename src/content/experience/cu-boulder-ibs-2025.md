@@ -1,6 +1,6 @@
 ---
 organization: 'University of Colorado Boulder · Institute of Behavioral Science'
-title: 'Software Engineer, Internal Tools'
+title: 'Systems Integration Engineer'
 period: 'May 2025 – Present'
 order: 1
 visibility: 'public'

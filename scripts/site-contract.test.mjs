@@ -60,7 +60,7 @@ test("built internal links use canonical paths and point to published files and 
 test("discovery documents link to built public resources and preserve evidence scope", async () => {
   const index = await readFile(path.join(dist, "llms.txt"), "utf8");
   const full = await readFile(path.join(dist, "llms-full.txt"), "utf8");
-  assert.match(index, /^# Vraj Patel\n\n> Software engineer/);
+  assert.match(index, /^# Vraj Patel\n\n> Systems integration engineer/);
   assert.ok(Buffer.byteLength(index) < 6000, "the index should remain a concise entry point");
   const localLinks = [...index.matchAll(/https:\/\/www\.vrajmpatel\.com([^\s)]+)/g)].map(match => match[1]);
   for (const href of localLinks) {

@@ -2,14 +2,14 @@
   "updated": "2026-10-30",
   "person": {
     "name": "Vraj Patel",
-    "role": "Software Engineer, Internal Tools",
+    "role": "Systems Integration Engineer",
     "location": "Boulder, Colorado",
     "citizenship": "U.S. Citizen",
     "site": "https://www.vrajmpatel.com",
     "linkedin": "https://www.linkedin.com/in/vrajmp/",
     "education": "M.S. Computer Science + M.E. Engineering Management",
     "graduation": "Expected May 2028",
-    "description": "Software engineer in Boulder, Colorado building backend services, data pipelines, and applied ML systems. Python, TypeScript, SQL, and research-driven engineering at CU Boulder."
+    "description": "Systems integration engineer in Boulder, Colorado building backend services, data pipelines, and applied ML systems. Python, TypeScript, SQL, and research-driven engineering at CU Boulder."
   },
   "education": [
     {
@@ -26,7 +26,7 @@
   "experience": [
     {
       "id": "ibs",
-      "title": "Software Engineer, Internal Tools",
+      "title": "Systems Integration Engineer",
       "organization": "CU Boulder | Institute of Behavioral Science",
       "period": "May 2025 - Present",
       "bullets": {

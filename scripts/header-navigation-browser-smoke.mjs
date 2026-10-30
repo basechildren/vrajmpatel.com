@@ -9,7 +9,8 @@ const check = (name, passed, details = {}) => {
   report.checks.push({ name, passed, ...details });
   console.log(`${passed ? 'PASS' : 'FAIL'} ${name}${passed ? '' : ` ${JSON.stringify(details)}`}`);
 };
-const pathOf = page => new URL(page.url()).pathname.replace(/\/$/, '') || '/';
+const pathOfUrl = value => new URL(value).pathname.replace(/\/$/, '') || '/';
+const pathOf = page => pathOfUrl(page.url());
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ channel: 'chrome', headless: true, ignoreDefaultArgs: ['--disable-back-forward-cache'] });
 const visit = async (page, path) => {
@@ -79,7 +80,7 @@ const captureCommand = async (page, { destination, mobile, filename, expected = 
     });
     observer.observe(text, { childList: true, characterData: true, subtree: true });
     const scope = mobile ? '[data-mobile-menu]' : '.desktop-navigation';
-    const selector = destination === '/' ? '.terminal-breadcrumb a[href="/"]' : `${scope} [data-command-link][href="${destination}"]`;
+    const selector = destination === '/' ? '.terminal-breadcrumb a[href="/"]' : `${scope} [data-command-link][href="${destination}/"]`;
     document.querySelector(selector).click();
   }), { destination, mobile, expected });
   const shot = await client.send('Page.captureScreenshot', { format: 'png', clip: { x: 0, y: 0, width: page.viewportSize().width, height: 500, scale: 1 } });
@@ -101,9 +102,9 @@ try {
     await visit(page, '/');
     await observeHeader(page);
     let requestedAt = 0;
-    const onRequest = request => { if (request.isNavigationRequest() && request.frame() === page.mainFrame() && new URL(request.url()).pathname === destination) requestedAt = Date.now(); };
+    const onRequest = request => { if (request.isNavigationRequest() && request.frame() === page.mainFrame() && pathOfUrl(request.url()) === destination) requestedAt = Date.now(); };
     page.on('request', onRequest);
-    await page.locator(`.desktop-navigation [data-command-link][href="${destination}"]`).click({ noWaitAfter: true });
+    await page.locator(`.desktop-navigation [data-command-link][href="${destination}/"]`).click({ noWaitAfter: true });
     await waitForDestination(page, destination);
     page.off('request', onRequest);
     const trace = await getTrace(page);
@@ -115,7 +116,7 @@ try {
   await visit(page, '/');
   await observeHeader(page);
   const popupWait = context.waitForEvent('page', { timeout: 5000 });
-  await page.locator('.desktop-navigation [data-command-link][href="/projects"]').click({ modifiers: ['Meta'] });
+  await page.locator('.desktop-navigation [data-command-link][href="/projects/"]').click({ modifiers: ['Meta'] });
   const popup = await popupWait;
   await popup.waitForLoadState('domcontentloaded');
   const modifiedTrace = await getTrace(page);
@@ -125,11 +126,11 @@ try {
 
   await visit(page, '/');
   const rapidRequests = [];
-  const onRapid = request => { if (request.isNavigationRequest() && request.frame() === page.mainFrame()) rapidRequests.push(new URL(request.url()).pathname); };
+  const onRapid = request => { if (request.isNavigationRequest() && request.frame() === page.mainFrame()) rapidRequests.push(pathOfUrl(request.url())); };
   page.on('request', onRapid);
   await page.evaluate(() => {
-    document.querySelector('.desktop-navigation [data-command-link][href="/projects"]').click();
-    setTimeout(() => document.querySelector('.desktop-navigation [data-command-link][href="/about"]').click(), 40);
+    document.querySelector('.desktop-navigation [data-command-link][href="/projects/"]').click();
+    setTimeout(() => document.querySelector('.desktop-navigation [data-command-link][href="/about/"]').click(), 40);
   });
   await waitForDestination(page, '/about');
   await page.waitForTimeout(500);
@@ -137,19 +138,19 @@ try {
   check('Rapid clicks navigate once to the latest destination', pathOf(page) === '/about' && rapidRequests.length === 1 && rapidRequests[0] === '/about', { requests: rapidRequests });
 
   await visit(page, '/');
-  await page.locator('.desktop-navigation [href="/projects"]').click({ noWaitAfter: true });
+  await page.locator('.desktop-navigation [href="/projects/"]').click({ noWaitAfter: true });
   await page.keyboard.press('Escape');
   await page.waitForTimeout(650);
   check('Escape cancels a pending navigation and restores the breadcrumb', pathOf(page) === '/' && await animationReset(page));
 
-  await page.locator('.desktop-navigation [href="/experience"]').click({ noWaitAfter: true });
+  await page.locator('.desktop-navigation [href="/experience/"]').click({ noWaitAfter: true });
   await page.keyboard.press('?');
   await page.waitForTimeout(650);
   check('Opening keyboard help cancels pending navigation', pathOf(page) === '/' && await page.locator('[data-shortcuts-dialog]').evaluate(element => element.open) && await animationReset(page));
   await page.keyboard.press('Escape');
 
   await visit(page, '/about');
-  await page.locator('.desktop-navigation [href="/projects"]').click({ noWaitAfter: true });
+  await page.locator('.desktop-navigation [href="/projects/"]').click({ noWaitAfter: true });
   await page.keyboard.press('g');
   await page.keyboard.press('h');
   await waitForDestination(page, '/');
@@ -166,7 +167,7 @@ try {
   await page.goBack({ waitUntil: 'commit' });
   await page.waitForTimeout(650);
   check('History Back restores a clean, usable breadcrumb', pathOf(page) === '/' && await animationReset(page), { bfcacheRestored: await page.evaluate(() => window.__qaPageShowPersisted) });
-  await page.locator('.desktop-navigation [href="/about"]').click({ noWaitAfter: true });
+  await page.locator('.desktop-navigation [href="/about/"]').click({ noWaitAfter: true });
   await waitForDestination(page, '/about');
   check('Header navigation remains usable after Back', pathOf(page) === '/about');
 
@@ -174,9 +175,9 @@ try {
   await visit(page, '/');
   await observeHeader(page);
   let reducedRequest = 0;
-  const onReduced = request => { if (request.isNavigationRequest() && request.frame() === page.mainFrame() && new URL(request.url()).pathname === '/brief') reducedRequest = Date.now(); };
+  const onReduced = request => { if (request.isNavigationRequest() && request.frame() === page.mainFrame() && pathOfUrl(request.url()) === '/brief') reducedRequest = Date.now(); };
   page.on('request', onReduced);
-  await page.locator('.desktop-navigation [data-command-link][href="/brief"]').click();
+  await page.locator('.desktop-navigation [data-command-link][href="/brief/"]').click();
   await waitForDestination(page, '/brief');
   page.off('request', onReduced);
   const reducedTrace = await getTrace(page);
@@ -209,7 +210,7 @@ try {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await observeHeader(page);
   let homeRequestedAt = 0;
-  const onHomeRequest = request => { if (request.isNavigationRequest() && request.frame() === page.mainFrame() && new URL(request.url()).pathname === '/') homeRequestedAt = Date.now(); };
+  const onHomeRequest = request => { if (request.isNavigationRequest() && request.frame() === page.mainFrame() && pathOfUrl(request.url()) === '/') homeRequestedAt = Date.now(); };
   page.on('request', onHomeRequest);
   await page.locator('.terminal-breadcrumb a[href="/"]').click();
   await waitForDestination(page, '/');
@@ -251,13 +252,13 @@ try {
   const noScript = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 1440, height: 900 } });
   const plain = await noScript.newPage();
   await visit(plain, '/');
-  await plain.locator('.desktop-navigation a[href="/projects"]').click();
-  await plain.waitForURL('**/projects');
+  await plain.locator('.desktop-navigation a[href="/projects/"]').click();
+  await plain.waitForURL('**/projects/');
   check('Desktop regular navigation works without JavaScript', pathOf(plain) === '/projects');
   await plain.setViewportSize({ width: 390, height: 900 });
   await plain.locator('[data-mobile-menu] summary').click();
-  await plain.locator('[data-mobile-menu] a[href="/about"]').click();
-  await plain.waitForURL('**/about');
+  await plain.locator('[data-mobile-menu] a[href="/about/"]').click();
+  await plain.waitForURL('**/about/');
   check('Mobile native menu works without JavaScript', pathOf(plain) === '/about');
   await noScript.close();
   }

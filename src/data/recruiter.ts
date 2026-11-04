@@ -28,17 +28,17 @@ export const proofPoints: readonly ProofPoint[] = [
 
 export const selectedEngineering = [
   {
-    title: "Keeping model suggestions separate from approval",
-    description: "Ticket reconciliation, operator review, and the controls around outbound changes.",
+    title: "Model suggestions require approval",
+    description: "How staff review and delivery controls govern ticket updates.",
     href: "/projects/operational-ticket-intelligence/#reliability-and-control",
   },
   {
-    title: "Making long data jobs restartable",
-    description: "Collection checkpoints, intermediate artifacts, and normalization that preserves source context.",
+    title: "Restarting interrupted data jobs",
+    description: "Checkpoints and saved outputs keep long collection runs recoverable.",
     href: "/projects/building-indian-parliamentary-datasets/#engineering-decisions",
   },
   {
-    title: "Turning uncertain matches into reviewable results",
+    title: "Reviewing uncertain race-photo matches",
     description: "My contribution to athlete verification and race creation in SeeMyRace.",
     href: "/projects/full-stack-biometric-marathon/#engineering-highlights",
   },

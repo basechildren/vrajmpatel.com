@@ -6,7 +6,7 @@ export const primaryNavigation = [
   { path: "/brief/", label: "Brief", key: "4" },
 ] as const;
 
-export const animatedNavigation = [{ path: "/", label: "Home" }, ...primaryNavigation] as const;
+export const animatedNavigation = [{ path: "/", label: "Home" }, ...primaryNavigation, { path: "/resume/", label: "Resumes" }] as const;
 
 /** Treat each public page as a directory in the site's navigation hierarchy. */
 export function getNavigationCommand(currentPath: string, destination: string): string {

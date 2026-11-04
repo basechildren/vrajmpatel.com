@@ -17,7 +17,7 @@ posterLabel: 'Spring 2025 research poster'
 <details>
 <summary>More about this work</summary>
 
-- Co-authored and presented “L3Harris: Satellite Cyberattack Detection” at the Data Mine of the Rockies Spring 2025 symposium in Colorado Springs to engineers and stakeholders from the U.S. Space Force, L3Harris, Lockheed Martin, Northrop Grumman, CrowdStrike, and other aerospace and cybersecurity organizations
+- Presented in Colorado Springs to engineers and stakeholders from the U.S. Space Force, L3Harris, Lockheed Martin, Northrop Grumman, and CrowdStrike
 - Used Wireshark to identify affected devices and indicators of compromise in simulated satellite communications
 - Mapped space-cyber scenarios to the SPARTA Matrix and MITRE ATT&CK frameworks, then generated synthetic telemetry for multiple attack types
 

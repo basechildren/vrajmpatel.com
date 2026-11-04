@@ -1,13 +1,19 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { resumeVariants } from "../data/resumes";
+const focus = {
+  software: "Backend services, APIs, and internal tools.",
+  data: "Data ingestion, SQL, and restartable pipelines.",
+  ml: "Model evaluation, NLP, and human review.",
+  master: "Full work history, projects, and education.",
+};
 ---
 
 <BaseLayout title="Resumes — Vraj Patel | Software, Data and ML Engineering" description="Download Vraj Patel's software engineering, data engineering, ML engineering, and comprehensive master resumes.">
-  <header class="max-w-3xl">
-    <p class="eyebrow">Resume collection</p>
-    <h1 class="page-title mt-3">A focused version for the role.</h1>
-    <p class="muted-copy mt-5">The same engineering background, with the most relevant work up front. Choose a focused one-page resume or the two-page master.</p>
+  <header class="page-header">
+    <p class="eyebrow">PDF · Text</p>
+    <h1 class="page-title">Resumes</h1>
+    <p class="page-lede">One-page resumes for software, data, and ML roles. The master resume covers my full background.</p>
     <p class="mt-5"><a href="/brief/" class="text-link">Read the recruiter brief <span aria-hidden="true">→</span></a></p>
   </header>
   <section class="resume-grid" aria-label="Resume versions">
@@ -15,7 +21,7 @@ import { resumeVariants } from "../data/resumes";
       <article class="instrument-frame resume-card" data-reveal>
         <p class="eyebrow">{variant.pages === 1 ? "One page" : "Two pages"} · PDF</p>
         <h2>{variant.label}</h2>
-        <p>{variant.summary}</p>
+        <p>{focus[variant.id as keyof typeof focus]}</p>
         <div class="resume-actions">
           <a href={variant.pdf} class="button-primary" target="_blank" rel="noopener noreferrer" data-ph-event="resume_clicked" data-ph-placement={`resume_${variant.id}`}>View PDF <span class="sr-only">— {variant.label}</span><span aria-hidden="true"> ↗</span></a>
           <a href={variant.markdown} class="text-link">Text version <span class="sr-only">— {variant.label}</span></a>
@@ -26,7 +32,7 @@ import { resumeVariants } from "../data/resumes";
 </BaseLayout>
 
 <style>
-  .resume-grid { display: grid; gap: 1.25rem; margin-top: 2.5rem; }
+  .resume-grid { display: grid; gap: 1.25rem; }
   .resume-card { padding: 1.75rem; display: flex; flex-direction: column; }
   h2 { font-size: 1.55rem; line-height: 1.25; letter-spacing: -.035em; margin-top: .8rem; font-weight: 550; }
   .resume-card > p:not(.eyebrow) { color: var(--copy); font-size: .9375rem; line-height: 1.8; margin-top: 1rem; }

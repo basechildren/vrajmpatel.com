@@ -1,5 +1,6 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
+import SocialLinks from "./SocialLinks.astro";
 import { primaryNavigation as nav } from "../lib/siteNavigation";
 import "../styles/header-command.css";
 
@@ -24,34 +25,32 @@ const segments = pathname.split("/").filter(Boolean).map((segment, index, all) =
     </nav>
     <div class="header-command-preview" data-command-preview aria-hidden="true" hidden><span class="header-command-dollar">$</span><span data-command-text></span><span class="terminal-cursor"></span></div>
     </div>
-    <span class="sr-only" role="status" data-navigation-live></span>
 
     <nav aria-label="Primary" class="desktop-navigation">
-      {nav.map(({ path, label, key }) => <a href={path} data-shortcut-route={key} data-command-link aria-current={isCurrent(path) ? "page" : undefined}>
+      {nav.map(({ path, label, key }) => <a href={path} data-astro-prefetch data-shortcut-route={key} data-command-link aria-current={isCurrent(path) ? "page" : undefined}>
         <span aria-hidden="true" class="nav-number">[{key}]</span> {label}
         {isCurrent(path) && <span class="navigation-marker" aria-hidden="true"></span>}
       </a>)}
     </nav>
 
     <div class="header-actions">
-      <a href="/resume.pdf" target="_blank" rel="noopener noreferrer"
-        data-ph-event="resume_clicked" data-ph-placement="header" data-shortcut-resume
-        class="header-resume" aria-label="Resume (PDF), opens in a new tab">
-        Resume (PDF) <span aria-hidden="true">↗</span>
+      <a href="/resume/" data-astro-prefetch data-shortcut-resume data-command-link
+        class="header-resume" aria-current={isCurrent("/resume/") ? "page" : undefined}>
+        Resumes <span aria-hidden="true">→</span>
       </a>
       <ThemeToggle />
       <details data-mobile-menu class="mobile-menu">
         <summary>Menu <span aria-hidden="true">+</span></summary>
         <nav aria-label="Mobile" class="mobile-navigation">
           <p class="mobile-menu-caption" aria-hidden="true">~/vraj-patel — ls</p>
-          {nav.map(({ path, label, key }) => <a href={path} data-command-link aria-current={isCurrent(path) ? "page" : undefined}>
+          {nav.map(({ path, label, key }) => <a href={path} data-astro-prefetch data-command-link aria-current={isCurrent(path) ? "page" : undefined}>
             <span aria-hidden="true" class="nav-number">[{key}]</span> {label} <span aria-hidden="true" class="mobile-arrow">→</span>
           </a>)}
           <a href="/about/#contact"><span aria-hidden="true" class="nav-number">[→]</span> Contact</a>
-          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer"
-            data-ph-event="resume_clicked" data-ph-placement="mobile_menu">
-            <span aria-hidden="true" class="nav-number">[r]</span> Resume (PDF) <span aria-hidden="true" class="mobile-arrow">↗</span>
+          <a href="/resume/" aria-current={isCurrent("/resume/") ? "page" : undefined}>
+            <span aria-hidden="true" class="nav-number">[r]</span> Resumes <span aria-hidden="true" class="mobile-arrow">→</span>
           </a>
+          <div class="mobile-social-links"><SocialLinks placement="menu" /></div>
         </nav>
       </details>
     </div>

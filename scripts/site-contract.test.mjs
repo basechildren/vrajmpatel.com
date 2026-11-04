@@ -122,7 +122,7 @@ test("homepage and recruiter brief expose evidence-led navigation", async () => 
     readPage("brief"),
   ]);
 
-  assert.match(homepage, /Evidence at a glance/);
+  assert.match(homepage, /Results with context/);
   assert.match(homepage, /Recruiter brief/);
   assert.match(homepage, /10\.8K tickets/);
   assert.match(homepage, /200\+ hours of audio/);
@@ -148,19 +148,19 @@ test("homepage and recruiter brief expose evidence-led navigation", async () => 
   );
   assert.match(brief, /Selected contributions/);
   assert.match(brief, /data-print-brief/);
-  assert.match(brief, /Resume \(PDF\)/);
+  assert.match(brief, /Software resume · PDF/);
 });
 
-test("about leads with public GitHub activity before the profile narrative", async () => {
+test("about introduces the profile before public GitHub activity", async () => {
   const about = await readPage("about");
   const main = about.match(/<main\b[^>]*>([\s\S]*?)<\/main>/)?.[1];
   assert.ok(main, "About page content was not generated");
-  const headingIndex = main.indexOf("GitHub activity across personal and academic work");
+  const headingIndex = main.indexOf("Public GitHub activity");
   const backgroundIndex = main.indexOf("Background");
 
   assert.ok(headingIndex > -1, "GitHub activity heading was not generated");
   assert.ok(backgroundIndex > -1, "Background heading was not generated");
-  assert.ok(headingIndex < backgroundIndex, "GitHub activity should precede Background");
+  assert.ok(backgroundIndex < headingIndex, "Background should precede GitHub activity");
   assert.match(about, /contributions across two accounts/);
   const activity = JSON.parse(await readFile("src/data/githubActivitySnapshot.json", "utf8"));
   assert.match(about, activity.source === "checked-in-baseline" ? /Snapshot verified/ : /Last refreshed/);
@@ -224,13 +224,13 @@ test("SeeMyRace presents recruiter-ready evidence without overstating ML ownersh
   assert.match(brief, /athlete verification, GPX race creation/);
   assert.match(brief, /upload\/search workflows/);
   assert.match(page, /Software Engineering/);
-  assert.match(page, /I contributed the authenticated confirm\/deny workflow, GPX-backed race creation/);
-  assert.match(page, /requested a distinct Jira implementation ticket/);
+  assert.match(page, /I built athlete verification, GPX race creation/);
+  assert.match(page, /co-developed the Flask\/Jinja backend/);
   assert.match(page, /restricted to non-commercial research/);
-  assert.match(page, /work added by other team members/);
+  assert.match(page, /work added by teammates after my contribution window/);
   assert.match(page, /proof-grid--three/);
   assert.match(llms, /user-scoped confirm\/deny workflow/);
-  assert.match(llms, /team-built application for finding race photos/);
+  assert.match(llms, /work added by teammates after my contribution window/);
   assert.match(llms, /architecture changes, not measured accuracy gains/);
 });
 
@@ -316,24 +316,22 @@ test("privacy policy is published, linked, and opt-out capable", async () => {
   assert.match(sitemap, /https:\/\/www\.vrajmpatel\.com\/privacy\/?/);
 });
 
-test("engineering instrument includes accessible synthetic films and shortcuts", async () => {
+test("project media distinguishes the live product from synthetic films", async () => {
   const homepage = await readPage();
   assert.equal((homepage.match(/<h1\b/g) ?? []).length, 1);
-  const placements = [...homepage.matchAll(/data-system-flow-placement="([\w-]+)"/g)].map((match) => match[1]);
-  assert.deepEqual(placements, ["hero", "after-work"]);
-  assert.ok(homepage.indexOf('data-system-flow-placement="hero"') < homepage.indexOf('id="selected-work"'));
-  assert.ok(homepage.indexOf('data-system-flow-placement="after-work"') > homepage.indexOf('id="selected-work"'));
+  assert.doesNotMatch(homepage, /data-system-flow|home-impact/);
+  assert.equal((homepage.match(/15 minutes to under 1/g) ?? []).length, 1, "show the automation result once");
   const ids = [...homepage.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
   assert.equal(new Set(ids).size, ids.length, "ids must be unique on the homepage");
   for (const card of homepage.split('<article class="project-feature"').slice(1)) {
     const copy = card.indexOf("project-feature-copy");
-    assert.ok(copy > -1 && copy < card.indexOf("data-film"), "project card text comes before its film");
+    assert.ok(copy > -1 && copy < card.search(/data-(?:film|product-preview)/), "project card text comes before its film");
   }
-  assert.equal((homepage.match(/\bdata-film(?:\s|>)/g) ?? []).length, 3);
+  assert.equal((homepage.match(/\bdata-film(?:\s|>)/g) ?? []).length, 2);
   assert.match(homepage, /<dialog[^>]+id="keyboard-shortcuts"/);
-  assert.doesNotMatch(homepage, /data-build-time|status-branch|status-sha|Source revision/, "the status bar must not publish build metadata");
+  assert.doesNotMatch(homepage, /data-build-time|status-branch|status-sha|Source revision/, "the footer must not publish build metadata");
   const videos = [...homepage.matchAll(/<video\b[^>]*>[\s\S]*?<\/video>/g)].map(match => match[0]);
-  assert.equal(videos.length, 3);
+  assert.equal(videos.length, 2);
   for (const video of videos) {
     assert.match(video, /\bmuted\b/);
     assert.match(video, /\bplaysinline\b/);
@@ -346,18 +344,35 @@ test("engineering instrument includes accessible synthetic films and shortcuts",
   for (const caption of homepage.matchAll(/<figcaption\b[^>]*>([\s\S]*?)<\/figcaption>/g)) {
     if (caption[1].includes("Recreation")) assert.match(caption[1], /synthetic data/);
   }
-  assert.equal((homepage.match(/Recreation · synthetic data/g) ?? []).length, 3);
+  assert.equal((homepage.match(/Recreation · synthetic data/g) ?? []).length, 2);
+  assert.equal((homepage.match(/data-product-preview/g) ?? []).length, 1);
+  assert.doesNotMatch(homepage, /seemyrace-production-teaser/);
+  assert.match(homepage, /href="\/resume\/"[^>]*data-shortcut-resume/);
+  assert.match(homepage, /Choose a resume/);
+  assert.doesNotMatch(homepage, /data-count|data-scramble|data-split/);
   assert.doesNotMatch(homepage, /12 sec \/ loop/);
   assert.doesNotMatch(homepage, /fig\. 0\d|System 01/);
   await assert.rejects(access(path.join(dist, "dev", "films")));
   for (const slug of ["operational-ticket-intelligence", "building-indian-parliamentary-datasets", "full-stack-biometric-marathon"]) {
     const page = await readPage("projects", slug);
-    assert.match(page, /data-film-context="case"/);
-    assert.equal((page.match(/\bdata-film(?:\s|>)/g) ?? []).length, 1, "case studies show one film");
-    assert.ok(page.indexOf('id="overview"') < page.indexOf('data-film-context="case"'), "the case film follows the overview");
+    if (slug === "full-stack-biometric-marathon") {
+      assert.match(page, /data-product-preview/);
+      assert.doesNotMatch(page, /<video/);
+      assert.match(page, /seemyrace-production-site-poster[^"\s]*\.webp/);
+    } else {
+      assert.match(page, /data-film-context="case"/);
+      assert.equal((page.match(/\bdata-film(?:\s|>)/g) ?? []).length, 1, "one film per illustrated case study");
+      assert.ok(page.indexOf('id="overview"') < page.indexOf('data-film-context="case"'), "the film follows the overview");
+    }
     assert.doesNotMatch(page, />\s*Contribution\s*</, "the header Contribution cell duplicates My contribution");
     assert.doesNotMatch(page, /fig\. 0\d|~\/work\//);
-    assert.match(page, /Recreation · synthetic data/);
+    assert.match(page, slug === "full-stack-biometric-marathon" ? /Production site/ : /Recreation · synthetic data/);
+    assert.ok(page.indexOf("Engineering summary") < page.indexOf('id="overview"'), "role, stack, and evidence must be available near the introduction");
+    if (slug === "full-stack-biometric-marathon") {
+      assert.match(page, /Live production service/);
+      assert.ok(page.indexOf('href="https://seemyrace.ecolocate.org/"') < page.indexOf('id="overview"'), "the production link must be visible near the introduction");
+      assert.match(page, /Current team stack/);
+    }
     const names = [...page.matchAll(/view-transition-name:\s*([\w-]+)/g)].map(match => match[1]);
     assert.equal(new Set(names).size, names.length, "view transition names must be unique per page");
   }

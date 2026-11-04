@@ -2,9 +2,9 @@
 import { getCollection, render } from "astro:content";
 import ProjectFilm from "../../components/ProjectFilm.astro";
 import WorkflowDemo from "../../components/WorkflowDemo.astro";
-import ContactBlock from "../../components/ContactBlock.astro";
 import CaseNavigation from "../../components/CaseNavigation.astro";
 import { projectDemos } from "../../data/projectDemos";
+import { selectedEngineering } from "../../data/recruiter";
 import ProofGrid from "../../components/ProofGrid.astro";
 import SystemPath from "../../components/SystemPath.astro";
 import { isPublicProject, isCaseStudy, sortProjects } from "../../lib/projects";
@@ -20,6 +20,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+const engineering = selectedEngineering.find(item => item.href.startsWith(`/projects/${entry.id}/#`));
 const projects = (await getCollection("projects")).filter(isPublicProject).filter(isCaseStudy).sort(sortProjects);
 const nextProject = projects.length > 1 ? projects[(projects.findIndex(project => project.id === entry.id) + 1) % projects.length] : undefined;
 const sections = [
@@ -43,6 +44,7 @@ const hasHeaderResources = Boolean(
   ogImage={`/og/${entry.id}.png`}
   ogImageAlt={`Project preview for ${entry.data.title}`}
   schemaType="WebPage"
+  contactProject={entry.data.title}
 >
   <article class="case-study">
     <a
@@ -53,7 +55,7 @@ const hasHeaderResources = Boolean(
     </a>
 
     <header class="case-header">
-      <p class="eyebrow" data-scramble>
+      <p class="eyebrow">
         {entry.data.domain}
       </p>
       <h1 class="case-title" style={`view-transition-name: title-${entry.id}`}>
@@ -61,7 +63,7 @@ const hasHeaderResources = Boolean(
       </h1>
       {
         entry.data.summary && (
-          <p class="mt-5 text-base leading-7 text-slate-600 dark:text-slate-400 sm:mt-6 sm:text-lg sm:leading-8">
+          <p class="page-lede">
             {entry.data.summary}
           </p>
         )
@@ -86,7 +88,7 @@ const hasHeaderResources = Boolean(
               data-ph-event="outbound_link_clicked"
               data-ph-resource="github"
               data-ph-project={entry.id}
-              class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm dark:decoration-slate-700 dark:hover:text-blue-400"
+              class="inline-flex min-h-11 items-center gap-2 underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm dark:decoration-slate-700 dark:hover:text-blue-400"
             >
               Source
             </a>
@@ -101,7 +103,7 @@ const hasHeaderResources = Boolean(
               data-ph-event="outbound_link_clicked"
               data-ph-resource={entry.data.paperResource ?? "paper"}
               data-ph-project={entry.id}
-              class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm dark:decoration-slate-700 dark:hover:text-blue-400"
+              class="inline-flex min-h-11 items-center gap-2 underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm dark:decoration-slate-700 dark:hover:text-blue-400"
             >
               {entry.data.paperLabel ?? "Paper"}
             </a>
@@ -116,79 +118,55 @@ const hasHeaderResources = Boolean(
               data-ph-event="outbound_link_clicked"
               data-ph-resource="project_site"
               data-ph-project={entry.id}
-              class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm dark:decoration-slate-700 dark:hover:text-blue-400"
+              class="inline-flex min-h-11 items-center gap-2 underline decoration-slate-300 underline-offset-4 hover:text-blue-700 focus-visible:rounded-sm dark:decoration-slate-700 dark:hover:text-blue-400"
             >
-              Live site
+              Visit live product <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span>
             </a>
           )
         }
       </div>
 
-      {
-        (entry.data.setting || entry.data.status) && (
-          <dl class="case-specification">
-            {entry.data.setting && (
-              <div>
-                <dt class="font-mono text-xs text-slate-500 dark:text-slate-400">
-                  Setting
-                </dt>
-                <dd class="mt-2 text-sm leading-6 text-slate-800 dark:text-slate-200">
-                  {entry.data.setting}
-                </dd>
-              </div>
-            )}
-            {entry.data.status && (
-              <div>
-                <dt class="font-mono text-xs text-slate-500 dark:text-slate-400">
-                  Status
-                </dt>
-                <dd class="mt-2 text-sm leading-6 text-slate-800 dark:text-slate-200">
-                  {entry.data.status}
-                </dd>
-              </div>
-            )}
-          </dl>
-        )
-      }
+      <div class="case-context">
+        {entry.data.status && <p class="case-status">{entry.data.status}</p>}
+        {entry.data.setting && <p>{entry.data.setting}</p>}
+      </div>
+      <dl class="case-specification" aria-label="Engineering summary">
+        {entry.data.contribution && <div>
+          <dt>My role</dt>
+          <dd>{entry.data.contribution}</dd>
+        </div>}
+        {engineering && <div>
+          <dt>Engineering decision</dt>
+          <dd>{engineering.title}</dd>
+          <dd><a href={`#${engineering.href.split("#")[1]}`} class="text-link">Decision and evidence <span aria-hidden="true">→</span></a></dd>
+        </div>}
+        {entry.data.tech?.length && <div class="case-stack">
+          <dt>{entry.id === "full-stack-biometric-marathon" ? "Current team stack" : "Stack"}</dt>
+          <dd>{entry.data.tech.join(" · ")}</dd>
+        </div>}
+      </dl>
     </header>
 
     <div class="case-layout">
     <CaseNavigation sections={sections} />
     <div class="case-content">
     {entry.data.overview && <section id="overview" class="case-overview" aria-labelledby="overview-heading" data-reveal>
-      <p class="eyebrow">Overview</p>
       <h2 id="overview-heading" class="section-title">The problem</h2>
       <p>{entry.data.overview.problem}</p>
-      <h3>My contribution</h3>
-      <p>{entry.data.overview.built}</p>
     </section>}
     <div class="case-film"><ProjectFilm slug={entry.id} context="case" /></div>
     <WorkflowDemo project={entry.id} />
     {entry.data.proof?.length && <section id="results" class="page-section" aria-labelledby="project-evidence-heading">
-      <p class="eyebrow">Measured and implemented</p>
-      <h2 id="project-evidence-heading" class="section-title">Results, with their scope.</h2>
+      <h2 id="project-evidence-heading" class="section-title">Results</h2>
       <ProofGrid items={entry.data.proof} columns={3} class="mt-6" />
     </section>}
     {entry.data.systemPath?.length && <SystemPath steps={entry.data.systemPath} label={entry.data.systemPathLabel} heading={entry.data.systemPathHeading} description={entry.data.systemPathDescription} />}
     <section id="evidence" class="case-body" aria-label="Details and evidence"><Content /></section>
 
-    {
-      entry.data.tech && entry.data.tech.length > 0 && (
-        <section class="border-t border-slate-200 pt-8 dark:border-slate-800" aria-labelledby="technologies-heading">
-          <h2 id="technologies-heading" class="text-lg font-semibold text-slate-950 dark:text-white">
-            Technologies
-          </h2>
-          <p class="mt-3 font-mono text-[0.8125rem] leading-6 text-slate-500 dark:text-slate-400">
-            {entry.data.tech.join(" · ")}
-          </p>
-        </section>
-      )
-    }
     {nextProject && <section class="next-case" aria-labelledby="next-case-heading">
       <p class="eyebrow">Continue exploring</p>
       <a href={`/projects/${nextProject.id}/`} class="related-project" data-ph-event="project_opened" data-ph-project={nextProject.id} data-ph-placement="related_project"><h2 id="next-case-heading">{nextProject.data.title}</h2><span aria-hidden="true">↗</span></a>
     </section>}
-    <ContactBlock project={entry.data.title} compact />
     </div>
     </div>
   </article>
@@ -196,14 +174,19 @@ const hasHeaderResources = Boolean(
 
 <style>
   .case-study { max-width: 72rem; margin-inline: auto; }
-  .case-header { margin-top: 2.25rem; padding-bottom: 1.5rem; }
+  .case-header { margin-top: 1.5rem; padding-bottom: 1.5rem; }
   .case-title { max-width: 21ch; margin-top: 1rem; font-family: var(--font-display, Georgia, serif); font-size: clamp(2.75rem, 6vw, 5rem); font-weight: 400; line-height: 1.06; letter-spacing: -.035em; color: var(--ink); text-wrap: balance; }
   .case-header > p { max-width: 64ch; }
-  .case-specification { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 2rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-2, var(--surface)); overflow: hidden; }
+  .case-context { margin-top: 1rem; color: var(--muted); font-size: .8125rem; line-height: 1.8; }
+  .case-status { color: var(--ink); font-weight: 550; }
+  .case-specification { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 1.5rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-2, var(--surface)); overflow: hidden; }
   .case-specification > div { padding: 1.25rem; }
   .case-specification > div + div { border-left: 1px solid var(--line); }
-  .case-specification dt { text-transform: uppercase; font-size: .65rem; letter-spacing: .09em; }
-  .case-specification dd { color: var(--ink); }
+  .case-specification dt { color: var(--muted); font-family: var(--font-mono); text-transform: uppercase; font-size: .65rem; letter-spacing: .09em; }
+  .case-specification dd { margin-top: .5rem; color: var(--ink); font-size: .875rem; line-height: 1.75; }
+  .case-specification .text-link { font-size: .75rem; }
+  .case-specification > .case-stack { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--line); }
+  .case-stack dd { color: var(--copy); font-family: var(--font-mono); font-size: .75rem; }
   .case-film { margin-top: 2rem; }
   .case-layout { display: grid; grid-template-columns: minmax(0, 1fr); min-width: 0; }
   .case-content { min-width: 0; }

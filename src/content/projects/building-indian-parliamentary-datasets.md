@@ -6,7 +6,7 @@ order: 2
 visibility: 'public'
 tech: ['Python', 'Selenium', 'SQLite', 'Amazon Transcribe', 'Amazon Translate', 'Amazon S3', 'PyMuPDF']
 summary: "Restartable pipelines that turn campaign audio and parliamentary documents into structured research data."
-contribution: "I evaluated speech and translation tools at Studio Lab, built the production speech pipeline at IBS, then built the parliamentary-archive pipeline at Princeton."
+contribution: "I evaluated speech tools at Studio Lab, built the production speech pipeline at IBS, and built Princeton’s parliamentary-data pipeline."
 setting: "CU Boulder Studio Lab and IBS · Princeton University"
 status: "Princeton appointment completed · May 2026"
 proof:
@@ -39,23 +39,21 @@ overview:
 
 ## Studio Lab: evaluation phase
 
-At CU Boulder’s Studio Lab, my primary work was comparative research. I designed word-error-rate evaluations across Deepgram, Google Speech-to-Text, Amazon Transcribe, and Azure Speech, then set up parallel translation comparisons across Google Cloud Translation, Amazon Translate, and Azure Translator. I also researched configuration and language-adaptation options for political names and domain-specific vocabulary.
-
-The goal was not to promote one vendor. It was to understand how standard tools behaved on the project’s material and identify which components fit the workflow.
+At CU Boulder’s Studio Lab, I compared speech services using word error rate and evaluated translation services from Google, AWS, and Azure. Speech tools included Deepgram, Google Speech-to-Text, Amazon Transcribe, and Azure Speech. I also researched language adaptation for political names and domain vocabulary.
 
 ## IBS: production speech pipeline (2024)
 
-Back under my IBS appointment, I turned the evaluation into a production pipeline. I collected rally speeches from the 2014 and 2019 campaigns and, as the 2024 election unfolded, a 2024 election-period corpus (182 videos): more than 300 speeches and 200+ hours (40+ GB) of audio in all. I resampled the audio to 16 kHz WAV, staged it in S3, and transcribed and translated it with Amazon Transcribe and Amazon Translate; the 2024 run alone covered 181 speeches (about 110 hours).
+At IBS, I built the production pipeline for 2014, 2019, and 2024 campaign speeches: more than 300 speeches and 200+ hours (40+ GB) of audio in all. I resampled audio to 16 kHz WAV, staged it in S3, and used Amazon Transcribe and Translate. Of 182 videos collected for the 2024 corpus, the run transcribed and translated 181 speeches (about 110 hours).
 
 A custom language model trained on about 110K words of official Hindi transcripts lowered word error rate from 40.1% to 30.1% on one held-out speech. That is a single-speech check, not a corpus-wide benchmark, and the references are edited official texts rather than verbatim transcripts. Transcripts were linked back to video metadata by fuzzy title matching. Total AWS spend was about $216.
 
 ## Princeton: engineering phase
 
-Under the later Princeton appointment, I built the scraping logic and orchestrated the archive workflow end to end for Indian parliamentary records spanning 1951 through 2024. That included dynamic Parliament Digital Library pagination, resumable SQLite state across multi-day runs, OCR evaluation, PDF text extraction with PyMuPDF, and structured outputs for further analysis.
+At Princeton, I built archive collection and processing for parliamentary records spanning 1951–2024. The workflow handled dynamic pagination, resumable SQLite state across multi-day runs, OCR evaluation, and PDF extraction with PyMuPDF.
 
 One retained checkpoint database contains 2,526 Lok Sabha debate records from 1985 through 2024 (8th through 18th Lok Sabha). This snapshot represents part of the project's broader archival coverage.
 
-I parsed thousands of parliamentary statements and used fuzzy matching to map inconsistent ministry names into a standardized research representation. Checkpoints and intermediate artifacts made long-running jobs restartable and kept transformations open to review.
+I parsed thousands of parliamentary statements and used fuzzy matching to standardize ministry names. Saved checkpoints and intermediate outputs made jobs restartable and transformations reviewable.
 
 ## Engineering decisions
 

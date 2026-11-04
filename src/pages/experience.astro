@@ -1,6 +1,5 @@
 ---
 import { getCollection, render } from "astro:content";
-import ContactBlock from "../components/ContactBlock.astro";
 import ExperienceItem from "../components/ExperienceItem.astro";
 import { isPublicExperience } from "../lib/projects";
 import BaseLayout from "../layouts/BaseLayout.astro";
@@ -16,15 +15,16 @@ const experience = await Promise.all(
 <BaseLayout
   title="Experience — Vraj Patel"
   description="Systems integration, backend, data, and machine-learning experience across CU Boulder, Purdue, and L3Harris."
+  contact
 >
-  <header class="experience-header max-w-3xl pb-10 sm:pb-14" data-reveal>
-    <p class="eyebrow" data-scramble>Career</p>
-    <h1 class="mt-3 text-4xl font-semibold tracking-[-0.035em] text-slate-950 dark:text-white sm:text-5xl">
+  <header class="page-header">
+    <p class="eyebrow">Career</p>
+    <h1 class="page-title">
       Experience
     </h1>
-    <p class="mt-5 text-lg leading-8 text-slate-600 dark:text-slate-400">
-      Systems integration and data engineering at CU Boulder and Princeton,
-      alongside satellite cybersecurity research through Purdue and L3Harris.
+    <p class="page-lede">
+      Engineering and research at CU Boulder and Princeton, and through
+      Purdue’s collaboration with L3Harris.
     </p>
   </header>
 
@@ -37,10 +37,8 @@ const experience = await Promise.all(
       ))
     }
   </section>
-  <ContactBlock />
 </BaseLayout>
 
 <style>
-  .experience-header h1 { font-family: var(--font-display, Georgia, serif); font-size: clamp(3.5rem, 7vw, 5.5rem); line-height: 1.05; font-weight: 400; color: var(--ink); }
   .experience-timeline { max-width: 64rem; }
 </style>

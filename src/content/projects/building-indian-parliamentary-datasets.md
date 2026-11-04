@@ -1,19 +1,19 @@
 ---
 title: 'Indian Parliamentary Data'
-domain: 'Research'
+domain: 'Data Engineering'
 featured: true
 order: 2
 visibility: 'public'
-tech: ['Python', 'Selenium', 'SQLite', 'AWS', 'Google Cloud', 'Azure', 'Deepgram', 'PyMuPDF']
-summary: "A restartable pipeline that turns parliamentary documents and campaign audio into structured research data."
-contribution: "I evaluated speech and translation tools at Studio Lab, then built the end-to-end pipeline at Princeton."
-setting: "CU Boulder Studio Lab · Princeton University"
+tech: ['Python', 'Selenium', 'SQLite', 'Amazon Transcribe', 'Amazon Translate', 'Amazon S3', 'PyMuPDF']
+summary: "Restartable pipelines that turn campaign audio and parliamentary documents into structured research data."
+contribution: "I evaluated speech tools at Studio Lab, built the production speech pipeline at IBS, and built Princeton’s parliamentary-data pipeline."
+setting: "CU Boulder Studio Lab and IBS · Princeton University"
 status: "Princeton appointment completed · May 2026"
 proof:
-  - value: "40+ GB of audio"
-    label: "2014 and 2019 campaign recordings processed after tool evaluation."
-  - value: "Multi-decade archives"
-    label: "Lok Sabha and Rajya Sabha records collected for research."
+  - value: "200+ hours of audio"
+    label: "40+ GB of 2014, 2019, and 2024 campaign speeches; the 2024 run alone transcribed and translated 181 (about 110 hours)."
+  - value: "40.1% → 30.1% WER"
+    label: "Custom language model result on one held-out speech, before the full 2024 run."
   - value: "Thousands of PDFs"
     label: "Parliamentary statements parsed and mapped to standardized ministry names."
 systemPath:
@@ -22,10 +22,10 @@ systemPath:
     technical: 'At Studio Lab, I set up WER-oriented comparisons across Deepgram, Google Speech-to-Text, Amazon Transcribe, and Azure Speech, plus translation comparisons across Google, AWS, and Azure services.'
   - title: 'Archive scraping'
     purpose: 'Dynamic parliamentary pages and documents become a recoverable source collection.'
-    technical: 'At Princeton, I built the Selenium scraping logic, handled pagination, and persisted progress in SQLite so long collection runs could resume.'
-  - title: 'End-to-end orchestration'
-    purpose: 'Audio, page metadata, and documents move through one inspectable research workflow.'
-    technical: 'The workflow coordinates source capture, speech and translation processing, PDF text extraction, and intermediate artifacts instead of relying on disconnected one-off scripts.'
+    technical: 'At Princeton, I built Selenium collection workflows for Indian parliamentary records spanning 1951 through 2024, handled pagination, and persisted progress in SQLite so long collection runs could resume.'
+  - title: 'Speech pipeline'
+    purpose: 'Campaign audio becomes transcripts and English translations that researchers can analyze.'
+    technical: 'At IBS in 2024, YouTube audio was resampled to 16 kHz WAV, staged in S3, and transcribed with an Amazon Transcribe custom language model trained on about 110K words of official Hindi transcripts. An S3 job manifest let reruns skip completed files, and byte-aware chunking kept requests within Amazon Translate limits. Total AWS spend was about $216, roughly $0.03 per audio-minute.'
   - title: 'Data structuring'
     purpose: 'Inconsistent records become formats that researchers can inspect and analyze.'
     technical: 'PyMuPDF extraction, metadata normalization, and fuzzy ministry-name mapping produce structured outputs for downstream analysis.'
@@ -34,20 +34,26 @@ systemPath:
     technical: 'Saved state, intermediate outputs, and reviewable mappings keep processing recoverable and normalization decisions auditable.'
 overview:
   problem: "Political archives span dynamic pages, long recordings, PDFs, and inconsistent ministry names. Researchers need traceable outputs without restarting hours of collection after an interruption."
-  built: "I designed comparative speech and translation evaluations at Studio Lab. In a later Princeton appointment, I built archive scraping, orchestration, PDF extraction, normalization, and resumable processing."
+  built: "I designed comparative speech and translation evaluations at Studio Lab, built the production Amazon Transcribe pipeline at IBS in 2024, and later built archive scraping, PDF extraction, normalization, and resumable processing under a Princeton appointment."
 ---
 
 ## Studio Lab: evaluation phase
 
-At CU Boulder’s Studio Lab, my primary work was comparative research. I designed word-error-rate evaluations across Deepgram, Google Speech-to-Text, Amazon Transcribe, and Azure Speech, then set up parallel translation comparisons across Google Cloud Translation, Amazon Translate, and Azure Translator. I also researched configuration and language-adaptation options for political names and domain-specific vocabulary.
+At CU Boulder’s Studio Lab, I compared speech services using word error rate and evaluated translation services from Google, AWS, and Azure. Speech tools included Deepgram, Google Speech-to-Text, Amazon Transcribe, and Azure Speech. I also researched language adaptation for political names and domain vocabulary.
 
-The goal was not to promote one vendor. It was to understand how standard tools behaved on the project’s material and identify which components fit the workflow.
+## IBS: production speech pipeline (2024)
+
+At IBS, I built the production pipeline for 2014, 2019, and 2024 campaign speeches: more than 300 speeches and 200+ hours (40+ GB) of audio in all. I resampled audio to 16 kHz WAV, staged it in S3, and used Amazon Transcribe and Translate. Of 182 videos collected for the 2024 corpus, the run transcribed and translated 181 speeches (about 110 hours).
+
+A custom language model trained on about 110K words of official Hindi transcripts lowered word error rate from 40.1% to 30.1% on one held-out speech. That is a single-speech check, not a corpus-wide benchmark, and the references are edited official texts rather than verbatim transcripts. Transcripts were linked back to video metadata by fuzzy title matching. Total AWS spend was about $216.
 
 ## Princeton: engineering phase
 
-Under the later Princeton appointment, I built the scraping logic and orchestrated the workflow end to end. That included dynamic Parliament Digital Library pagination, resumable SQLite state, speech and translation processing for more than 40 GB of 2014 and 2019 campaign audio, PDF text extraction with PyMuPDF, and structured outputs for further analysis.
+At Princeton, I built archive collection and processing for parliamentary records spanning 1951–2024. The workflow handled dynamic pagination, resumable SQLite state across multi-day runs, OCR evaluation, and PDF extraction with PyMuPDF.
 
-I parsed thousands of parliamentary statements and used fuzzy matching to map inconsistent ministry names into a standardized research representation. Checkpoints and intermediate artifacts made long-running jobs restartable and kept transformations open to review.
+One retained checkpoint database contains 2,526 Lok Sabha debate records from 1985 through 2024 (8th through 18th Lok Sabha). This snapshot represents part of the project's broader archival coverage.
+
+I parsed thousands of parliamentary statements and used fuzzy matching to standardize ministry names. Saved checkpoints and intermediate outputs made jobs restartable and transformations reviewable.
 
 ## Engineering decisions
 
@@ -55,8 +61,8 @@ I parsed thousands of parliamentary statements and used fuzzy matching to map in
 - Persist collection state so interrupted sessions can resume near the failure rather than restarting.
 - Keep raw source material, intermediate text, and normalized outputs distinct so transformations can be inspected.
 - Treat source text and fuzzy matching as assistive normalization inputs that still need review, not unquestioned ground truth.
-- Separate the campaign-audio corpus from the parliamentary-document corpus so scale and date claims are not merged.
+- Separate the campaign-audio corpora (2014, 2019, and 2024) from the parliamentary-document corpus so scale and date claims are not merged.
 
 ## Research context
 
-This project spanned two separate paid appointments: Studio Lab at CU Boulder (January 21–April 13, 2024) and Princeton (January 15, 2025–May 2026), with continued research collaboration between them. [Experience](/experience) lists the roles and their distinct contributions.
+This project spanned three appointments: Studio Lab at CU Boulder (January 21–April 13, 2024), my IBS research appointment (production speech pipeline, 2024), and Princeton (January 15, 2025–May 2026). [Experience](/experience/) lists the roles and their distinct contributions.

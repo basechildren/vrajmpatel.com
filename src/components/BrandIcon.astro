@@ -1,0 +1,6 @@
+---
+import { Icon } from "astro-icon/components";
+interface Props { network: "github" | "linkedin"; }
+const { network } = Astro.props;
+---
+<Icon name={`fa6-brands:${network === "linkedin" ? "linkedin-in" : "github"}`} size={16} aria-hidden="true" focusable="false" class="brand-icon" />

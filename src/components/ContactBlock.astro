@@ -1,12 +1,9 @@
 ---
-interface Props { project?: string; compact?: boolean; }
-const { project, compact = false } = Astro.props;
+import BrandIcon from "./BrandIcon.astro";
+interface Props { project?: string; }
+const { project } = Astro.props;
 ---
-<section id="contact" class:list={["contact-block", compact && "contact-block--compact"]} aria-labelledby="contact-heading" data-reveal>
-  <div>
-    <p class="eyebrow">Get in touch</p>
-    <h2 id="contact-heading" class="section-title">{project ? "Discuss this project." : "Let’s talk about the work."}</h2>
-    <p class="muted-copy">{project ? `Questions about ${project}, the tradeoffs, or my contribution?` : "For engineering opportunities or project questions."}</p>
-  </div>
-  <a class="button-primary" href="https://www.linkedin.com/in/vrajmp/" target="_blank" rel="noopener noreferrer" data-ph-event="social_profile_clicked" data-ph-network="linkedin" data-ph-placement="contact">Message me on LinkedIn</a>
+<section id="contact" class="contact-block" aria-labelledby="contact-heading">
+  <h2 id="contact-heading" class="section-title">{project ? "Discuss this project." : "Get in touch."}</h2>
+  <a class="button-primary" href="https://www.linkedin.com/in/vrajmp/" target="_blank" rel="noopener noreferrer" data-ph-event="social_profile_clicked" data-ph-network="linkedin" data-ph-placement="contact"><BrandIcon network="linkedin" />Message me on LinkedIn</a>
 </section>

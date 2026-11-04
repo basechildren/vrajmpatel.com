@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import icon from 'astro-icon';
 
 import tailwindcss from '@tailwindcss/vite';
 
@@ -19,9 +20,13 @@ const devFilmRoutes = {
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.vrajmpatel.com',
+  trailingSlash: 'ignore',
+  prefetch: true,
 
   vite: {
     plugins: [tailwindcss()],
   },
-  integrations: [sitemap(), devFilmRoutes],
+  integrations: [sitemap({
+    serialize: (page) => ({ ...page, url: page.url.replace(/\/?$/, '/') }),
+  }), icon({ iconDir: 'src/assets', include: { 'fa6-brands': ['github', 'linkedin-in'] } }), devFilmRoutes],
 });

@@ -1,25 +1,26 @@
 ---
-title: 'SeeMyRace: Multimodal Race Photo Search'
+title: 'SeeMyRace'
 domain: 'Software Engineering'
 featured: true
 order: 3
 visibility: 'public'
 tech: ['Flask', 'PostgreSQL + pgvector', 'InsightFace / ArcFace', 'PaddleOCR', 'YOLOv8', 'Google Drive API', 'Docker']
 privateRepo: true
-summary: "A team-built application for finding race photos by bib or selfie and reviewing uncertain matches."
+link: 'https://seemyrace.ecolocate.org/'
+summary: "Find race photos by bib number or selfie, then review uncertain matches."
 contribution: "I built athlete verification, GPX race creation, and upload/search workflows, and evaluated OCR approaches."
-setting: "Collaborative academic project"
-status: 'Private repository'
+setting: "Team capstone at CU Boulder · continued as a commercial product"
+status: 'Live production service · Private repository'
 systemPathLabel: 'Current team architecture'
-systemPathHeading: 'How the multimodal retrieval system works'
-systemPathDescription: 'Independent bib and face signals, scoped by race, end in athlete review.'
+systemPathHeading: 'From race photos to candidate matches'
+systemPathDescription: 'Bib and face searches stay scoped to a race; athletes review the results.'
 proof:
   - value: "Athlete review"
     label: "My confirm/deny workflow records a decision for each signed-in user."
   - value: "GPX race creation"
     label: "My upload and validation work connects course metadata to a race."
   - value: "32 commits · 7 merged PRs"
-    label: "Supporting contribution evidence across 24 paths, including upload/search workflows."
+    label: "Changes across 24 paths, including upload and search workflows."
 systemPath:
   - title: 'Idempotent photo intake'
     purpose: 'Race photos synchronize from Google Drive without exposing partially processed images.'
@@ -38,16 +39,16 @@ systemPath:
     technical: 'Face and bib candidates are unioned, deduplicated, and linked to the signed-in user. I implemented the user-scoped confirm/deny workflow and persisted its pending, confirmed, or denied state with a verification timestamp.'
 overview:
   problem: "Faces and bib numbers can be blurred, hidden, or partially visible in race photos. Athletes need candidate matches they can inspect and correct."
-  built: "I contributed the authenticated confirm/deny workflow, GPX-backed race creation, substantial upload/search interface work, and OCR/SWT evaluation. The current detection and retrieval pipeline also includes later work by other team members."
+  built: "I contributed the authenticated confirm/deny workflow, GPX-backed race creation, upload/search interfaces, and OCR/SWT evaluation. Other team members later extended the detection and retrieval pipeline."
 ---
 
 ## Engineering highlights
 
-- **Shipped across the full stack.** Authored 32 commits on current `main`—27 direct change commits across 24 paths—with work landing through seven merged pull requests spanning Flask routes, Peewee persistence, Jinja templates, JavaScript, CSS, validation, and user-facing error handling.
-- **Moved the admin portal from requirements to implementation.** Defined the portal requirements and Figma direction, requested a distinct Jira implementation ticket, then co-developed its Flask/Jinja backend and UI integration with user-facing feedback states.
-- **Connected model output to user judgment.** Implemented an authenticated confirm/deny workflow that persists a timestamped, per-user review state, turning uncertain automated matches into auditable feedback and a foundation for future threshold analysis.
-- **Added race-course context safely.** Integrated GPX uploads into race creation with an extension allowlist, sanitized filenames, stored course metadata, and matching form and backend changes.
-- **Investigated bib-recognition failure modes.** Contributed Canny-backed SWT/Tesseract and cross-OCR exploration that documented tradeoffs around motion blur, glare, candidate-region isolation, and character filtering before the team’s later body-first PaddleOCR pipeline.
+- **Full-stack delivery.** Authored 32 commits on `main`, including 27 direct change commits across 24 paths and seven merged PRs. Work spanned Flask routes, Peewee persistence, Jinja templates, JavaScript, CSS, validation, and error handling.
+- **Admin portal.** Defined requirements and the Figma direction, then co-developed the Flask/Jinja backend and interface.
+- **Athlete review.** Built an authenticated confirm/deny workflow with a timestamped review state for each user.
+- **Race creation.** Added GPX uploads with an extension allowlist, sanitized filenames, course metadata, and matching form and backend validation.
+- **Bib-recognition research.** Evaluated SWT/Tesseract and other OCR approaches against blur, glare, crop selection, and character filtering before the team adopted its body-first PaddleOCR pipeline.
 
 ## Architecture decisions
 
@@ -66,8 +67,10 @@ The web, OCR, orchestration, and data layers use Flask, Jinja, YOLOv8, PaddleOCR
 
 ## Scope and evidence
 
-This was a collaborative system, and the current YOLOv8, PaddleOCR, InsightFace, and pgvector implementation includes work added by other team members after my direct contribution window. My verified ownership is the review workflow, GPX-backed race creation, substantial upload/search interface work, and OCR/SWT evaluation described above.
+The current detection and retrieval pipeline includes work added by teammates after my contribution window. My work covered athlete review, GPX race creation, upload/search interfaces, and OCR/SWT evaluation.
 
-The repository does not contain a controlled, labeled before-and-after accuracy study.
+Team-measured during the capstone, on the earlier 128-dimension pipeline: pgvector face search in under 50 ms, under 100 ms of UI latency during asynchronous bulk uploads, and about 30% higher athlete recall on hard images (glare, truncated or crumpled bibs) from combining face embeddings with adaptive-threshold bib OCR. These were team measurements, not a controlled, labeled study stored in the repository.
+
+After the capstone, SeeMyRace continued as a commercial service at [seemyrace.ecolocate.org](https://seemyrace.ecolocate.org/).
 
 The repository remains private, so this public case study omits team-owned datasets, biometric examples, credentials, and internal screenshots.

@@ -1,4 +1,5 @@
 import type { OrganizationMark } from "./organizationMarks";
+import resumeContent from "./resumeContent.json";
 
 interface Affiliation {
   discipline: "Engineering" | "Research";
@@ -13,15 +14,18 @@ interface GitHubProfile {
 }
 
 export const profile = {
-  name: "Vraj Patel",
-  location: "Boulder, Colorado",
-  role: "Systems Integration Engineer",
+  name: resumeContent.person.name,
+  location: resumeContent.person.location,
+  role: resumeContent.person.role,
+  description: resumeContent.person.description,
+  site: resumeContent.person.site,
+  linkedin: resumeContent.person.linkedin,
   employer: {
     name: "Institute of Behavioral Science",
     parent: "University of Colorado Boulder",
     short: "CU Boulder · Institute of Behavioral Science",
   },
-  education: "Dual M.S. · Computer Science + Engineering Management",
+  education: resumeContent.person.education,
   githubProfiles: [
     {
       label: "Personal GitHub",

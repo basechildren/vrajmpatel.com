@@ -16,6 +16,7 @@ const {
   variant = "rich",
 } = Astro.props;
 const Heading = headingLevel;
+const featuredProof = entry.data.proof?.[entry.id === "full-stack-biometric-marathon" ? 2 : 0];
 const technologies = entry.data.tech?.slice(0, 4) ?? [];
 const showPrivateLabel =
   entry.data.privateRepo &&
@@ -31,25 +32,27 @@ const hasRichActions = Boolean(
 
 {
   variant === "feature" ? (
-    <article class="project-feature" data-reveal data-spotlight>
+    <article class="project-feature" data-reveal>
       <div class="project-feature-copy">
         <p class="eyebrow">{entry.data.domain}</p>
         <div class="project-feature-title">
           <Heading style={`view-transition-name: title-${entry.id}`}>
-            <a href={`/projects/${entry.id}`} data-ph-event="project_opened" data-ph-project={entry.id} data-ph-placement="project_list">{entry.data.title}</a>
+            <a href={`/projects/${entry.id}/`} data-astro-prefetch data-ph-event="project_opened" data-ph-project={entry.id} data-ph-placement="project_list">{entry.data.title}</a>
           </Heading>
           <span class="project-arrow" aria-hidden="true">↗</span>
         </div>
         <p class="project-feature-summary">{entry.data.summary}</p>
-        {entry.data.contribution && <p class="project-feature-summary">{entry.data.contribution}</p>}
-        {entry.data.proof?.[0] && (
+        {entry.data.contribution && <p class="project-feature-contribution">{entry.data.contribution}</p>}
+        {technologies.length > 0 && <p class="project-feature-stack">{technologies.join(" · ")}</p>}
+        {featuredProof && (
           <p class="project-feature-proof">
-            <strong class="font-medium">{entry.data.proof[0].value}</strong>
-            <span class="mt-1 block font-sans text-xs leading-relaxed">{entry.data.proof[0].label}</span>
+            <strong class="font-medium">{featuredProof.value}</strong>
+            <span class="mt-1 block font-sans text-xs leading-relaxed">{featuredProof.label}</span>
           </p>
         )}
         <div class="project-action">
-          <a href={`/projects/${entry.id}`} class="text-link" data-ph-event="project_opened" data-ph-project={entry.id} data-ph-placement="project_list_action">View case study <span aria-hidden="true" class="ml-2">→</span></a>
+          <a href={`/projects/${entry.id}/`} data-astro-prefetch class="text-link" data-ph-event="project_opened" data-ph-project={entry.id} data-ph-placement="project_list_action">View case study <span aria-hidden="true">→</span></a>
+          {entry.data.link && <a href={entry.data.link} class="text-link" target="_blank" rel="noopener noreferrer" data-ph-event="outbound_link_clicked" data-ph-resource="project_site" data-ph-project={entry.id}>Visit live product <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>}
         </div>
       </div>
       <ProjectFilm slug={entry.id} context="card" />
@@ -65,7 +68,7 @@ const hasRichActions = Boolean(
       </div>
       <div class="min-w-0">
         <a
-          href={`/projects/${entry.id}`}
+          href={`/projects/${entry.id}/`}
           data-ph-event="project_opened"
           data-ph-project={entry.id}
           data-ph-placement="project_list"
@@ -90,7 +93,7 @@ const hasRichActions = Boolean(
           </p>
         )}
         <a
-          href={`/projects/${entry.id}`}
+          href={`/projects/${entry.id}/`}
           data-ph-event="project_opened"
           data-ph-project={entry.id}
           data-ph-placement="project_list_action"
@@ -119,7 +122,7 @@ const hasRichActions = Boolean(
 
       <div class="min-w-0">
         <a
-          href={`/projects/${entry.id}`}
+          href={`/projects/${entry.id}/`}
           data-ph-event="project_opened"
           data-ph-project={entry.id}
           data-ph-placement="project_list"

@@ -25,7 +25,7 @@ test("every displayed command resolves to its actual link destination from every
       const command = getNavigationCommand(current, path);
       const argument = command.slice(3);
       const destination = argument === "~" ? "/" : argument.startsWith("~/") ? posix.resolve("/", argument.slice(2)) : posix.resolve(current, argument);
-      assert.equal(destination, path, `${current} → ${path}: ${command}`);
+      assert.equal(destination, path.replace(/\/$/, "") || "/", `${current} → ${path}: ${command}`);
     }
   }
 });

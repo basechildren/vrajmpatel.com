@@ -28,6 +28,7 @@ const projects = defineCollection({
     domain: z.enum([
       'Machine Learning',
       'Software Engineering',
+      'Data Engineering',
       'Systems Infrastructure',
       'Research',
     ]),

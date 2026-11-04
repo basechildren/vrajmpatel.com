@@ -70,10 +70,34 @@ that browser to normal collection with `?analytics_mode=live`.
 
 ## Checks
 
+### Resume content and discovery
+
+`src/data/resumeContent.json` holds the curated facts and selections for the
+software, data, ML, and master resumes. The three focused PDFs are one page;
+the master is two pages. `/resume.pdf` is the software version. Regenerate all
+PDFs after editing the content:
+
+```bash
+uv run --python 3.14 --with reportlab==5.0.1 --with pypdf==6.16.2 python scripts/build-resumes.py
+```
+
+The builder checks page counts, extractable text, document tags, and public
+contact boundaries. Review rendered pages before committing regenerated PDFs.
+The same source generates the four `/resumes/*.md` endpoints during the site
+build. `src/lib/discovery.ts` also builds `/llms.txt`, `/profile.md`,
+`/llms-full.txt`, and Markdown copies of the three published case studies.
+Archived project routes stay unpublished. These discovery files supplement the
+canonical HTML, structured data, and sitemap; they do not guarantee indexing
+or search placement.
+
+### Validation
+
 ```bash
 pnpm test
+pnpm test:media
 pnpm check
 pnpm build
+pnpm test:site
 pnpm audit --prod --audit-level=moderate
 pnpm privacy:check
 ```

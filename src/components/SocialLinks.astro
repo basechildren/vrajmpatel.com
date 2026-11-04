@@ -1,0 +1,8 @@
+---
+import BrandIcon from "./BrandIcon.astro";
+import { profile } from "../data/profile";
+interface Props { includeLinkedIn?: boolean; placement: "footer" | "menu"; }
+const { includeLinkedIn = true, placement } = Astro.props;
+---
+{includeLinkedIn && <a class="social-link" href={profile.linkedin} target="_blank" rel="noopener noreferrer" data-ph-event="social_profile_clicked" data-ph-network="linkedin" data-ph-placement={placement}><BrandIcon network="linkedin" /><span>LinkedIn</span></a>}
+{profile.githubProfiles.map(({ href, label, username }) => <a class="social-link" href={href} target="_blank" rel="noopener noreferrer" data-ph-event="social_profile_clicked" data-ph-network="github" data-ph-account={username} data-ph-placement={placement}><BrandIcon network="github" /><span>{label}</span></a>)}

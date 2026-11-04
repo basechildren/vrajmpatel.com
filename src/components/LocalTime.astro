@@ -1,0 +1,29 @@
+---
+interface Props { location: string; }
+const { location } = Astro.props;
+---
+<p class="footer-location">
+  <span>{location}</span><span class="footer-local-time" data-local-clock hidden> · <time data-mountain-clock></time></span>
+</p>
+<script>
+  const clock = document.querySelector<HTMLTimeElement>("[data-mountain-clock]");
+  const label = document.querySelector<HTMLElement>("[data-local-clock]");
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Denver", hour: "numeric", minute: "2-digit", hour12: true,
+  });
+  let timer: number | undefined;
+  const stop = () => window.clearTimeout(timer);
+  const update = () => {
+    stop();
+    if (!clock || !label || document.hidden) return;
+    const now = new Date();
+    clock.dateTime = now.toISOString();
+    clock.textContent = `${formatter.format(now)} MT`;
+    label.hidden = false;
+    timer = window.setTimeout(update, 60000 - now.getTime() % 60000);
+  };
+  update();
+  document.addEventListener("visibilitychange", update);
+  window.addEventListener("pagehide", stop);
+  window.addEventListener("pageshow", update);
+</script>

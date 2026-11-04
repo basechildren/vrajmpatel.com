@@ -1,12 +1,11 @@
 ---
 import { Image } from "astro:assets";
+import portrait from "../assets/profile.jpg";
 import { getCollection } from "astro:content";
 import ExperienceItem from "../components/ExperienceItem.astro";
 import ProofGrid from "../components/ProofGrid.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import { profile } from "../data/profile";
-import ContactBlock from "../components/ContactBlock.astro";
-import SystemFlow from "../components/SystemFlow.astro";
 import { proofPoints } from "../data/recruiter";
 import {
   isCaseStudy,
@@ -27,45 +26,42 @@ const recentExperience = (await getCollection("experience"))
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 4);
 ---
-<BaseLayout title="Vraj Patel — Systems Integration Engineer" description="Backend services, data pipelines, and applied ML systems built by Vraj Patel at CU Boulder." schemaType="Person">
+<BaseLayout title="Vraj Patel — Systems Integration Engineer | Data and ML" description={profile.description} schemaType="Person" contact>
   <section class="home-intro" aria-labelledby="intro-heading">
     <div class="home-intro-copy">
       <div class="home-identity">
-        <Image src="/profile.jpg" alt="Portrait of Vraj Patel" width={88} height={88} class="home-portrait" loading="eager" />
-        <p class="eyebrow"><span class="home-role" data-scramble>{profile.role}</span><br />{profile.location}</p>
+        <Image src={portrait} alt="Portrait of Vraj Patel" width={88} height={88} format="webp" class="home-portrait" loading="eager" />
+        <p class="eyebrow"><span class="home-role">{profile.role}</span><br />{profile.location}</p>
       </div>
       <h1 id="intro-heading" class="home-name" data-intro>{profile.name}</h1>
-      <p class="home-statement" data-split>I build backend services, <em class="display-accent">data pipelines,</em> and tools for support operations.</p>
-      <p class="muted-copy">At CU Boulder’s Institute of Behavioral Science. My work connects Python, SQL, applied ML, and the people who use the results.</p>
+      <p class="home-statement">I build reliable software, <em class="display-accent">data pipelines,</em> and applied ML systems.</p>
+      <p class="muted-copy">Python, TypeScript, and SQL for research and operations at CU&nbsp;Boulder.</p>
       <nav class="action-row" aria-label="Explore my work">
-        <a href="#selected-work" class="button-primary">Explore the work <span aria-hidden="true" class="ml-3">↗</span></a>
-        <a href="/brief" class="text-link" data-ph-event="recruiter_brief_opened" data-ph-placement="hero">Recruiter brief</a>
-        <a href="#contact" class="text-link">Contact</a>
+        <a href="#selected-work" class="button-primary">Explore the work <span aria-hidden="true">↗</span></a>
+        <a href="/resume/" class="text-link">Choose a resume</a>
+        <a href="/brief/" class="text-link" data-ph-event="recruiter_brief_opened" data-ph-placement="hero">Recruiter brief</a>
       </nav>
     </div>
-    <div class="home-system"><SystemFlow placement="hero" /></div>
   </section>
 
   <section id="selected-work" class="page-section" aria-labelledby="work-heading">
     <div class="section-heading" data-reveal>
-      <div><p class="eyebrow" data-scramble>01 / Selected work</p><h2 id="work-heading" class="section-title">Three systems. Different problems.</h2></div>
-      <a href="/projects" class="text-link">All case studies</a>
+      <div><p class="eyebrow">01 / Projects</p><h2 id="work-heading" class="section-title">Selected work</h2></div>
+      <a href="/projects/" class="text-link">All case studies</a>
     </div>
     <div class="work-bento">{featured.map(entry => <ProjectCard entry={entry} headingLevel="h3" variant="feature" />)}</div>
   </section>
-  <div class="home-system-after-work"><SystemFlow placement="after-work" /></div>
 
   <section class="page-section" aria-labelledby="proof-heading">
-    <div data-reveal><p class="eyebrow">02 / Evidence at a glance</p><h2 id="proof-heading" class="section-title">Results with context.</h2></div>
+    <div data-reveal><p class="eyebrow">02 / Results</p><h2 id="proof-heading" class="section-title">Results with context</h2></div>
     <ProofGrid items={proofPoints} class="mt-6" />
   </section>
 
   <section class="page-section" aria-labelledby="experience-heading">
     <div class="section-heading" data-reveal>
-      <div><p class="eyebrow">03 / Career</p><h2 id="experience-heading" class="section-title">Engineering and research.</h2></div>
-      <a href="/experience" class="text-link">Full experience</a>
+      <div><p class="eyebrow">03 / Career</p><h2 id="experience-heading" class="section-title">Engineering and research</h2></div>
+      <a href="/experience/" class="text-link">Full experience</a>
     </div>
     <div class="mt-6">{recentExperience.map(entry => <ExperienceItem entry={entry} variant="compact" />)}</div>
   </section>
-  <ContactBlock />
 </BaseLayout>

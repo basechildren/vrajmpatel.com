@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 interface Mark {
   logo: string;
   logoDark?: string;
@@ -41,7 +42,7 @@ const railHeight = size === "compact" ? 64 : 72;
                 : "h-14 w-32 sm:h-[4.5rem] sm:w-44",
             ]}
           >
-            <img
+            <Image
               src={logo}
               alt=""
               width={railWidth}
@@ -57,7 +58,7 @@ const railHeight = size === "compact" ? 64 : 72;
             />
             {
               logoDark && (
-                <img
+                <Image
                   src={logoDark}
                   alt=""
                   width={railWidth}

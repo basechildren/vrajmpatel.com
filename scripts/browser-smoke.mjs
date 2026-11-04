@@ -94,15 +94,15 @@ try {
   await page.reload({ waitUntil: 'networkidle' });
   check('Theme persists after reload', await page.locator('html').evaluate(el => el.classList.contains('dark')));
   await page.keyboard.press('1');
-  await page.waitForURL('**/projects');
+  await page.waitForURL('**/projects/');
   await page.waitForTimeout(300);
-  check('Numbered work shortcut navigates', new URL(page.url()).pathname === '/projects');
+  check('Numbered work shortcut navigates', new URL(page.url()).pathname === '/projects/');
   await page.keyboard.press('g'); await page.keyboard.press('h');
   await page.waitForURL(`${baseURL}/`);
   await page.waitForTimeout(300);
   check('Home chord navigates', new URL(page.url()).pathname === '/');
   await page.locator('[data-ph-placement="project_list_action"]').first().click();
-  await page.waitForURL('**/projects/operational-ticket-intelligence');
+  await page.waitForURL('**/projects/operational-ticket-intelligence/');
   await page.waitForTimeout(300);
   check('Card navigation starts native cross-document transition', await page.evaluate(() => sessionStorage.getItem('qa-view-transition') === 'true'));
   await visit(page, '/');
@@ -116,8 +116,8 @@ try {
   await page.mouse.click(4, 500);
   check('Clicking outside dismisses mobile menu', await page.locator('[data-mobile-menu]').evaluate(el => !el.open));
   await page.locator('[data-mobile-menu] summary').click();
-  await page.locator('[data-mobile-menu] a[href="/experience"]').click();
-  await page.waitForURL('**/experience');
+  await page.locator('[data-mobile-menu] a[href="/experience/"]').click();
+  await page.waitForURL('**/experience/');
   await page.waitForTimeout(300);
   check('Mobile menu link navigates and menu stays closed', await page.locator('[data-mobile-menu]').evaluate(el => !el.open));
 

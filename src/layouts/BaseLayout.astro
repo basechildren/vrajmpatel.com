@@ -3,7 +3,10 @@ import "../styles/global.css";
 import "../styles/shell.css";
 import Motion from "../components/Motion.astro";
 import SiteHeader from "../components/SiteHeader.astro";
-import StatusBar from "../components/StatusBar.astro";
+import ContactBlock from "../components/ContactBlock.astro";
+import LocalTime from "../components/LocalTime.astro";
+import SocialLinks from "../components/SocialLinks.astro";
+import portrait from "../assets/profile.jpg";
 import ShortcutsDialog from "../components/ShortcutsDialog.astro";
 import Tracker from "../components/Tracker.astro";
 import { profile } from "../data/profile";
@@ -15,26 +18,40 @@ interface Props {
   ogImageAlt?: string;
   schemaType?: "Person" | "WebPage";
   robots?: "index, follow" | "noindex, follow";
+  contact?: boolean;
+  contactProject?: string;
 }
 
 const {
   title = "Vraj Patel",
-  description = "Systems integration engineer building backend and ML systems at CU Boulder.",
-  ogImage = "/profile.jpg",
-  ogImageAlt = "Portrait of Vraj Patel",
+  description = profile.description,
+  ogImage = "/og/profile.png",
+  ogImageAlt = "Vraj Patel — Software, Data and ML Engineering",
   schemaType = "WebPage",
   robots = "index, follow",
+  contact = false,
+  contactProject,
 } = Astro.props;
 
+const showContact = contact || Boolean(contactProject);
 const wideLayout = Astro.url.pathname === "/" || Astro.url.pathname.startsWith("/projects");
 const homeLayout = Astro.url.pathname === "/";
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const canonicalPath = Astro.url.pathname === "/404" ? "/404.html" : Astro.url.pathname.endsWith(".html") ? Astro.url.pathname : Astro.url.pathname.replace(/\/?$/, "/");
+const canonicalUrl = new URL(canonicalPath, Astro.site);
 const imageUrl = new URL(ogImage, Astro.site);
+const personId = new URL("/#person", Astro.site).href;
+const websiteId = new URL("/#website", Astro.site).href;
+const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
+const markdownPath = pathname === "/" ? "/profile.md" : /^\/projects\/[^/]+$/.test(pathname) ? `${pathname}.md` : undefined;
 const person = {
+  "@id": personId,
   "@type": "Person",
   name: profile.name,
-  url: "https://www.vrajmpatel.com",
+  url: new URL("/", Astro.site).href,
+  description: profile.description,
+  image: new URL(portrait.src, Astro.site).href,
   jobTitle: profile.role,
+  knowsAbout: ["Software engineering", "Data engineering", "Backend systems", "Applied machine learning", "Model evaluation"],
   worksFor: {
     "@type": "Organization",
     name: profile.employer.name,
@@ -48,22 +65,30 @@ const person = {
     name: "University of Colorado Boulder",
   },
   sameAs: [
-    "https://www.linkedin.com/in/vrajmp/",
+    profile.linkedin,
     ...profile.githubProfiles.map(({ href }) => href),
   ],
 };
 
-const structuredData =
-  schemaType === "Person"
-    ? { "@context": "https://schema.org", ...person }
-    : {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        name: title,
-        description,
-        url: canonicalUrl,
-        author: person,
-      };
+const page = {
+  "@id": `${canonicalUrl.href}#webpage`,
+  "@type": schemaType === "Person" || pathname === "/about" ? "ProfilePage" : "WebPage",
+  name: title,
+  description,
+  url: canonicalUrl.href,
+  inLanguage: "en-US",
+  isPartOf: { "@id": websiteId },
+  author: { "@id": personId },
+  ...(schemaType === "Person" || pathname === "/about" ? { mainEntity: { "@id": personId } } : {}),
+};
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    person,
+    { "@type": "WebSite", "@id": websiteId, name: profile.name, url: new URL("/", Astro.site).href, publisher: { "@id": personId } },
+    page,
+  ],
+};
 ---
 
 <!DOCTYPE html>
@@ -102,6 +127,8 @@ const structuredData =
 
     <link rel="canonical" href={canonicalUrl} />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="describedby" href="/llms.txt" />
+    {markdownPath && <link rel="alternate" type="text/markdown" href={markdownPath} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
@@ -109,7 +136,7 @@ const structuredData =
     <script
       is:inline
       type="application/ld+json"
-      set:html={JSON.stringify(structuredData)}
+      set:html={JSON.stringify(structuredData).replace(/</g, "\\u003c")}
     ></script>
     <script is:inline>
       (() => {
@@ -150,39 +177,20 @@ const structuredData =
     </main>
 
     <footer class="site-footer print:hidden">
-      <div
-        class="site-footer-links"
-      >
-        <p class="footer-copyright">&copy; {new Date().getFullYear()} {profile.name} · {profile.location}</p>
-        <nav aria-label="Footer links" class="footer-navigation">
-          <a
-            href="/privacy"
-            class="inline-flex min-h-11 touch-manipulation items-center underline underline-offset-4 focus-visible:rounded-sm"
-          >Privacy</a>
-          <a
-            href="https://www.linkedin.com/in/vrajmp/"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-ph-event="social_profile_clicked"
-            data-ph-network="linkedin"
-            class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm dark:decoration-slate-700 dark:hover:text-white"
-          >LinkedIn</a>
-          {
-            profile.githubProfiles.map(({ href, label, username }) => (
-              <a
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-ph-event="social_profile_clicked"
-                data-ph-network="github"
-                data-ph-account={username}
-                class="inline-flex min-h-11 items-center underline decoration-slate-300 underline-offset-4 hover:text-slate-950 focus-visible:rounded-sm dark:decoration-slate-700 dark:hover:text-white"
-              >{label}</a>
-            ))
-          }
-        </nav>
+      <div class:list={["site-footer-inner", { "site-footer-inner-wide": wideLayout }]}>
+        {showContact && <div class="footer-main"><ContactBlock project={contactProject} /></div>}
+        <div class="site-footer-links">
+          <div class="footer-identity">
+            <p class="footer-copyright">&copy; {new Date().getFullYear()} {profile.name}</p>
+            <LocalTime location={profile.location} />
+          </div>
+          <nav aria-label="Footer links" class="footer-navigation">
+            <SocialLinks includeLinkedIn={!showContact} placement="footer" />
+            <a href="/privacy/">Privacy</a>
+            <button type="button" class="shortcuts-open" data-shortcuts-open aria-label="Keyboard shortcuts" aria-haspopup="dialog" aria-controls="keyboard-shortcuts" hidden><kbd aria-hidden="true">?</kbd> Shortcuts</button>
+          </nav>
+        </div>
       </div>
-      <StatusBar />
     </footer>
     <ShortcutsDialog />
   </body>

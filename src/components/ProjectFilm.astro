@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { projectFilms } from "../data/projectFilms";
 
 interface Props {
@@ -10,7 +11,14 @@ const { slug, context = "card", transition = true } = Astro.props;
 const film = projectFilms[slug];
 ---
 
-{film && (
+{film && (film.href !== undefined ? (
+  <figure class="project-film" data-product-preview style={transition ? `view-transition-name: film-${slug}` : undefined}>
+    <a href={film.href} target="_blank" rel="noopener noreferrer" aria-label={film.label} class="product-preview-link" data-ph-event="outbound_link_clicked" data-ph-resource="project_site" data-ph-project={slug}>
+      <Image src={film.poster} alt="SeeMyRace homepage" width={film.width} height={film.height} widths={[480, 768, 1280, 1440]} sizes={context === "case" ? "(min-width: 1024px) 768px, calc(100vw - 40px)" : "(min-width: 768px) 576px, calc(100vw - 56px)"} format="webp" loading="lazy" decoding="async" />
+    </a>
+    <figcaption>{film.caption}</figcaption>
+  </figure>
+) : (
   <figure class="project-film ph-no-capture" data-film data-film-context={context} data-film-name={film.name} style={transition ? `view-transition-name: film-${slug}` : undefined}>
     <div class="project-film-screen">
       <video muted loop playsinline preload="none" poster={film.poster} width={film.width} height={film.height} aria-label={film.label} data-film-video>
@@ -23,7 +31,7 @@ const film = projectFilms[slug];
     </div>
     <figcaption><span>{film.caption}</span></figcaption>
   </figure>
-)}
+))}
 
 <script>
   const motion = matchMedia("(prefers-reduced-motion: reduce)");
@@ -37,7 +45,6 @@ const film = projectFilms[slug];
     const button = figure.querySelector<HTMLButtonElement>("[data-film-toggle]");
     if (!video || !button) return;
     let visible = false;
-    let engaged = false;
     let pausedByUser = false;
     let optedIn = false;
     let loaded = false;
@@ -75,21 +82,14 @@ const film = projectFilms[slug];
     };
     button.addEventListener("click", () => {
       if (!video.paused) { pausedByUser = true; pause(); }
-      else { engaged = true; void play(true); }
+      else { void play(true); }
     });
-    // Reduced-motion and data-saving visitors only load video after pressing Play.
-    figure.addEventListener("pointerenter", (event) => {
-      if (event.pointerType === "mouse") { engaged = true; void play(); }
-    });
-    figure.addEventListener("focusin", () => { engaged = true; void play(); });
-    figure.addEventListener("pointerleave", () => { if (figure.dataset.filmContext === "card" && !figure.contains(document.activeElement)) pause(); });
-    figure.addEventListener("focusout", () => { if (figure.dataset.filmContext === "card" && !figure.matches(":hover")) pause(); });
     video.addEventListener("play", sync);
     video.addEventListener("pause", sync);
     const observer = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting && entry.intersectionRatio >= 0.4;
       if (!visible) pause();
-      else if (engaged && !pausedByUser && (figure.dataset.filmContext === "case" || figure.matches(":hover") || figure.contains(document.activeElement)) && (!constrained() || optedIn)) void play(optedIn);
+      else if (optedIn && !pausedByUser) void play();
     }, { threshold: [0, 0.4] });
     observer.observe(figure);
     const preferenceChanged = () => { optedIn = false; if (constrained()) pause(); };
@@ -112,6 +112,9 @@ const film = projectFilms[slug];
   .project-film { margin: 0; overflow: hidden; background: var(--paper-2, #f5f4f0); border: 1px solid var(--line, #ddd); border-radius: var(--radius-2, 12px); }
   .project-film-screen { position: relative; aspect-ratio: 8 / 5; overflow: hidden; background: #f2f1ed; }
   video { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .product-preview-link { display: block; }
+  .product-preview-link img { display: block; width: 100%; height: auto; aspect-ratio: 8 / 5; object-fit: cover; }
+  .product-preview-link:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
   figcaption { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .65rem .85rem; border-top: 1px solid var(--line, #ddd); color: var(--muted, #57545f); font: 10px/1.5 var(--font-mono, monospace); letter-spacing: .01em; }
   .film-toggle { position: absolute; bottom: .75rem; right: .75rem; display: inline-flex; align-items: center; gap: .45rem; min-width: 5rem; min-height: 2.75rem; padding: .45rem .8rem; border: 1px solid #ffffff70; border-radius: 99px; background: #242330ed; color: white; box-shadow: 0 2px 10px #0002; cursor: pointer; font: 11px/1 var(--font-mono, monospace); }
   .film-toggle:hover { background: #424052; }

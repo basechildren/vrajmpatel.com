@@ -9,7 +9,7 @@
     <div><dt><kbd>g</kbd> then <kbd>h</kbd></dt><dd>Go home</dd></div>
     <div><dt><kbd>j</kbd> / <kbd>k</kbd></dt><dd>Next / previous case study section</dd></div>
     <div><dt><kbd>t</kbd></dt><dd>Switch color theme</dd></div>
-    <div><dt><kbd>r</kbd></dt><dd>Resume (PDF, new tab)</dd></div>
+    <div><dt><kbd>r</kbd></dt><dd>Choose a resume</dd></div>
     <div><dt><kbd>?</kbd> / <kbd>Esc</kbd></dt><dd>Open / close this reference</dd></div>
   </dl>
   <label class="shortcuts-preference"><input type="checkbox" checked data-shortcuts-enabled /> Enable single-key shortcuts</label>
@@ -57,7 +57,6 @@
       if (key === "g") { event.preventDefault(); return; }
       if (goHome) {
         event.preventDefault();
-        // Use the normal link path so a pending terminal navigation is cancelled.
         const home = document.querySelector<HTMLAnchorElement>('.terminal-breadcrumb a[href="/"]');
         if (home) home.click();
         else window.location.assign("/");

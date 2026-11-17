@@ -28,7 +28,7 @@
     "astro-og-canvas": "^0.13.3",
     "canvaskit-wasm": "0.42.0",
     "motion": "^14.10.1",
-    "posthog-js": "1.445.1",
+    "posthog-js": "1.449.1",
     "tailwindcss": "^4.3.5"
   },
   "devDependencies": {
